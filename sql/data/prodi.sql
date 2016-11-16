@@ -1,0 +1,10 @@
+insert into PRODI (id, namaprodi) values (1, 'Marketing');
+insert into PRODI (id, namaprodi) values (2, 'Product Management');
+insert into PRODI (id, namaprodi) values (3, 'Marketing');
+insert into PRODI (id, namaprodi) values (4, 'Legal');
+insert into PRODI (id, namaprodi) values (5, 'Marketing');
+insert into PRODI (id, namaprodi) values (6, 'Accounting');
+insert into PRODI (id, namaprodi) values (7, 'Engineering');
+insert into PRODI (id, namaprodi) values (8, 'Services');
+insert into PRODI (id, namaprodi) values (9, 'Marketing');
+insert into PRODI (id, namaprodi) values (10, 'Support');

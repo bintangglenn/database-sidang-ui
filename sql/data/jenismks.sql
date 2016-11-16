@@ -1,0 +1,10 @@
+insert into jenismks (id, namamks) values (1, 1);
+insert into jenismks (id, namamks) values (2, 1);
+insert into jenismks (id, namamks) values (3, 1);
+insert into jenismks (id, namamks) values (4, 1);
+insert into jenismks (id, namamks) values (5, 1);
+insert into jenismks (id, namamks) values (6, 1);
+insert into jenismks (id, namamks) values (7, 1);
+insert into jenismks (id, namamks) values (8, 1);
+insert into jenismks (id, namamks) values (9, 1);
+insert into jenismks (id, namamks) values (10, 1);
