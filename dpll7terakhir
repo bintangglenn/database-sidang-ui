@@ -1,81 +1,81 @@
 CREATE table SARAN_DOSEN_PENGUJI(
-    idmks integer [not null], 
-    nipsaranpenguji varchar(20) [not null],
+    idmks integer not null, 
+    nipsaranpenguji varchar(20) not null,
     PRIMARY KEY (idmks, nipdosenpenguji)
     FOREIGN KEY (idmks) REFERENCES
-        MATA_KULIAH_SPESIAL (idmks)
+        MATA_KULIAH_SPESIAL (idmks) ON DELETE RESTRICT ON UPDATE RESTRICT
     FOREIGN KEY (nipdosenpenguji) REFERENCES
-        DOSEN (nip) [ON DELETE RESTRICT] [ON UPDATE RESTRICT]
+        DOSEN (nip) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE table DOSEN_PENGUJI(
-    idmks integer [not null], 
-    nipsaranpenguji varchar(20) [not null],
+    idmks integer not null, 
+    nipsaranpenguji varchar(20) not null,
     PRIMARY KEY (idmks, nipdosenpenguji)
     FOREIGN KEY (idmks) REFERENCES
-        MATA_KULIAH_SPESIAL (idmks)
+        MATA_KULIAH_SPESIAL (idmks) ON DELETE RESTRICT ON UPDATE RESTRICT
     FOREIGN KEY (nipdosenpenguji) REFERENCES
-        DOSEN (nip) [ON DELETE RESTRICT] [ON UPDATE RESTRICT]
+        DOSEN (nip) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE table TIMELINE(
-    idTimeline Integer [not null], 
-    namaEvent varchar(100) [not null],
-    tanggal date [not null],
-    tahun varchar(50) [not null],
-    semester varchar(100) [not null],
+    idTimeline Integer not null, 
+    namaEvent varchar(100) not null,
+    tanggal date not null,
+    tahun varchar(50) not null,
+    semester varchar(100) not null,
 
     PRIMARY KEY (idTimeline)
     FOREIGN KEY (tahun) REFERENCES
-        TERM (tahun)
+        TERM (tahun) ON DELETE RESTRICT ON UPDATE RESTRICT
     FOREIGN KEY (semester) REFERENCES
-        TERM (semester) [ON DELETE RESTRICT] [ON UPDATE RESTRICT]
+        TERM (semester) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE table JADWAL_NON_SIDANG(
-    idJadwal integer [not null], 
-    tanggalMulai date [not null],
-    tanggalSelesai date [not null],
-    alasan varchar(100) [not null],
+    idJadwal integer not null, 
+    tanggalMulai date not null,
+    tanggalSelesai date not null,
+    alasan varchar(100) not null,
     repetisi varchar(50),
-    nipDosen varchar(10) [not null],
+    nipDosen varchar(10) not null,
 
     PRIMARY KEY (idJadwal)
     FOREIGN KEY (nipDosen) REFERENCES
-        DOSEN (nip) [ON DELETE RESTRICT] [ON UPDATE RESTRICT]
+        DOSEN (nip) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE table RUANGAN(
-    idRuangan integer [not null], 
-    namaRuangan varchar(20) [not null, unique],
+    idRuangan integer not null, 
+    namaRuangan varchar(20) not null UNIQUE,
 
-    PRIMARY KEY (idRuangan) [ON DELETE RESTRICT] [ON UPDATE RESTRICT]
+    PRIMARY KEY (idRuangan) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE table JADWAL_NON_SIDANG(
-    idJadwal integer [not null], 
-    idmks integer [not null],
-    tanggal date [not null],
-    jamMulai time [not null],
-    jamSelesai time [not null],
-    idRuangan int [not null],
+    idJadwal integer not null, 
+    idmks integer not null,
+    tanggal date not null,
+    jamMulai time not null,
+    jamSelesai time not null,
+    idRuangan int not null,
 
     PRIMARY KEY (idJadwal, idmks)
     FOREIGN KEY (idmks) REFERENCES
-        MATA_KULIAH_SPESIAL (idmks)
+        MATA_KULIAH_SPESIAL (idmks) ON DELETE RESTRICT ON UPDATE RESTRICT
     FOREIGN KEY (idRuangan) REFERENCES 
-        TABEL_RUANGAN (idRuangan) [ON DELETE RESTRICT] [ON UPDATE RESTRICT]
+        TABEL_RUANGAN (idRuangan) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE table BERKAS(
-    idBerkas integer [not null],
-    idmks integer [not null],
-    nama varchar(100) [not null],
-    alamat varchar(100) [not null],
+    idBerkas integer not null,
+    idmks integer not null,
+    nama varchar(100) not null,
+    alamat varchar(100) not null,
 
     PRIMARY KEY (idBerkas, idmks)
     FOREIGN KEY (idmks) REFERENCES
-        MATA_KULIAH_SPESIAL (idmks)
+        MATA_KULIAH_SPESIAL (idmks) ON DELETE RESTRICT ON UPDATE RESTRICT
     FOREIGN KEY (idRuangan) REFERENCES 
-        TABEL_RUANGAN (idRuangan) [ON DELETE RESTRICT] [ON UPDATE RESTRICT]
+        TABEL_RUANGAN (idRuangan) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
