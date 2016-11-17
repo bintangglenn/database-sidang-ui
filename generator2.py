@@ -72,7 +72,7 @@ def genSaranDosenPenguji():
         idx = random.randrange(len(IDMKS_MKS)), random.randrange(len(NIPsaranpenguji))
         if(idx not it uniSet):
             uniSet.add(idx)
-            tmp = "INSERT INTO SARAN_DOSEN_PENGUJI (IDMKS, NIPsaranpenguji) VALUES (\'{}\',\'{}\');\n".format(IDMKS_MKS[idxIDMKS], NIPsaranpenguji[idxNIP])
+            tmp = "INSERT INTO SARAN_DOSEN_PENGUJI (IDMKS, NIPsaranpenguji) VALUES ({},\'{}\');\n".format(IDMKS_MKS[idxIDMKS], NIPsaranpenguji[idxNIP])
             outFile.write(tmp)
             i += 1
     outFile.close()
@@ -88,7 +88,7 @@ def genDosenPenguji():
         idx = random.randrange(len(IDMKS_MKS)), random.randrange(len(NIPdosenpenguji))
         if(idx not it uniSet):
             uniSet.add(idx)
-            tmp = "INSERT INTO DOSEN_PENGUJI (IDMKS, NIPdosenpenguji) VALUES (\'{}\',\'{}\');\n".format(IDMKS_MKS[idxIDMKS], NIPdosenpenguji[idxNIP])
+            tmp = "INSERT INTO DOSEN_PENGUJI (IDMKS, NIPdosenpenguji) VALUES ({},\'{}\');\n".format(IDMKS_MKS[idxIDMKS], NIPdosenpenguji[idxNIP])
             outFile.write(tmp)
             i += 1
     outFile.close()
@@ -103,7 +103,7 @@ def genTimeline():
         tahunInserted = tahun[random.randrange(len(tahun))]
         smsInserted = semester[random.randrange(len(semester))]
         tanggal = randomDate(tahunInserted)
-        tmp = "INSERT INTO TIMELINE (IdTimeline, NamaEvent, Tanggal, Tahun, Semester) VALUES (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');\n".format(i, namaEvent, tanggal, tahunInserted, semesterInserted)
+        tmp = "INSERT INTO TIMELINE (IdTimeline, NamaEvent, Tanggal, Tahun, Semester) VALUES ({},\'{}\',\'{}\',\'{}\',\'{}\');\n".format(i, namaEvent, tanggal, tahunInserted, semesterInserted)
         outFile.write(tmp)
     outFile.close()
 
@@ -119,9 +119,9 @@ def genJadwalNonSidang():
         idxNip = random.randrange(len(NIPdosen))
         tmp = "INSERT INTO JADWAL_NON_SIDANG (IdJadwal, Tanggalmulai, Tanggalselesai, Alasan, Repetisi, NIPdosen) VALUES "
         if(repetisi == "null"):
-            tmp += "(\'{}\',\'{}\',\'{}\',\'{}\',null,\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, idxNip)
+            tmp += "({},\'{}\',\'{}\',\'{}\',null,\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, idxNip)
         else:
-            tmp += "(\'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, repetisi, idxNip)
+            tmp += "({},\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, repetisi, idxNip)
         outFile.write(tmp)
     outFile.close()
 
@@ -136,4 +136,3 @@ def genRuangan():
             outFile.write(tmp)
             i += 1
     outFile.close()
-##gantiyangintegernggakpakaikutip
