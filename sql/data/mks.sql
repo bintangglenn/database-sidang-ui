@@ -37,4 +37,4 @@ INSERT INTO MATA_KULIAH_SPESIAL VALUES (36,1506757980,2011,3,'Pengenalan bentuk 
 INSERT INTO MATA_KULIAH_SPESIAL VALUES (37,1506757884,2011,1,'Gambaran sikap ibu yang melakukan dan tidak melakukan inisiasi menyusu dini terhadap pelaksanaan menyusu dini di puskesmas kecamatan Pasar Minggu Jakarta Selatan tahun',NULL,NULL,NULL,5);
 INSERT INTO MATA_KULIAH_SPESIAL VALUES (38,1506757694,2011,2,'Pengklasifikasian artikel berita berbahasa Indonesia secara otomatis menggunakan ontologi',NULL,NULL,NULL,1);
 INSERT INTO MATA_KULIAH_SPESIAL VALUES (39,1506757926,2011,3,'Gambaran perencanaan perbekalan obat di Poliklinik Lembaga Pemasyarakatan Kelas II A Narkotika Jakarta',NULL,NULL,NULL,2);
-INSERT INTO MATA_KULIAH_SPESIAL VALUES (40,1506757826,2011,1,'Hubungan aritmia dengan angka mortalitas pasien gagal jantung akut di lima rumah sakit di Indonesia',NULL,NULL,NULL,2);
+INSERT INTO MATA_KULIAH_SPESIAL VALUES (40,1506752826,2011,1,'Hubungan aritmia dengan angka mortalitas pasien gagal jantung akut di lima rumah sakit di Indonesia',NULL,NULL,NULL,2);
