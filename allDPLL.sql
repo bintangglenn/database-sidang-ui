@@ -60,7 +60,7 @@ CREATE TABLE DOSEN_PEMBIMBING(
 );
 
 CREATE table DOSEN_PENGUJI(
-    idmks integer not null, 
+    idmks integer not null,
     nipdosenpenguji varchar(20) not null,
     PRIMARY KEY (idmks, nipdosenpenguji),
     FOREIGN KEY (idmks) REFERENCES
@@ -70,7 +70,7 @@ CREATE table DOSEN_PENGUJI(
 );
 
 CREATE table SARAN_DOSEN_PENGUJI(
-    idmks integer not null, 
+    idmks integer not null,
     nipdosenpenguji varchar(20) not null,
     PRIMARY KEY (idmks, nipdosenpenguji),
     FOREIGN KEY (idmks) REFERENCES
@@ -81,7 +81,7 @@ CREATE table SARAN_DOSEN_PENGUJI(
 
 
 CREATE table TIMELINE(
-    idTimeline Integer not null, 
+    idTimeline Integer not null,
     namaEvent varchar(100) not null,
     tanggal date not null,
     tahun integer not null,
@@ -92,7 +92,7 @@ CREATE table TIMELINE(
 );
 
 CREATE table JADWAL_NON_SIDANG(
-    idJadwal integer not null, 
+    idJadwal integer not null,
     tanggalMulai date not null,
     tanggalSelesai date not null,
     alasan varchar(100) not null,
@@ -105,12 +105,12 @@ CREATE table JADWAL_NON_SIDANG(
 );
 
 CREATE table RUANGAN(
-    idRuangan integer not null PRIMARY KEY, 
+    idRuangan integer not null PRIMARY KEY,
     namaRuangan varchar(20) not null UNIQUE
 );
 
 CREATE table JADWAL_SIDANG(
-    idJadwal integer not null, 
+    idJadwal integer not null,
     idmks integer not null,
     tanggal date not null,
     jamMulai time not null,
@@ -119,7 +119,7 @@ CREATE table JADWAL_SIDANG(
     PRIMARY KEY (idJadwal, idmks),
     FOREIGN KEY (idmks) REFERENCES
         MATA_KULIAH_SPESIAL (idmks) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    FOREIGN KEY (idRuangan) REFERENCES 
+    FOREIGN KEY (idRuangan) REFERENCES
         RUANGAN (idRuangan) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
