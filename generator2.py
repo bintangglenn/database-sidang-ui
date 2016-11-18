@@ -43,7 +43,7 @@ def pairDate(tahun):
     return "{}-{}-{}".format(tgl1,bulan1,tahun), "{}-{}-{}".format(tgl2,bulan2,tahun)
 
 #PairTime
-def pairTime:
+def pairTime():
     jam1 = random.randrange(9,17)
     jam2 = jam1 + random.randrange(4)
     menit = random.randrange(0,60)
@@ -70,7 +70,7 @@ def genSaranDosenPenguji():
     uniSet = set()
     while(i < 50):
         idx = random.randrange(len(IDMKS_MKS)), random.randrange(len(NIPsaranpenguji))
-        if(idx not it uniSet):
+        if(idx not in uniSet):
             uniSet.add(idx)
             tmp = "INSERT INTO SARAN_DOSEN_PENGUJI (IDMKS, NIPsaranpenguji) VALUES ({},\'{}\');\n".format(IDMKS_MKS[idxIDMKS], NIPsaranpenguji[idxNIP])
             outFile.write(tmp)
@@ -86,7 +86,7 @@ def genDosenPenguji():
     uniSet = set()
     while(i < 60):
         idx = random.randrange(len(IDMKS_MKS)), random.randrange(len(NIPdosenpenguji))
-        if(idx not it uniSet):
+        if(idx not in uniSet):
             uniSet.add(idx)
             tmp = "INSERT INTO DOSEN_PENGUJI (IDMKS, NIPdosenpenguji) VALUES ({},\'{}\');\n".format(IDMKS_MKS[idxIDMKS], NIPdosenpenguji[idxNIP])
             outFile.write(tmp)
@@ -128,11 +128,39 @@ def genJadwalNonSidang():
 #RUANGAN
 def genRuangan():
     uniSet = set() #to make sure unique
+    i = 0
+    outFile = open("RUANGAN-DATA.txt", "w")
     while(i < 20):
         namaRuangan = randomName(8,21)
         if(namaRuangan not in uniSet):
             uniSet.add(namaRuangan)
-            tmp = "INSERT INTO RUANGAN (IDRuangan, NamaRuangan) VALUES ({},\'{}\');\n)".format(i, namaRuangan)
+            tmp = "INSERT INTO RUANGAN (IDRuangan, NamaRuangan) VALUES ({},\'{}\');\n".format(i, namaRuangan)
             outFile.write(tmp)
             i += 1
+    outFile.close()
+
+#JADWAL_SIDANG
+def genJadwalSidang():
+    idMKS_MKS = []
+    idRuangan = []
+    outFile = open("JADWAL_SIDANG-DATA.txt", "w")
+    for i in range(1, 51):
+        idMKS = idMKS_MKS[random.randrange(len(idMKS_MKS))]
+        tanggal = randomDate(random.choice([2015,2016]))
+        jamMulai, jamSelesai = pairTime()
+        idRuanganSel = idRuangan[random.randrange(len(idRuangan))]
+        tmp = "INSERT INTO JADWAL_SIDANG (IDJadwal, Tanggal, JamMulai, JamSelesai, IdRuangan) VALUES ({},{},\'{}\',\'{}\',\'{}\',{});\n".format(i,idMKS, tanggal, jamMulai, jamSelesai, idRuangan)
+        outFile.write(tmp)
+    outFile.close()
+
+#BERKAS
+def genBerkas():
+    idMKS_MKS = []
+    outFile = open("BERKAS-DATA.txt", "w")
+    for i in range(1, 101):
+        idMKS = idMKS_MKS[random.randrange(len(idMKS_MKS))]
+        nama = randomName(12,31)
+        alamat = randomName(25,101)
+        tmp = "INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES ({},{},\'{}\',\'{}\');\n".format(i, idMKS, nama, alamat)
+        outFile.write(tmp)
     outFile.close()
