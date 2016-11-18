@@ -1,5 +1,31 @@
 import random
 
+#SQLInverter
+def inserter():
+    table = input("Masukkan table: ")
+    string = "INSERT INTO {} (".format(table)
+    i = "-"
+    count = 0
+    while(i != ";"):
+        att = input("Atribut: ")
+        i = att
+        if(att != ";"):
+            string += att + ","
+            count += 1
+    string = string[:-1]
+    string += ") VALUES ("
+    while True:
+        outFile = open(table + ".txt", "a")
+        tmp = string
+        for i in range(count):
+            print(i)
+            data = input("--> ")
+            tmp += "\'{}\',".format(data)
+        tmp = tmp[:-1]
+        tmp += ");\n"
+        outFile.write(tmp)
+        outFile.close()
+
 #RandomDate
 def randomDate(x=-1):
     bulan = random.randrange(1,13)
@@ -62,13 +88,13 @@ def randomName(x,y):
     return name
     
 #SARAN_DOSEN_PENGUJI
-def genSaranDosenPenguji():
+def genSaranDosenPenguji(x):
     IDMKS_MKS = []
     NIPsaranpenguji = []
     outFile = open("SARAN_DOSEN_PENGUJI-DATA.txt", "w")
-    i = 0
+    i = x
     uniSet = set()
-    while(i < 50):
+    while(i < x + 50):
         idx = random.randrange(len(IDMKS_MKS)), random.randrange(len(NIPsaranpenguji))
         if(idx not in uniSet):
             uniSet.add(idx)
@@ -78,13 +104,13 @@ def genSaranDosenPenguji():
     outFile.close()
 
 #DOSEN_PENGUJI
-def genDosenPenguji():
+def genDosenPenguji(x):
     IDMKS_MKS = []
     NIPdosenpenguji = []
     outFile = open("DOSEN_PENGUJI-DATA.txt", "w")
-    i = 0
+    i = x
     uniSet = set()
-    while(i < 60):
+    while(i < x + 60):
         idx = random.randrange(len(IDMKS_MKS)), random.randrange(len(NIPdosenpenguji))
         if(idx not in uniSet):
             uniSet.add(idx)
@@ -94,11 +120,11 @@ def genDosenPenguji():
     outFile.close()
 
 #TIMELINE
-def genTimeline():
+def genTimeline(x):
     tahun = []
     semester = []
     outFile = open("TIMELINE-DATA.txt", "w")
-    for i in range(1, 21):
+    for i in range(x, x + 20):
         namaEvent = randomName(10,101)
         tahunInserted = tahun[random.randrange(len(tahun))]
         smsInserted = semester[random.randrange(len(semester))]
@@ -108,11 +134,11 @@ def genTimeline():
     outFile.close()
 
 #JADWAL_NON_SIDANG
-def genJadwalNonSidang():
+def genJadwalNonSidang(x):
     NIPdosen = []
     outFile = open("JADWAL_NON_SIDANG-DATA.txt", "w")
     repData = ["null", "harian", "mingguan", "bulanan"]
-    for i in range(1, 51):
+    for i in range(x, x + 50):
         tglMulai, tglSelesai = pairDate(2016) #Default
         alasan = randomName(50,101)
         repetisi = random.choice(repData)
@@ -126,11 +152,11 @@ def genJadwalNonSidang():
     outFile.close()
 
 #RUANGAN
-def genRuangan():
+def genRuangan(x):
     uniSet = set() #to make sure unique
-    i = 0
+    i = x
     outFile = open("RUANGAN-DATA.txt", "w")
-    while(i < 20):
+    while(i < x + 20):
         namaRuangan = randomName(8,21)
         if(namaRuangan not in uniSet):
             uniSet.add(namaRuangan)
@@ -140,11 +166,11 @@ def genRuangan():
     outFile.close()
 
 #JADWAL_SIDANG
-def genJadwalSidang():
+def genJadwalSidang(x):
     idMKS_MKS = []
     idRuangan = []
     outFile = open("JADWAL_SIDANG-DATA.txt", "w")
-    for i in range(1, 51):
+    for i in range(x, x + 50):
         idMKS = idMKS_MKS[random.randrange(len(idMKS_MKS))]
         tanggal = randomDate(random.choice([2015,2016]))
         jamMulai, jamSelesai = pairTime()
@@ -154,10 +180,10 @@ def genJadwalSidang():
     outFile.close()
 
 #BERKAS
-def genBerkas():
+def genBerkas(x):
     idMKS_MKS = []
     outFile = open("BERKAS-DATA.txt", "w")
-    for i in range(1, 101):
+    for i in range(x, x + 100):
         idMKS = idMKS_MKS[random.randrange(len(idMKS_MKS))]
         nama = randomName(12,31)
         alamat = randomName(25,101)
