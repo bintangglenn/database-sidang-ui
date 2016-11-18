@@ -1,0 +1,6 @@
+insert into TERM (tahun, semester) values (2015, 1);
+insert into TERM (tahun, semester) values (2015, 2);
+insert into TERM (tahun, semester) values (2015, 3);
+insert into TERM (tahun, semester) values (2016, 1);
+insert into TERM (tahun, semester) values (2016, 2);
+insert into TERM (tahun, semester) values (2016, 3);

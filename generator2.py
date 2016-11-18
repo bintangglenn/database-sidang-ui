@@ -1,0 +1,192 @@
+import random
+
+#SQLInverter
+def inserter():
+    table = input("Masukkan table: ")
+    string = "INSERT INTO {} (".format(table)
+    i = "-"
+    count = 0
+    while(i != ";"):
+        att = input("Atribut: ")
+        i = att
+        if(att != ";"):
+            string += att + ","
+            count += 1
+    string = string[:-1]
+    string += ") VALUES ("
+    while True:
+        outFile = open(table + ".txt", "a")
+        tmp = string
+        for i in range(count):
+            print(i)
+            data = input("--> ")
+            tmp += "\'{}\',".format(data)
+        tmp = tmp[:-1]
+        tmp += ");\n"
+        outFile.write(tmp)
+        outFile.close()
+
+#RandomDate
+def randomDate(x=-1):
+    bulan = random.randrange(1,13)
+    tgl31 = [1,3,5,7,8,10,12]
+    if(bulan in tgl31):
+        tgl = random.randrange(1,32)
+    elif(bulan == 2):
+        tgl = random.randrange(1,29)
+    else:
+        tgl = random.randrange(1,31)
+
+    if(x == -1):
+        tahun = random.randrange(2000,2021)
+    else:
+        tahun = x
+
+    return "{}-{}-{}".format(tgl,bulan,tahun)
+
+#PairDate
+def pairDate(tahun):
+    tgl31 = [1,3,5,7,8,10,12]
+    bulan1 = random.randrange(1,13)
+    if(bulan1 in tgl31):
+        if(bulan1 > 9):
+            tgl1 = random.randrange(1,16)
+            tgl2 = random.randrange(16,32)
+            bulan2 = bulan1
+        else:
+            tgl1 = random.randrange(1,32)
+            bulan2 = random.randrange(bulan1 + 1, 13)
+            tgl2 = tgl1
+    elif(bulan1 == 2):
+        tgl1 = random.randrange(1,29)
+        bulan2 = random.randrange(bulan1 + 1, 13)
+        tgl2 = tgl1
+    else:
+        tgl1 = random.randrange(1,31)
+        bulan2 = random.randrange(bulan1 + 1, 13)
+        tgl2 = tgl1
+
+    return "{}-{}-{}".format(tgl1,bulan1,tahun), "{}-{}-{}".format(tgl2,bulan2,tahun)
+
+#PairTime
+def pairTime():
+    jam1 = random.randrange(9,17)
+    jam2 = jam1 + random.randrange(4)
+    menit = random.randrange(0,60)
+
+    if(menit < 10):
+        menit = "0" + menit
+
+    return "{}:{}".format(jam1,menit),"{}:{}".format(jam2, menit)
+
+#RandomName
+def randomName(x,y):
+    ranLength = random.randrange(x,y)
+    name = ""
+    for i in range(ranLength):
+        name += random.choice("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ ")
+    return name
+    
+#SARAN_DOSEN_PENGUJI
+def genSaranDosenPenguji(x):
+    IDMKS_MKS = []
+    NIPsaranpenguji = []
+    outFile = open("SARAN_DOSEN_PENGUJI-DATA.txt", "w")
+    i = x
+    uniSet = set()
+    while(i < x + 50):
+        idx = random.randrange(len(IDMKS_MKS)), random.randrange(len(NIPsaranpenguji))
+        if(idx not in uniSet):
+            uniSet.add(idx)
+            tmp = "INSERT INTO SARAN_DOSEN_PENGUJI (IDMKS, NIPsaranpenguji) VALUES ({},\'{}\');\n".format(IDMKS_MKS[idxIDMKS], NIPsaranpenguji[idxNIP])
+            outFile.write(tmp)
+            i += 1
+    outFile.close()
+
+#DOSEN_PENGUJI
+def genDosenPenguji(x):
+    IDMKS_MKS = []
+    NIPdosenpenguji = []
+    outFile = open("DOSEN_PENGUJI-DATA.txt", "w")
+    i = x
+    uniSet = set()
+    while(i < x + 60):
+        idx = random.randrange(len(IDMKS_MKS)), random.randrange(len(NIPdosenpenguji))
+        if(idx not in uniSet):
+            uniSet.add(idx)
+            tmp = "INSERT INTO DOSEN_PENGUJI (IDMKS, NIPdosenpenguji) VALUES ({},\'{}\');\n".format(IDMKS_MKS[idxIDMKS], NIPdosenpenguji[idxNIP])
+            outFile.write(tmp)
+            i += 1
+    outFile.close()
+
+#TIMELINE
+def genTimeline(x):
+    tahun = []
+    semester = []
+    outFile = open("TIMELINE-DATA.txt", "w")
+    for i in range(x, x + 20):
+        namaEvent = randomName(10,101)
+        tahunInserted = tahun[random.randrange(len(tahun))]
+        smsInserted = semester[random.randrange(len(semester))]
+        tanggal = randomDate(tahunInserted)
+        tmp = "INSERT INTO TIMELINE (IdTimeline, NamaEvent, Tanggal, Tahun, Semester) VALUES ({},\'{}\',\'{}\',\'{}\',\'{}\');\n".format(i, namaEvent, tanggal, tahunInserted, semesterInserted)
+        outFile.write(tmp)
+    outFile.close()
+
+#JADWAL_NON_SIDANG
+def genJadwalNonSidang(x):
+    NIPdosen = []
+    outFile = open("JADWAL_NON_SIDANG-DATA.txt", "w")
+    repData = ["null", "harian", "mingguan", "bulanan"]
+    for i in range(x, x + 50):
+        tglMulai, tglSelesai = pairDate(2016) #Default
+        alasan = randomName(50,101)
+        repetisi = random.choice(repData)
+        idxNip = random.randrange(len(NIPdosen))
+        tmp = "INSERT INTO JADWAL_NON_SIDANG (IdJadwal, Tanggalmulai, Tanggalselesai, Alasan, Repetisi, NIPdosen) VALUES "
+        if(repetisi == "null"):
+            tmp += "({},\'{}\',\'{}\',\'{}\',null,\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, idxNip)
+        else:
+            tmp += "({},\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, repetisi, idxNip)
+        outFile.write(tmp)
+    outFile.close()
+
+#RUANGAN
+def genRuangan(x):
+    uniSet = set() #to make sure unique
+    i = x
+    outFile = open("RUANGAN-DATA.txt", "w")
+    while(i < x + 20):
+        namaRuangan = randomName(8,21)
+        if(namaRuangan not in uniSet):
+            uniSet.add(namaRuangan)
+            tmp = "INSERT INTO RUANGAN (IDRuangan, NamaRuangan) VALUES ({},\'{}\');\n".format(i, namaRuangan)
+            outFile.write(tmp)
+            i += 1
+    outFile.close()
+
+#JADWAL_SIDANG
+def genJadwalSidang(x):
+    idMKS_MKS = []
+    idRuangan = []
+    outFile = open("JADWAL_SIDANG-DATA.txt", "w")
+    for i in range(x, x + 50):
+        idMKS = idMKS_MKS[random.randrange(len(idMKS_MKS))]
+        tanggal = randomDate(random.choice([2015,2016]))
+        jamMulai, jamSelesai = pairTime()
+        idRuanganSel = idRuangan[random.randrange(len(idRuangan))]
+        tmp = "INSERT INTO JADWAL_SIDANG (IDJadwal, Tanggal, JamMulai, JamSelesai, IdRuangan) VALUES ({},{},\'{}\',\'{}\',\'{}\',{});\n".format(i,idMKS, tanggal, jamMulai, jamSelesai, idRuangan)
+        outFile.write(tmp)
+    outFile.close()
+
+#BERKAS
+def genBerkas(x):
+    idMKS_MKS = []
+    outFile = open("BERKAS-DATA.txt", "w")
+    for i in range(x, x + 100):
+        idMKS = idMKS_MKS[random.randrange(len(idMKS_MKS))]
+        nama = randomName(12,31)
+        alamat = randomName(25,101)
+        tmp = "INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES ({},{},\'{}\',\'{}\');\n".format(i, idMKS, nama, alamat)
+        outFile.write(tmp)
+    outFile.close()
