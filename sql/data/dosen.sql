@@ -17,3 +17,4 @@ INSERT INTO DOSEN VALUES (1419530189,'Ito Wasito, PhD.','wasito.phd','vskoaevegk
 INSERT INTO DOSEN VALUES (1328070758,'Drs. Lim Yohanes Stefanus, M.Math, Ph.D.','lim.yohanes','kpkcdmndyq','lim.yohanes@ui.ac.id','ilmu komputer');
 INSERT INTO DOSEN VALUES (1230244771,'Dra. Mirna Adriani, Ph.D','mirna.adriani','cranizvrfx','mirna.adriani@ui.ac.id','ilmu komputer');
 INSERT INTO DOSEN VALUES (1278073889,'Dr. Eng. Muhammad Rahmat Widyanto, SKom., M.Eng.','eng.muhammad','otgtxxfivf','eng.muhammad@ui.ac.id','ilmu komputer');
+INSERT INTO DOSEN VALUES (1283057756,'Putu Wuri Handayani, SKom., M.Sc.','putu.wuri','ecoutnkeri','putu.wuri@ui.ac.id','ilmu komputer');
