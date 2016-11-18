@@ -37,4 +37,4 @@ INSERT INTO MAHASISWA VALUES (1506757980,'Erza Akbar','erza.akbar','spjaftsswk',
 INSERT INTO MAHASISWA VALUES (1506757884,'Galuh Octavia Chrisdianti','galuh.octavia','vqyboczsnp','galuh.octavia@ui.ac.id','galuh.octavia@gmail.com',85869679548,218879029);
 INSERT INTO MAHASISWA VALUES (1506757694,'Farizki Yazid','farizki.yazid','ifpkpzkdxj','farizki.yazid@ui.ac.id','farizki.yazid@gmail.com',82484979343,218869007);
 INSERT INTO MAHASISWA VALUES (1506757926,'Jatmiko Budi Baskoro','jatmiko.budi','irdnsfkjzl','jatmiko.budi@ui.ac.id','jatmiko.budi@gmail.com',81548777887,218817719);
-INSERT INTO MAHASISWA VALUES (1506752926,'Gilang Faras Arifah','gilang.faras','nyfslrhidp','gilang.faras@ui.ac.id','gilang.faras@gmail.com',82612077602,218819358);
+INSERT INTO MAHASISWA VALUES (1506752826,'Gilang Faras Arifah','gilang.faras','nyfslrhidp','gilang.faras@ui.ac.id','gilang.faras@gmail.com',82612077602,218819358);
