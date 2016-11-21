@@ -10,59 +10,72 @@
  <body>
    <div class="container">
        <form id="createmks" method="post">
-           <div class="form-group">
-               <label for="term"> Term </label>
-               <select class="form-control" id="term" name="term">
-                   <option> 2016 - Gasal </option>
-                   <option> 2016 - Genap </option>
-                   <option> 2016 - Pendek </option>
-               </select>
-           </div>
-           <div class="form-group">
-               <label for="jenismks"> Jenis MKS </label>
-               <select class="form-control" id="jenismks" name="jenismks">
-                   <option> Skripsi </option>
-                   <option> Tesis </option>
-                   <option> Penelitian </option>
-               </select>
-           </div>
-           <div class="form-group">
-               <label for="mahasiswa"> Mahasiswa </label>
-               <select class="form-control" id="mahasiswa" name="mahasiswa">
-                   <option> Andi </option>
-                   <option> Budi </option>
-                   <option> Ratih </option>
-               </select>
-           </div>
-           <div class="form-group">
-               <label for="judulmks"> Judul MKS </label>
-               <input type="text" class="form-control" id="judulmks"/>
-           </div>
-           <div class="form-group">
-               <label for="pembimbing1"> Pembimbing1 </label>
-               <select class="form-control" class="dosen" id="pembimbing1" name="pembimbing1">
-               </select>
-           </div>
-           <div class="form-group">
-               <label for="pembimbing2"> Pembimbing2 </label>
-               <select class="form-control" class="dosen" id="pembimbing2" name="pembimbing2">
-               </select>
-           </div>
-           <div class="form-group">
-               <label for="pembimbing3"> Pembimbing3 </label>
-               <select class="form-control" class="dosen" id="pembimbing3" name="pembimbing3">
-               </select>
-           </div>
-           <div class="form-group">
-               <label for="penguji"> Penguji </label>
-               <select class="form-control" id="penguji" name="penguji">
-               </select>
-               <button class="btn btn-primary"> Tambah penguji </button>
+           <div class="row">
+               <div class="col-lg-6">
+                   <div class="form-group">
+                       <label for="term"> Term </label>
+                       <select class="form-control" id="term" name="term">
+                           <option> 2016 - Gasal </option>
+                           <option> 2016 - Genap </option>
+                           <option> 2016 - Pendek </option>
+                       </select>
+                   </div>
+                   <div class="form-group">
+                       <label for="mahasiswa"> Mahasiswa </label>
+                       <select class="form-control" id="mahasiswa" name="mahasiswa">
+                           <option> Andi </option>
+                           <option> Budi </option>
+                           <option> Ratih </option>
+                       </select>
+                   </div>
+               </div>
+               <div class="col-lg-6">
+                   <div class="form-group">
+                       <label for="jenismks"> Jenis MKS </label>
+                       <select class="form-control" id="jenismks" name="jenismks">
+                           <option> Skripsi </option>
+                           <option> Tesis </option>
+                           <option> Penelitian </option>
+                       </select>
+                   </div>
+                   <div class="form-group">
+                       <label for="judulmks"> Judul MKS </label>
+                       <input type="text" class="form-control" id="judulmks"/>
+                   </div>
+               </div>
+               <div class="col-lg-6">
+                   <div class="form-group">
+                       <label for="pembimbing1"> Pembimbing1 </label>
+                       <select class="form-control" class="dosen" id="pembimbing1" name="pembimbing1">
+                       </select>
+                   </div>
+                   <div class="form-group">
+                       <label for="pembimbing2"> Pembimbing2 </label>
+                       <select class="form-control" class="dosen" id="pembimbing2" name="pembimbing2">
+                       </select>
+                   </div>
+                   <div class="form-group">
+                       <label for="pembimbing3"> Pembimbing3 </label>
+                       <select class="form-control" class="dosen" id="pembimbing3" name="pembimbing3">
+                       </select>
+                   </div>
+               </div>
+               <div class="col-lg-6">
+                   <div id="penguji-wrapper">
+                       <div class="form-group ">
+                           <label for="penguji"> Penguji </label>
+                           <select class="form-control" id="penguji" name="penguji">
+                           </select>
+                       </div>
+                   </div>
+                   <div id="tambah-penguji" class="btn btn-default"> Tambah penguji </div>
+               </div>
            </div>
        </form>
    </div>
    <script type="text/javascript">
-
+   var dosenList;
+   var dosenOption;
    $.ajax({
         url : "../../request/mahasiswa.php",
         method : "GET",
@@ -99,13 +112,14 @@
           dataType : "JSON",
           data : {"action" : "get_dosen"},
           success : function (response) {
-              var data = response.data;
+              dosenList = response.data;
               var pembimbing1 = $("#pembimbing1");
               var pembimbing2 = $("#pembimbing2");
               var pembimbing3 = $("#pembimbing3");
               var penguji = $("#penguji");
-              for (var i = 0; i < data.length; i++) {
-                  var option = '<option value=' + data[i].nip + '>' + data[i].nama + '</option>';
+              for (var i = 0; i < dosenList.length; i++) {
+                  var option = '<option value=' + dosenList[i].nip + '>' + dosenList[i].nama + '</option>';
+                  dosenOption += option;
                   pembimbing1.append(option);
                   pembimbing2.append(option);
                   pembimbing3.append(option);
@@ -113,7 +127,28 @@
               }
           }
       });
+      var x = 1;
+      var pengujiWrapper = $("#penguji-wrapper");
+      $("#tambah-penguji").click(function(){
+          if (x < 3) {
+              x++;
+              var penguji = 'penguji' + x;
+              var field = '<div class="form-group ">' +
+                  '<label for="' + penguji + '">' + penguji + ' <btn class="btn btn-danger remove-penguji"> Hapus </button></label> ' +
+                  '<select class="form-control" id="' + penguji + '" name="'+ penguji + '">' + dosenOption
+                  '</select>' +
+                  '</div>';
+            pengujiWrapper.append(field);
+          }
+      });
 
-    </script>
+      pengujiWrapper.on("click",".remove-penguji", function(e){
+          console.log("remove");
+          $(this).parent().parent().remove();
+          x--;
+    });
+
+
+      </script>
  </body>
  </html
