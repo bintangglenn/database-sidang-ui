@@ -9,23 +9,18 @@
  </head>
  <body>
    <div class="container">
-       <form id="createmks" method="post">
+       <form method="post" id="form-mks">
            <div class="row">
                <div class="col-lg-6">
                    <div class="form-group">
                        <label for="term"> Term </label>
                        <select class="form-control" id="term" name="term">
-                           <option> 2016 - Gasal </option>
-                           <option> 2016 - Genap </option>
-                           <option> 2016 - Pendek </option>
                        </select>
                    </div>
                    <div class="form-group">
                        <label for="mahasiswa"> Mahasiswa </label>
                        <select class="form-control" id="mahasiswa" name="mahasiswa">
-                           <option> Andi </option>
-                           <option> Budi </option>
-                           <option> Ratih </option>
+
                        </select>
                    </div>
                </div>
@@ -33,9 +28,6 @@
                    <div class="form-group">
                        <label for="jenismks"> Jenis MKS </label>
                        <select class="form-control" id="jenismks" name="jenismks">
-                           <option> Skripsi </option>
-                           <option> Tesis </option>
-                           <option> Penelitian </option>
                        </select>
                    </div>
                    <div class="form-group">
@@ -46,17 +38,20 @@
                <div class="col-lg-6">
                    <div class="form-group">
                        <label for="pembimbing1"> Pembimbing1 </label>
-                       <select class="form-control" class="dosen" id="pembimbing1" name="pembimbing1">
+                       <select class="form-control pembimbing" id="pembimbing1" name="pembimbing1">
+                            <option>Pilih Dosen</option>
                        </select>
                    </div>
                    <div class="form-group">
                        <label for="pembimbing2"> Pembimbing2 </label>
-                       <select class="form-control" class="dosen" id="pembimbing2" name="pembimbing2">
+                       <select class="form-control pembimbing" id="pembimbing2" name="pembimbing2">
+                            <option>Pilih Dosen</option>
                        </select>
                    </div>
                    <div class="form-group">
                        <label for="pembimbing3"> Pembimbing3 </label>
-                       <select class="form-control" class="dosen" id="pembimbing3" name="pembimbing3">
+                       <select class="form-control pembimbing" id="pembimbing3" name="pembimbing3">
+                            <option>Pilih Dosen</option>
                        </select>
                    </div>
                </div>
@@ -65,17 +60,36 @@
                        <div class="form-group ">
                            <label for="penguji"> Penguji </label>
                            <select class="form-control" id="penguji" name="penguji">
+                               <option>Pilih Dosen</option>
                            </select>
                        </div>
                    </div>
                    <div id="tambah-penguji" class="btn btn-default"> Tambah penguji </div>
                </div>
            </div>
+           <button id="btnCreate"type="button" class="btn btn-primary"> Create </button>
        </form>
    </div>
    <script type="text/javascript">
    var dosenList;
    var dosenOption;
+
+   // ajax call
+   $.ajax({
+       url : "../../request/term.php",
+       method : "GET",
+       dataType : "JSON",
+       data : {"action" : "get_term"},
+       success : function(response) {
+           var data = response.data;
+           var selectTerm = $("#term");
+           selectTerm.empty();
+           for (var i = 0; i < data.length; i++) {
+               selectTerm.append('<option value=' + data[i].tahun + ' ' + data[i].semeseter + '>' + data[i].tahun + ' ' + data[i].semester + '</option>');
+           }
+       }
+   });
+
    $.ajax({
         url : "../../request/mahasiswa.php",
         method : "GET",
@@ -127,15 +141,18 @@
               }
           }
       });
+
+
       var x = 1;
       var pengujiWrapper = $("#penguji-wrapper");
       $("#tambah-penguji").click(function(){
           if (x < 3) {
               x++;
+              var defaultOption = "<option>Pilih Dosen</option>";
               var penguji = 'penguji' + x;
               var field = '<div class="form-group ">' +
                   '<label for="' + penguji + '">' + penguji + ' <btn class="btn btn-danger remove-penguji"> Hapus </button></label> ' +
-                  '<select class="form-control" id="' + penguji + '" name="'+ penguji + '">' + dosenOption
+                  '<select class="form-control penguji" id="' + penguji + '" name="'+ penguji + '">' + defaultOption + dosenOption +
                   '</select>' +
                   '</div>';
             pengujiWrapper.append(field);
@@ -148,7 +165,61 @@
           x--;
     });
 
+    $(".pembimbing").change(function() {
+        console.log("change");
+        var prevValue = $(this).data('previous');
+        $('.pembimbing').not(this).find('option[value="' + prevValue + '"]').show();
+        var value = $(this).val();
+        $(this).data('previous', value);
+        $('.pembimbing').not(this).find('option[value="' + value + '"]').hide();
+    });
+
+    $(".penguji").change(function() {
+        console.log("change");
+        var prevValue = $(this).data('previous');
+        $('.penguji').not(this).find('option[value="' + prevValue + '"]').show();
+        var value = $(this).val();
+        $(this).data('previous', value);
+        $('.penguji').not(this).find('option[value="' + value + '"]').hide();
+    });
+
+    $("#btnCreate").click(function(e) {
+        var term = $("#term").val().split(" ");
+        var npm = $("#mahasiswa").val();
+        var type = $("#jenismks").val();
+        var title = $("#judulmks").val();
+        var adviserList = [];
+        $(".pembimbing").each(function(){
+            adviserList.push($(this).val());
+        });
+        var examinerList = [];
+        $(".penguji").each(function(){
+            examinerList.push($(this).val());
+        });
+
+        data = {
+            action : "create",
+            term : term,
+            npm : npm,
+            type : type,
+            title, title,
+            adviserList : adviserList,
+            examinerList : examinerList
+        };
+
+        console.log("onsubmit", "create mks");
+        $.ajax({
+            url : "../../request/mks.php",
+            dataType : "JSON",
+            data : data,
+            method : "POST",
+            success : function (response) {
+                console.log("sumbitted", response);
+            }
+        });
+    });
 
       </script>
+
  </body>
  </html
