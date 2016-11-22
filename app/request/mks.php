@@ -2,7 +2,7 @@
     include '../connection.php';
     include '../controller/MKSHandler.php';
     $mksHandler = new MKSHandler($db);
-    //header('Content-Type: application/json');
+    header('Content-Type: application/json');
     $response = [
         'status' => 'success',
         'data' => null
@@ -33,18 +33,17 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'create':
-            echo json_encode($_POST);
+                $idmks = $_POST['idmks'];
                 $term = $_POST['term'];
                 $npm = $_POST['npm'];
                 $type = $_POST['type'];
                 $title = $_POST['title'];
-                $adviserList = $_POST['adviserList'];
-                $examinerList = $_POST['examinerList'];
-
-                $result = $mksHandler->create($term, $npm, $type, $title, $adivserList, $examinerList);
-                $response['data'] = pg_num_rows($result);
+                $adviserList = $_POST['adviserlist'];
+                $examinerList = $_POST['examinerlist'];
+                $result = $mksHandler->create($idmks, $term, $npm, $type, $title, $adviserList, $examinerList);
+                $response['data'] = $result;
                 break;
         }
     }
-    echo json_encode($response);
+    echo json_encode($_POST);
  ?>
