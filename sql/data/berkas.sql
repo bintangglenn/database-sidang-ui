@@ -7,7 +7,7 @@ INSERT INTO BERKAS VALUES (6,6,'Gambaran Realisasi Anggaran Bantuan Operasional 
 INSERT INTO BERKAS VALUES (7,7,'Gambaran Prevalensi dan Risiko Penyakit Kardiovaskular pada Penduduk Dewasa di Provinsi DKI Jakarta','bit.ly/isfhklbxxf');
 INSERT INTO BERKAS VALUES (8,8,'Faktor-Faktor yang berhubungan dengan keaktifan kader rukun warga siaga di wilayah kecamatan Jatisampurna kota Bekasi','bit.ly/cdwjtgcqee');
 INSERT INTO BERKAS VALUES (9,9,'Bentuk penyebaran Islam dalam Hikayat Haji disertai edisi teks','bit.ly/hniufuyytt');
-INSERT INTO BERKAS VALUES (,,'Gambaran Epidemiologi dan Faktor-faktor yang Berhubungan dengan Timbulnya Korban Luka Berat dan Meninggal Akibat Kecelakaan Lalu Lintas Kendaraan Bermotor Roda Dua di Wilayah Satuan Lalu Lintas Polres Bogor','bit.ly/kkrnsufgfy');
+INSERT INTO BERKAS VALUES (10,10,'Gambaran Epidemiologi dan Faktor-faktor yang Berhubungan dengan Timbulnya Korban Luka Berat dan Meninggal Akibat Kecelakaan Lalu Lintas Kendaraan Bermotor Roda Dua di Wilayah Satuan Lalu Lintas Polres Bogor','bit.ly/kkrnsufgfy');
 INSERT INTO BERKAS VALUES (11,11,'Gambaran Faktor Demografi, Penyelidikan Epidemiologi, Foging Fokus dan Hubungan Angka Bebas Jentik dengan Kejadian Kasus DBD Di Kecamatan Tanjungkarang Timur Kota Bandar Lampung','bit.ly/wqzeqygcvr');
 INSERT INTO BERKAS VALUES (12,12,'Hubungan antara sikap terhadap hubungan seksual, masturbasi, pornografi dan homoseksual dengan religiusitas pada dewasa muda muslim','bit.ly/pwpcrqxypt');
 INSERT INTO BERKAS VALUES (13,13,'Harapan (hope) pada remaja penyandang thalassaemia mayor','bit.ly/nleqdnwera');
@@ -17,7 +17,7 @@ INSERT INTO BERKAS VALUES (16,16,'Perlindungan hukum terhadap nasabah bank dalam
 INSERT INTO BERKAS VALUES (17,17,'Pengembangan Sharable E-learning Content Authoring Tool and Repository (SHECAR)','bit.ly/lsthtwvnnp');
 INSERT INTO BERKAS VALUES (18,18,'Pengembangan sistem"scanner project" untuk membaca dan mengekstrak data lembar isian komputer pada studi kasus SPBM, dan SNMPT','bit.ly/kayvzvakxp');
 INSERT INTO BERKAS VALUES (19,19,'Pengaruh pembentukan otoritas jasa keuangan terhadap kewenangan Bank Indonesia di bidang pengawasan perbankan','bit.ly/czdlelgfry');
-INSERT INTO BERKAS VALUES (,,'Korelasi stadium dengan usia penderita kanker serviks di Departemen Patologi Anatomi RSCM tahun 2004','bit.ly/eqshowsgth');
+INSERT INTO BERKAS VALUES (20,20,'Korelasi stadium dengan usia penderita kanker serviks di Departemen Patologi Anatomi RSCM tahun 2004','bit.ly/eqshowsgth');
 INSERT INTO BERKAS VALUES (21,21,'Penggunaan grup fundamental dalam pembuktian ruang-ruang topologi yang tidak saling homeomorfik','bit.ly/gcoxuvfpdy');
 INSERT INTO BERKAS VALUES (22,22,'Menaksir koefisien korelasi polychoric dengan metode taksiran dua tahap','bit.ly/ebmoaphyxt');
 INSERT INTO BERKAS VALUES (23,23,'Item response model','bit.ly/zcjbypgtzm');
@@ -27,7 +27,7 @@ INSERT INTO BERKAS VALUES (26,26,'Pengembangan sistem ekstraksi informasi untuk 
 INSERT INTO BERKAS VALUES (27,27,'Faktor-faktor yang berhubungan dengan perilaku merokok siswa SLTP di Bekasi tahun 2008','bit.ly/nfdxygkqhf');
 INSERT INTO BERKAS VALUES (28,28,'Penerapan ontologi objek pembelajaran untuk kebutuhan personalisasi E-learning berbasis semantic web','bit.ly/caimaptank');
 INSERT INTO BERKAS VALUES (29,29,'Pemeriksaan kemungkinan adanya bahan asing pada jamu anti rematik','bit.ly/csveaoyoci');
-INSERT INTO BERKAS VALUES (,,'Pengembangan prototipe TRuST (Temukan Rumah Sakit Terdekat) e-health mobile context aware system menggunakan semantic web reasoning','bit.ly/uufxzstcfw');
+INSERT INTO BERKAS VALUES (30,30,'Pengembangan prototipe TRuST (Temukan Rumah Sakit Terdekat) e-health mobile context aware system menggunakan semantic web reasoning','bit.ly/uufxzstcfw');
 INSERT INTO BERKAS VALUES (31,31,'Pengaruh pajanan musik rock terhadap perubahan berat badan tikus galur Wistar','bit.ly/xsulynlzwa');
 INSERT INTO BERKAS VALUES (32,32,'Integrasi dan peningkatan unjuk kerja algoritma-algoritma data mining pada aplikasi FIKUI mining','bit.ly/bjvmrnxgmc');
 INSERT INTO BERKAS VALUES (33,33,'Pengendalian persediaan obat antibiotik dengan metode analisis ABC, EOQ dan ROP di Sub Unit Apotik Rumah Sakit Pertamina Jaya','bit.ly/lyqeyobvyi');
@@ -37,7 +37,7 @@ INSERT INTO BERKAS VALUES (36,36,'Pengenalan bentuk gigi pada citra dental radio
 INSERT INTO BERKAS VALUES (37,37,'Gambaran sikap ibu yang melakukan dan tidak melakukan inisiasi menyusu dini terhadap pelaksanaan menyusu dini di puskesmas kecamatan Pasar Minggu Jakarta Selatan tahun','bit.ly/vqyboczsnp');
 INSERT INTO BERKAS VALUES (38,38,'Pengklasifikasian artikel berita berbahasa Indonesia secara otomatis menggunakan ontologi','bit.ly/ifpkpzkdxj');
 INSERT INTO BERKAS VALUES (39,39,'Gambaran perencanaan perbekalan obat di Poliklinik Lembaga Pemasyarakatan Kelas II A Narkotika Jakarta','bit.ly/irdnsfkjzl');
-INSERT INTO BERKAS VALUES (40 ,40 ,'Hubungan aritmia dengan angka mortalitas pasien gagal jantung akut di lima rumah sakit di Indonesia','bit.ly/nyfslrhidp');
+INSERT INTO BERKAS VALUES (40,40,'Hubungan aritmia dengan angka mortalitas pasien gagal jantung akut di lima rumah sakit di Indonesia','bit.ly/nyfslrhidp');
 INSERT INTO BERKAS VALUES (41,22,'Menaksir koefisien korelasi polychoric dengan metode taksiran dua tahap I','bit.ly/rqbbnnceah');
 INSERT INTO BERKAS VALUES (42,13,'Harapan (hope) pada remaja penyandang thalassaemia mayor ii','bit.ly/qdlgxwzmsv');
 INSERT INTO BERKAS VALUES (43,14,'Proses pengambilan keputusan pada individu dewasa muda yang melakukan konversi agama karena pernikahan','bit.ly/smugksyinc');

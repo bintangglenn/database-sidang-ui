@@ -239,15 +239,15 @@ def genJadwalNonSidang(x):
     outFile = open("JADWAL_NON_SIDANG-DATA.sql", "w")
     repData = ["null", "harian", "mingguan", "bulanan"]
     for i in range(x, x + 50):
-        tglMulai, tglSelesai = pairDate(2016) #Default
+        tglMulai, tglSelesai = pairDate(2011) #Default
         alasan = randomName(50,101)
         repetisi = random.choice(repData)
         idxNip = random.randrange(len(NIPdosen))
         tmp = "INSERT INTO JADWAL_NON_SIDANG (IdJadwal, Tanggalmulai, Tanggalselesai, Alasan, Repetisi, NIPdosen) VALUES "
         if(repetisi == "null"):
-            tmp += "({},\'{}\',\'{}\',\'{}\',null,\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, idxNip)
+            tmp += "({},\'{}\',\'{}\',\'{}\',null,\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, NIPdosen[idxNip])
         else:
-            tmp += "({},\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, repetisi, idxNip)
+            tmp += "({},\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');\n".format(i, tglMulai, tglSelesai, alasan, repetisi, NIPdosen[idxNip])
         outFile.write(tmp)
     outFile.close()
 
@@ -273,7 +273,7 @@ def genJadwalSidang(x):
         tanggal = randomDate(random.choice([2011,2012,2013,2014,2015]))
         jamMulai, jamSelesai = pairTime()
         idRuangan = random.randrange(1,35)
-        tmp = "INSERT INTO JADWAL_SIDANG (IDJadwal, Tanggal, JamMulai, JamSelesai, IdRuangan) VALUES ({},{},\'{}\',\'{}\',\'{}\',{});\n".format(i,idMKS, tanggal, jamMulai, jamSelesai, idRuangan)
+        tmp = "INSERT INTO JADWAL_SIDANG (IDJadwal, IdMKS, Tanggal, JamMulai, JamSelesai, IdRuangan) VALUES ({},{},\'{}\',\'{}\',\'{}\',{});\n".format(i,idMKS, tanggal, jamMulai, jamSelesai, idRuangan)
         outFile.write(tmp)
     outFile.close()
 
