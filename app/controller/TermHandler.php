@@ -14,9 +14,9 @@
 
     }
 
-    public function getAllTerm() {
+    public static function getAllTerm($db) {
         $query = "SELECT * FROM SISIDANG.TERM";
-        $termList = pg_query($this->conn,$query);
+        $termList = pg_query($db, $query);
         return $termList;
     }
   }

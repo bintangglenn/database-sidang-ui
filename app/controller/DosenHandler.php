@@ -10,9 +10,9 @@
       $this->conn = $connection;
     }
 
-    public function getAlldosen() {
+    public static function getAlldosen($db) {
         $query = "SELECT * FROM SISIDANG.DOSEN";
-        $dosenList = pg_query($this->conn,$query);
+        $dosenList = pg_query($db,$query);
         return $dosenList;
     }
   }

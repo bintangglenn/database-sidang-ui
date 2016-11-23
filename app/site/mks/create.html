@@ -77,10 +77,10 @@
 
    // ajax call
    $.ajax({
-       url : "../../request/term.php",
+       url : "../../request/request.php",
        method : "GET",
        dataType : "JSON",
-       data : {"action" : "get_term"},
+       data : {"action" : "GET_TERM"},
        success : function(response) {
            var data = response.data;
            var selectTerm = $("#term");
@@ -88,14 +88,17 @@
            for (var i = 0; i < data.length; i++) {
                selectTerm.append('<option value="' + data[i].tahun + ' ' + data[i].semester + '">' + data[i].tahun + ' ' + data[i].semester + '</option>');
            }
+       },
+       error : function (err) {
+           console.log("error : ", err.responseText);
        }
    });
 
    $.ajax({
-        url : "../../request/mahasiswa.php",
+        url : "../../request/request.php",
         method : "GET",
         dataType : "JSON",
-        data : {"action" : "get_mahasiswa"},
+        data : {"action" : "GET_MAHASISWA"},
         success : function (response) {
             var data = response.data;
             var selectMahasiswa = $("#mahasiswa");
@@ -107,10 +110,10 @@
     });
 
     $.ajax({
-         url : "../../request/jenismks.php",
+         url : "../../request/request.php",
          method : "GET",
          dataType : "JSON",
-         data : {"action" : "get_jenismks"},
+         data : {"action" : "GET_JENIS_MKS"},
          success : function (response) {
              var data = response.data;
              var selectJenisMKS = $("#jenismks");
@@ -122,10 +125,10 @@
      });
 
      $.ajax({
-          url : "../../request/dosen.php",
+          url : "../../request/request.php",
           method : "GET",
           dataType : "JSON",
-          data : {"action" : "get_dosen"},
+          data : {"action" : "GET_DOSEN"},
           success : function (response) {
               dosenList = response.data;
               var pembimbing1 = $("#pembimbing1");
@@ -223,7 +226,7 @@
         if (error) return;
         var id = randomId();
         data = {
-            action : "create",
+            action : "CREATE_MKS",
             idmks : id,
             term : term,
             npm : npm,
@@ -233,7 +236,7 @@
             examinerlist : examinerList,
         };
         $.ajax({
-            url : "../../request/mks.php",
+            url : "../../request/request.php",
             dataType : "json",
             data : data,
             method : "POST",

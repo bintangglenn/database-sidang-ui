@@ -14,9 +14,9 @@
 
     }
 
-    public function getAllJenisMKS() {
+    public static function getAllJenisMKS($db) {
         $query = "SELECT * FROM SISIDANG.JENISMKS";
-        $jenisMKSList = pg_query($this->conn,$query);
+        $jenisMKSList = pg_query($db,$query);
         return $jenisMKSList;
     }
   }
