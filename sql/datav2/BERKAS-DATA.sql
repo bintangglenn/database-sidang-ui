@@ -1,4 +1,3 @@
-INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES (51,31,'FqgCXNiflRJrhaEBFD ','dhjGPBVGubkqHfQVCXTFOxFmSrmVaZqqhbKUdETZbRMkfwStBmBESmPBMaZmHZntxTezhcdRuDKoCKJMJEqvfGojceefXgBGlyao');
 INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES (52,73,' LOjHjzxVdNCwcCyzhxNI','rgFSaOJzd fzAklPfrPketNxEtyCgceHfn KtWlnRiftAQejGFxraXwykakMevlQBMaDUdNWtWqrlJkCLcS');
 INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES (53,42,'UzxFPDRAxfGJPAry mjuMfEMP','zruCluLUQ vihTLFBETEHofHewAilp');
 INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES (54,37,'ihmg gre lMkc','ckfihTSYfJQMoVkafmfKguJriKJDMlsWFuZZOtaVnrvMaxqvz CwJLOZabMcnhJrEfUuIjEn UX jFcEhrVMyH');
@@ -98,3 +97,4 @@ INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES (147,6,'MKkMloIzST Tgq
 INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES (148,72,'JqoohzfNO eDZCPVr','RlFechXwnKOMR bCnbd Fg LhuovyXrF HZzSbttfVFAXrkOLI VCSNDoO');
 INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES (149,65,'FJmblbsiNqFhW Y','NUxOcorybbqYtoYbBeMQGXgNnyiApqzeGlzoBKhEMHYhqBYJGGzVimbcwsPZarR');
 INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES (150,16,'Jwpi BNfCzcSWCqlrOVk',' hkvd LzSaEucMGVKfsBArTpT LAMUytYCELFOtBWrstf  iQkUuqYcWdl RpVNkxlBRfrWjijIqi');
+INSERT INTO BERKAS (IDBerkas, IdMKS, Nama, Alamat) VALUES (151,31,'FqgCXNiflRJrhaEBFD ','dhjGPBVGubkqHfQVCXTFOxFmSrmVaZqqhbKUdETZbRMkfwStBmBESmPBMaZmHZntxTezhcdRuDKoCKJMJEqvfGojceefXgBGlyao');
