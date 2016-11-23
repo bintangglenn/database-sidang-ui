@@ -34,9 +34,9 @@
          WHERE MKS.npm = M.npm AND MKS.idjenismks = J.id
          OFFSET $skip LIMIT $take";
         if ($sort != "") $query .= " ORDER BY $sort";
-        $MKSList = pg_query($this->conn,$query);
+        $MKSList = pg_query($db,$query);
         $query = "SELECT COUNT(*) FROM SISIDANG.MATA_KULIAH_SPESIAL";
-        $count = pg_query($this->conn,$query);
+        $count = pg_query($db,$query);
 
         return ['mkslist' => pg_fetch_all($MKSList), 'total' => pg_fetch_row($count)[0] / $take];
     }

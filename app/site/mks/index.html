@@ -64,7 +64,7 @@
 
       function getMks (data) {
           $.ajax({
-              url : "../../request/mks.php",
+              url : "../../request/request.php",
               dataType : "JSON",
               data : data,
               method : "GET",
@@ -96,7 +96,7 @@
               }
           });
       }
-      $.when(getMks({action : "get_mks_with_payload", skip : 0, take : 10, sort : ""})).then(function(){
+      $.when(getMks({action : "GET_MKS", skip : 0, take : 10, sort : ""})).then(function(){
           console.log("load done", totalPage);
           for (var i = 1; i <= totalPage; i++) {
               console.log("append");
@@ -109,7 +109,7 @@
         currentPage = $(this).val();
         showperpage = $("#showperpage").val();
         var data = {
-            action : "get_mks_with_payload",
+            action : "GET_MKS",
             skip : currentPage * showperpage,
             take : showperpage,
             sort : ""
