@@ -27,6 +27,19 @@
         $MKSList = pg_query($this->conn,$query);
         return $MKSList;
     }
+
+    public function getMKS($skip, $take, $sort) {
+        $query = "SELECT MKS.idmks, MKS.judul, M.nama, MKS.tahun, MKS.semester, J.namamks as jenis, MKS.IsSiapSidang, MKS.PengumpulanHardCopy, MKS.IjinMajuSidang
+         FROM SISIDANG.MATA_KULIAH_SPESIAL AS MKS, SISIDANG.MAHASISWA AS M, SISIDANG.JENISMKS AS J
+         WHERE MKS.npm = M.npm AND MKS.idjenismks = J.id
+         OFFSET $skip LIMIT $take";
+        if ($sort != "") $query .= " ORDER BY $sort";
+        $MKSList = pg_query($this->conn,$query);
+        $query = "SELECT COUNT(*) FROM SISIDANG.MATA_KULIAH_SPESIAL";
+        $count = pg_query($this->conn,$query);
+
+        return ['mkslist' => pg_fetch_all($MKSList), 'total' => pg_fetch_row($count)[0] / $take];
+    }
   }
 
  ?>

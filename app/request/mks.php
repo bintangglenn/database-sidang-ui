@@ -20,13 +20,19 @@
                     $response['status'] = 'failed';
                     $response['data'] = 'idmks is required';
                 } else {
-                    $mks = $mksHandler->getMahasiswa($_GET['id']);
+                    $mks = $mksHandler->getMKSwithId($_GET['id']);
                     $data = pg_fetch_all($mks);
                     $response['data'] = $data;
                 }
                 break;
+            case 'get_mks_with_payload' :
+                $skip = $_GET['skip'];
+                $take = $_GET['take'];
+                $sort = $_GET['sort'];
 
-            case 'create' :
+                $result = $mksHandler->getMKS($skip, $take, $sort);
+                $response['data'] = $result;
+                break;
         }
     }
 
@@ -45,5 +51,5 @@
                 break;
         }
     }
-    echo json_encode($_POST);
+    echo json_encode($response);
  ?>
