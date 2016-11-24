@@ -30,9 +30,9 @@
                             <div class="input-group">
                                 <label for="showperpage"> Show </label>
                                 <select id="showperpage" name="showperpage">
-                                    <option> 10 </option>
-                                    <option> 20 </option>
-                                    <option> 50 </option>
+                                    <option value="10"> 10 </option>
+                                    <option value="20"> 20 </option>
+                                    <option value="50"> 50 </option>
                                 </select>
                             </div>
                         </div>
@@ -83,9 +83,9 @@
                           mksItem += "<td>" + item['tahun'] + "\n" + ((item['semester'] == 1) ? ("Gasal" + "</td>") : (item['semester'] == 2) ? "Genap" : "Pendek") + "</td>";
                           mksItem += "<td>" + item['jenis'] + "</td>";
                           mksItem += "<td><ul>" +
-                              ((item['ijinmajusidang'] != "f") ? "<li> maju sidang </li> " : "") +
-                              ((item['pengumpulanhardcopy'] != "f") ? "<li> kumpul hardcopy </li>" : "") +
-                              ((item['issiapsidang'] != "f") ? "<li> siap sidang </li>": "") +
+                              ((item['ijinmajusidang'] != null) ? "<li> maju sidang </li> " : "") +
+                              ((item['pengumpulanhardcopy'] != null) ? "<li> kumpul hardcopy </li>" : "") +
+                              ((item['issiapsidang'] != null) ? "<li> siap sidang </li>": "") +
                           "</ul></td>";
                       mksItem += "</tr>";
                       tbody.append(mksItem);
@@ -116,6 +116,18 @@
         };
 
         getMks(data);
+    });
+
+    $("#showperpage").change(function(){
+            currentPage = pagination.val();
+            showperpage = $(this).val();
+            var data = {
+                action : "GET_MKS",
+                skip : currentPage * showperpage,
+                take : showperpage,
+                sort : ""
+            };
+            getMks(data);
     });
 
   </script>
