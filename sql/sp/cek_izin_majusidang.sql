@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION pengisian_jadwal_nonsidang()
+CREATE OR REPLACE FUNCTION cek_izin_majusidang()
     RETURNS "trigger" AS
     $$
     DECLARE deadline date;

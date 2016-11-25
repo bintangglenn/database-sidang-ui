@@ -1,7 +1,7 @@
 INSERT INTO BERKAS VALUES (1,1,'Pengaruh Games Terhadap Nilai','bit.ly/sjunckaegd');
 INSERT INTO BERKAS VALUES (2,2,'Pengaruh Wajah Terhadap Kesan Dosen','bit.ly/byhncctwna');
-INSERT INTO BERKAS VALUES (3,3,'Faktor-faktor yang Berhubungan dengan Praktik Deteksi Dini Ibu Hamil Risiko Tinggi Oleh Bidan Di Kabupaten Banjarnegara Tahun 2011','bit.ly/svobdhcwlm');
-INSERT INTO BERKAS VALUES (4,4,'Gambaran Sarana penyelamatan Jiwa di Sekolah Menengah Atas Negeri  Jakarta Tahun 2011 / Dekky','bit.ly/hboebeqtqs');
+INSERT INTO BERKAS VALUES (3,3,'Faktor-faktor yang Berhubungan dengan Praktik Deteksi Dini Ibu Hamil Risiko Tinggi Oleh Bidan Di Kabupaten Banjarnegara Tahun 2016','bit.ly/svobdhcwlm');
+INSERT INTO BERKAS VALUES (4,4,'Gambaran Sarana penyelamatan Jiwa di Sekolah Menengah Atas Negeri  Jakarta Tahun 2016 / Dekky','bit.ly/hboebeqtqs');
 INSERT INTO BERKAS VALUES (5,5,'Faktor_x0096_Faktor Yang Berhubungan dengan Status Gizi Anak Usia 6_x0096_59 Bulan di Pulau Sumatera','bit.ly/iaixxvxdpx');
 INSERT INTO BERKAS VALUES (6,6,'Gambaran Realisasi Anggaran Bantuan Operasional Kesehatan (BOK) untuk Pelayanan Kesehatan Reproduksi di Puskesmas Kabupaten Bandung Barat','bit.ly/aimeqaxqtw');
 INSERT INTO BERKAS VALUES (7,7,'Gambaran Prevalensi dan Risiko Penyakit Kardiovaskular pada Penduduk Dewasa di Provinsi DKI Jakarta','bit.ly/isfhklbxxf');
