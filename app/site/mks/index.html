@@ -72,7 +72,7 @@
   </div>
 
   <script>
-    var currentPage = 0;
+    var currentPage = 3;
     var totalPage = 0;
 
       function getMks (data) {
@@ -113,7 +113,6 @@
       $.when(getMks({action : "GET_MKS", skip : 0, take : 10, sort : ""})).then(function(){
           console.log("load done", totalPage);
           for (var i = 1; i <= totalPage; i++) {
-              console.log("append");
               var page = '<option value="' + i + '">' + i + '</option>';
               pagination.append(page);
           }
