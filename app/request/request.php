@@ -64,9 +64,7 @@
                 $response['data'] = $result;
                 break;
         }
-
     }
-
     echo json_encode($response);
 
  ?>
