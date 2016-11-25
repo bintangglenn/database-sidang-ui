@@ -22,9 +22,8 @@ class MahasiswaHandler
         return $mahasiswa;
     }
 
-    public function getMahasiswa($connection, $status){
+    public function getMahasiswaWithStatus($connection, $status){
         $query = "SELECT * FROM SISIDANG.MAHASISWA JOIN SISIDANG.MATA_KULIAH_SPESIAL MKS WHERE MKS.status = $status";
-        
     }
 
 }
