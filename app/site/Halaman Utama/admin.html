@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sisidang - Admin</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="../../libs/jquery.min.js"> </script>
+	    <script src="../../libs/bootstrap.min.js"></script>
+	    <link rel="stylesheet" type="text/css" href="../../libs/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div class="container" style="max-width: 80vw;">
+			<div class="menuBar col-md-12" style="margin-top: 2vh; border-bottom: 2px solid lightgrey;">
+				<h3 class="col-md-1" style="margin-top: 10px;">Admin</h3>
+				<form action="admin.php" method="post" style="float: right; margin: 5px;">
+					<input type="hidden" id="logout-command" name="command" value="logout">
+					<button type="submit" class="btn btn-danger">Logout</button>
+				</form>
+				<form action="admin.php" method="post" style="float: right; margin: 5px;">
+					<input type="hidden" id="tambahMKS-command" name="command" value="tambahMKS">
+					<button type="submit" class="btn btn-info">Tambah Peserta MKS</button>
+				</form>
+				<form action="admin.php" method="post" style="float: right; margin: 5px;">
+					<input type="hidden" id=" lihatSidang-command" name="command" value="lihatSidang">
+					<button type="submit" class="btn btn-info">Lihat Jadwal Sidang</button>
+				</form>
+				<form action="admin.php" method="post" style="float: right; margin: 5px;">
+					<input type="hidden" id=" nonSidang-command" name="command" value="nonSidang">
+					<button type="submit" class="btn btn-info">Buat Jadwal Non-Sidang</button>
+				</form>
+				<form action="admin.php" method="post" style="float: right; margin: 5px;">
+					<input type="hidden" id=" lihatMKS-command" name="command" value="lihatMKS">
+					<button type="submit" class="btn btn-info">Lihat Daftar MKS</button>
+				</form>
+				<form action="admin.php" method="post" style="float: right; margin: 5px;">
+					<input type="hidden" id=" buatSidang-command" name="command" value="buatSidang">
+					<button type="submit" class="btn btn-info">Buat Jadwal Sidang</button>
+				</form>
+			</div>
+			<div class="daftarMahasiswa col-md-12" style="margin-top: 10px;">
+				<div class="search col-md-4">
+					<div class="jenisSidang col-md-12"  style="border: 2px solid lightgrey;"> 
+						<h3>Search - Jenis Sidang</h3>
+						<form>
+							<div class="form-group">
+								<label for="term">Term</label>
+								<select class="form-control" name="term" id="term">
+									<option value="">Genap 2015/2016</option>
+								</select>
+								<br>
+								<label for="jenis">Jenis Sidang</label>
+								<select class="form-control" name="jenis" id="jenis">
+									<option value="">Skripsi</option>
+								</select>
+							</div>
+						</form>
+					</div>
+					<div class="mahasiswa col-md-12"  style="border: 2px solid lightgrey; margin-top:20px;">
+						<h3>Search - Mahasiwa</h3>
+						<form>
+							<div class="form-group">
+								<label for="nama">Nama Mahasiswa</label>
+								<input type="text" id="nama" name="nama" placeholder="Nama Mahasiswa">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="hasil col-md-8">
+					<div class="table-responsive">
+                        <table class="table table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Jenis Sidang</th>
+                                    <th>Mahasiswa</th>
+                                    <th>Dosen Pembimbing</th>
+                                    <th>Dosen Penguji</th>
+                                    <th>Waktu dan Lokasi</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="jenisSidang">
+                                        Skripsi
+                                    </td>
+                                    <td class="mahasiswa">
+                                        Andi
+
+
+                                        Judul: "Green ICT"
+                                    </td>
+                                    <td class="pembimbing">
+                                    	Ani
+                                    </td>
+                                    <td class="penguji">
+                                    	Anto
+                                    	Alief
+                                    </td>
+                                    <td class="waktuLokasi">
+                                    	<div class="tanggal">17-Nov-16</div>
+                                        <div class="waktu">09:00 - 10:30 WIB</div>
+                                        <div class="lokasi">2.301</div>
+                                    </td>
+                                    <td class="action">
+                                    	<form>
+											<input type="hidden" id=" edit-command" name="command" value="edit">
+											<button type="submit" class="btn btn-info">Edit</button>
+										</form>
+                                    </td>
+                                </tr>
+                                 <td class="jenisSidang">
+                                        Skripsi
+                                    </td>
+                                    <td class="mahasiswa">
+                                        Budi
+
+
+                                        Judul: "Analisa Algoritma Sorting"
+                                    </td>
+                                    <td class="pembimbing">
+                                    	Bayu
+                                    </td>
+                                    <td class="penguji">
+                                    	Chanek
+                                    	Cecep
+                                    </td>
+                                    <td class="waktuLokasi">
+                                    	<div class="tanggal">19-Nov-16</div>
+                                        <div class="waktu">15:00 - 16:30 WIB</div>
+                                        <div class="lokasi">2.2502</div>
+                                    </td>
+                                    <td class="action">
+                                    	<form>
+											<input type="hidden" id=" edit-command" name="command" value="edit">
+											<button type="submit" class="btn btn-info">Edit</button>
+										</form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <form style="float:left;">
+						<input type="hidden" id=" prev-command" name="command" value="prev">
+						<button type="submit" class="btn btn-info">Prev</button>
+					</form>
+					<form style="float:right;">
+						<input type="hidden" id=" next-command" name="command" value="next">
+						<button type="submit" class="btn btn-info">Next</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
