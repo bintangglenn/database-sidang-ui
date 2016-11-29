@@ -10,7 +10,7 @@
       $this->conn = $connection;
     }
 
-    public static function create($db, $idmks, $term,  $npm, $type, $title, $adviserList, $examinerList) {
+    public static function create($db, $idmks, $term,  $npm, $type, $title) {
         try {
             $insert = "INSERT INTO SISIDANG.MATA_KULIAH_SPESIAL (idmks, npm, tahun, semester, judul, IdJenisMKS) ";
             $values = "VALUES ($idmks, '$npm', '$term[0]', '$term[1]', '$title', '$type')";

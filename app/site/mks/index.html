@@ -26,9 +26,10 @@
       <div class="row">
           <div class="col-lg-12">
               <div class="panel">
-                  <div class="panel-heading bg-primary">
+                  <div class="panel-heading">
                       <div class="pull-left">
                         <h2> Mata Kuliah Spesial </h2>
+                        <a class="btn btn-primary" href="create.html"> Tambah MKS </a>
                     </div>
                         <div class="pull-right">
                             <div class="input-group">
@@ -74,7 +75,6 @@
   <script>
     var currentPage = 3;
     var totalPage = 0;
-
       function getMks (data) {
           $.ajax({
               url : "../../request/request.php",

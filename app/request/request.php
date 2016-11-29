@@ -51,7 +51,7 @@
         }
 
     } else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
-        switch ($_GET['action']) {
+        switch ($_POST['action']) {
             case 'CREATE_MKS' :
                 $idmks = $_POST['idmks'];
                 $term = $_POST['term'];
@@ -60,7 +60,13 @@
                 $title = $_POST['title'];
                 $adviserList = $_POST['adviserlist'];
                 $examinerList = $_POST['examinerlist'];
-                $result = MKSHandler::create($db, $idmks, $term, $npm, $type, $title, $adviserList, $examinerList);
+                $result = MKSHandler::create($db, $idmks, $term, $npm, $type, $title);
+                foreach ($adviserList as $adviser) {
+                    DosenHandler::addPembimbingMKS($db, $idmks, $adviser);
+                }
+                foreach ($examinerList as $examiner) {
+                    DosenHandler::addPengujiMKS($db, $idmks, $examiner);
+                }
                 $response['data'] = $result;
                 break;
         }
