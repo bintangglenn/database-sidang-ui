@@ -5,6 +5,7 @@
     include '../controller/MKSHandler.php';
     include '../controller/JenisMKSHandler.php';
     include '../controller/TermHandler.php';
+    include '../controller/RuanganHandler.php';
 
     header('Content-Type: application/json');
     $response = [
@@ -44,6 +45,12 @@
                 $sort = $_GET['sort'];
                 $result = MKSHandler::getMKSwith($db, $skip, $take, $sort);
                 $response['data'] = $result;
+                break;
+
+            case 'GET_RUANGAN':
+                $ruanganList = RuanganHandler :: getAllRuangan($db);
+                $data = pg_fetch_all($ruanganList);
+                $response['data'] = $data;
                 break;
             default:
                 # code...
