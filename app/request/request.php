@@ -6,11 +6,12 @@
     include '../controller/JenisMKSHandler.php';
     include '../controller/TermHandler.php';
     include '../controller/RuanganHandler.php';
+    include '../controller/TimelineHandler.php';
 
     header('Content-Type: application/json');
     $response = [
         'status' => 'success',
-        'data' => null
+        'data' => null,
     ];
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action'])) {
@@ -21,25 +22,25 @@
                 $response['data'] = $data;
                 break;
 
-            case 'GET_TERM' :
+            case 'GET_TERM':
                 $termList = TermHandler::getAllTerm($db);
                 $data = pg_fetch_all($termList);
                 $response['data'] = $data;
                 break;
 
-            case 'GET_DOSEN' :
+            case 'GET_DOSEN':
                 $dosenList = DosenHandler::getAllDosen($db);
                 $data = pg_fetch_all($dosenList);
                 $response['data'] = $data;
                 break;
 
-            case 'GET_JENIS_MKS' :
+            case 'GET_JENIS_MKS':
                 $jenisMKSList = JenisMKSHandler::getAllJenisMKS($db);
                 $data = pg_fetch_all($jenisMKSList);
                 $response['data'] = $data;
                 break;
 
-            case 'GET_MKS' :
+            case 'GET_MKS':
                 $skip = $_GET['skip'];
                 $take = $_GET['take'];
                 $sort = $_GET['sort'];
@@ -48,18 +49,24 @@
                 break;
 
             case 'GET_RUANGAN':
-                $ruanganList = RuanganHandler :: getAllRuangan($db);
+                $ruanganList = RuanganHandler::getAllRuangan($db);
                 $data = pg_fetch_all($ruanganList);
                 $response['data'] = $data;
                 break;
+
+            case 'GET_TIMELINE':
+                $timelineList = TimelineHandler::getAllTimeline($db);
+                $data = pg_fetch_all($timelineList);
+                $data['events'] = $data;
+                $response['data'] = $data;
+                break;
             default:
-                # code...
+                // code...
                 break;
         }
-
-    } else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
+    } elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         switch ($_POST['action']) {
-            case 'CREATE_MKS' :
+            case 'CREATE_MKS':
                 $idmks = $_POST['idmks'];
                 $term = $_POST['term'];
                 $npm = $_POST['npm'];
@@ -79,5 +86,3 @@
         }
     }
     echo json_encode($response);
-
- ?>
