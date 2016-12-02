@@ -11,14 +11,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Mengubah Jadwal Sidang</title>
 	<meta charset="UTF-8">
-  <title>Membuat Jadwal Sidang</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="../../image/icon.png">
-  <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
+	<script src="../../libs/jquery.min.js" type="text/javascript"></script>
 	<script src="../../src/js/generator.js" type="text/javascript"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
   <header>
@@ -55,9 +53,9 @@
                  </ul>
              </div>
          </nav>
-    </header>
+     </header>
 	<div class="container">
-    <h1>Tambah Jadwal Sidang MKS</h1>
+    <h1>Edit Jadwal Sidang MKS</h1>
 		<p>Menambahkan jadwal sidang sebuah mata kuliah spesial. Silahkan Isi form dibawah ini:</p>
 		<form method="post" id="form-jadwalSidang">
             <div class="row">
@@ -65,7 +63,8 @@
                     <div class="form-group">
                        <label for="mahasiswa"> Mahasiswa </label>
                        <select class="form-control" id="mahasiswa" name="mahasiswa">
-                       		<option value='0'> Pilih Mahasiswa </option>
+                       		<option value='0'>Pilih Mahasiswa</option>
+                       		
                        </select>
                     </div>
                     <div class="form-group">
@@ -94,23 +93,26 @@
 	                <label for="penguji1"> Penguji1 </label>
 	            	<select class="form-control penguji" id="penguji1" name="penguji1">
 	                	<option value='0'>Pilih Dosen Penguji</option>
+	                	
 	                </select>
 	            </div>
 	            <div class="form-group">
 	                <label for="penguji2"> Penguji 2 </label>
 	                <select class="form-control penguji" id="penguji2" name="penguji2">
 	                    <option value='0'>Pilih Dosen Penguji</option>
+	                    
 	                </select>
 	            </div>
 	            <div id="tambah-penguji" class="btn btn-default"> Tambah penguji </div>
-            </div>
-            </div>
+
+            </div> <!--col-lg-6-->
+            </div> <!--row-->
            <button id="btnCreate"type="button" class="btn btn-primary"> Create </button>
            <button id="btnCancel"type="button" class="btn btn-primary"> Cancel </button>
         </form>
 	</div>
 </body>
- <script type="text/javascript">
+<script type="text/javascript">
    var dosenList;
    var dosenOption;
    var mahasiswaoption;
@@ -208,12 +210,17 @@
 
     $("#btnCreate").click(function(e) {
         var error = false;
-        var mahasiswa = $("#mahasiswa").val();
-        var tanggal = $("#tanggal").val();
-        var jamMulai = $("#jamMulai").val();
-        var jamSelesai = $("#jamSelesai").val();
-        var ruangan = $("#ruangan").val();
-        var hardCopy = $("#hardCopy").val();
+        var term = $("#term").val().split(" ");
+        var npm = $("#mahasiswa").val();
+        var type = $("#jenismks").val();
+        var title = $("#judulmks").val();
+        if (title == null || title.length < 10) {
+            error = true;
+            $("#judulmks").parent().addClass("has-error");
+        } else {
+            $("#judulmks").parent().removeClass("has-error");
+        }
+
         
         var examinerList = [];
         $(".penguji").each(function(){
@@ -227,17 +234,16 @@
             }
 
         });
-        
         if (error) return;
         var id = randomId();
         data = {
-            action : "CREATE_JADWAL_SIDANG",
-            mahasiswa : mahasiswa,
-            tanggal : tanggal,
-            jamMulai : jamMulai,
-            jamSelesai : jamSelesai,
-            ruangan : ruangan,
-            hardCopy : hardCopy,
+            action : "CREATE_MKS",
+            idmks : id,
+            term : term,
+            npm : npm,
+            type : type,
+            title : title,
+            adviserlist : adviserList,
             examinerlist : examinerList,
         };
         $.ajax({
