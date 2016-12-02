@@ -2,7 +2,7 @@
   session_start();
   $user='';
   if(!isset($_SESSION["userlogin"])){
-    header("Location: ../Login/index.php");
+    //header("Location: ../Login/index.php");
   }else{
     $nav = '<ul class="nav navbar-nav">
                      
@@ -208,17 +208,12 @@
 
     $("#btnCreate").click(function(e) {
         var error = false;
-        var term = $("#term").val().split(" ");
-        var npm = $("#mahasiswa").val();
-        var type = $("#jenismks").val();
-        var title = $("#judulmks").val();
-        if (title == null || title.length < 10) {
-            error = true;
-            $("#judulmks").parent().addClass("has-error");
-        } else {
-            $("#judulmks").parent().removeClass("has-error");
-        }
-
+        var mahasiswa = $("#mahasiswa").val();
+        var tanggal = $("#tanggal").val();
+        var jamMulai = $("#jamMulai").val();
+        var jamSelesai = $("#jamSelesai").val();
+        var ruangan = $("#ruangan").val();
+        var hardCopy = $("#hardCopy").val();
         
         var examinerList = [];
         $(".penguji").each(function(){
@@ -232,16 +227,17 @@
             }
 
         });
+        
         if (error) return;
         var id = randomId();
         data = {
-            action : "CREATE_MKS",
-            idmks : id,
-            term : term,
-            npm : npm,
-            type : type,
-            title : title,
-            adviserlist : adviserList,
+            action : "CREATE_JADWAL_SIDANG",
+            mahasiswa : mahasiswa,
+            tanggal : tanggal,
+            jamMulai : jamMulai,
+            jamSelesai : jamSelesai,
+            ruangan : ruangan,
+            hardCopy : hardCopy,
             examinerlist : examinerList,
         };
         $.ajax({

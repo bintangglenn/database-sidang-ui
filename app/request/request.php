@@ -83,6 +83,21 @@
                 }
                 $response['data'] = $result;
                 break;
+            case 'CREATE_JADWAL_SIDANG':
+                $mahasiswa = $_POST['mahasiswa'];
+                $tanggal = $_POST['tanggal'];
+                $jamMulai = $_POST['jamMulai'];
+                $jamSelesai = $_POST['jamSelesai'];
+                $ruangan = $_POST['ruangan'];
+                $hardCopy = $_POST['hardCopy'];
+                $examinerList = $_POST['examinerlist'];
+                $result = MKSHandler::create($db, $mahasiswa, $tanggal, $jamMulai, $jamSelesai, $ruangan, $hardCopy);
+                foreach ($examinerList as $examiner) {
+                    DosenHandler::addPengujiMKS($db, $idmks, $examiner);
+                }
+                $response['data'] = $result;
+                break;
+            
         }
     }
     echo json_encode($response);
