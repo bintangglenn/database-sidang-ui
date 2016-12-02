@@ -2,7 +2,7 @@
   session_start();
   $user='';
   if(!isset($_SESSION["userlogin"])){
-    $nav = '<li><a href="login.php">'. $user.'</a></li>';
+    header("Location: ../Login/index.php");
   }else{
     $nav = '<ul class="nav navbar-nav">
                      
