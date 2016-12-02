@@ -1,3 +1,13 @@
+<?php
+  session_start();
+  $user='';
+  if(!isset($_SESSION["userlogin"])){
+    //header("Location: ../Login/index.php");
+  }else{
+    $nav = '';
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

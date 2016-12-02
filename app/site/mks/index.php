@@ -1,6 +1,15 @@
+<?php
+  session_start();
+  $user='';
+  if(!isset($_SESSION["userlogin"])){
+    //header("Location: ../Login/index.php");
+  }else{
+    $nav = '';
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>Tutorial 8</title>
     <meta charset="UTF-8">

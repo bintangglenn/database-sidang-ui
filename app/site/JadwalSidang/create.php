@@ -4,7 +4,7 @@
   if(!isset($_SESSION["userlogin"])){
     //header("Location: ../Login/index.php");
   }else{
-    $nav = '';
+    
   }
 
 ?>
@@ -16,46 +16,46 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="../../image/icon.png">
   <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
+  <script src="../../libs/js/bootstrap.min.js"></script>
 	<script src="../../src/js/generator.js" type="text/javascript"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
 </head>
 <body>
-  <header>
-         <nav class="navbar navbar-inverse">
-             <div class="container">
-                 <a class="navbar-brand" href="../HalamanUtama/admin.html"> Sisidang </a>
-                <ul class="nav navbar-nav">
-                     
-                     <li class="nav-item">
-                         <li class="dropdown">
-                        <a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
-                        <ul class="dropdown-menu">
-                              <li><a href="../mks/index.html"> Lihat Daftar </a></li>
-                              <li><a href="../mks/create.html"> Tambah MKS </a></li>
-                          </ul>
-                        </li> <!--dropdown-->
-                     </li> <!--nav-item-->
-                     <li class="nav-item">
-                      <li class="dropdown">
-                          <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
-                          <ul class="dropdown-menu">
-                            <li><a href="../LihatJadwalSidang/jadwalAdmin.html">Lihat Daftar</a></li>
-                            <li><a href="../JadwalSidang/create.html">Buat</a></li>
-                            <li><a href="../JadwalSidang/edit.html">Edit</a></li>
-                                  </ul>
-                          </li> <!--dropdown-->    
-                      </li> <!--nav-item-->  
-                      <li class="nav-item">
-                        <li><a href="../JadwalNonSidang/admin.html">Jadwal Non Sidang</a></li>
-                     </li><!--nav-item-->
-                     <li class="nav-item">
-                        <li><a href="../Logout/logout.php">Logout</a></li>
-                     </li><!--nav-item-->           
-                 </ul>
-             </div>
-         </nav>
-    </header>
+<header>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
+         <ul class="nav navbar-nav">
+           <li class="nav-item">
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="../mks/index.php"> Lihat Daftar </a></li>
+                    <li><a href="../mks/create.php"> Tambah MKS </a></li>
+                </ul>
+              </li> <!--dropdown-->
+           </li> <!--nav-item-->
+           <li class="nav-item">
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
+                  <li><a href="../JadwalSidang/create.php">Buat</a></li>
+                  <li><a href="../JadwalSidang/edit.php">Edit</a></li>
+                </ul>
+              </li> <!--dropdown-->    
+           </li> <!--nav-item-->  
+           <li class="nav-item">
+              <li><a href="../JadwalNonSidang/admin.php">Jadwal Non Sidang</a></li>
+           </li><!--nav-item-->
+           <li class="nav-item">
+              <li><a href="../Logout/logout.php">Logout</a></li>
+           </li><!--nav-item-->
+      </ul>
+    </div>
+  </nav>
+</header>
 	<div class="container">
     <h1>Tambah Jadwal Sidang MKS</h1>
 		<p>Menambahkan jadwal sidang sebuah mata kuliah spesial. Silahkan Isi form dibawah ini:</p>

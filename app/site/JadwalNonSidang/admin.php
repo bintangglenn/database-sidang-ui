@@ -1,3 +1,13 @@
+<?php
+  session_start();
+  $user='';
+  if(!isset($_SESSION["userlogin"])){
+    //header("Location: ../Login/index.php");
+  }else{
+    
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +48,7 @@
               <li><a href="../JadwalNonSidang/admin.php">Jadwal Non Sidang</a></li>
            </li><!--nav-item-->
            <li class="nav-item">
-              <?php echo $nav; ?>
+              <li><a href="../Logout/logout.php">Logout</a></li>
            </li><!--nav-item-->
       </ul>
     </div>
