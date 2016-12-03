@@ -1,68 +1,55 @@
-<?php print('<?xml version = "1.0" encoding = "utf-8"?>')?>
-<?php
-	$resp = "";
-	session_start();
-	if(isset($_POST["username"])){
-		if(login($_POST["username"], $_POST["password"])  == null){
-			//$resp = "login success";	
-			$_SESSION["userlogin"] = $_POST["username"];
-			$_SESSION["userpass"] = $_POST["password"];
-			header("Location: ../HalamanUtama/admin.php");
-		}else {
-			$resp = login($_POST["username"], $_POST["password"]);
-		}
-	}
-	
-	function login($user, $pass){
-		$servername = "localhost";
-		$username = "postgres";
-		$password = "2456298.5";
-		$dbname = "postgres";
+<?php session_start();
+	function connectDB() {
+		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=theinvoker');
 		
-		// Create connection
-		$conn = mysqli_connect($servername, $username, $password, $dbname);
-		// Check connection
 		if (!$conn) {
-			die("Connection failed: " . mysqli_connect_error());
-		}
-		
-		$sql = "SELECT * FROM user WHERE username='$user'";
-		$result = mysqli_query($conn, $sql);
-		
-		if ($result->num_rows > 0) {
-			$sql = "SELECT * FROM user WHERE username='$user' AND password='$pass'";
-			$result = mysqli_query($conn, $sql);
-			
-			if ($result->num_rows > 0) {
-				while($row = $result->fetch_assoc()) {
-          			$_SESSION["userid"] = $row['user_id'];
-    				mysqli_close($conn);
-					return null;
-
-    			}
-								
-			}
-			return "Password Invalid";
-		}
-		
-		mysqli_close($conn);
-		return "Username Invalid";
-	}
-
-	function connectDB(){
-		$servername = "localhost";
-		$username = "postgres";
-		$password = "2456298.5";
-		$dbName = "postgres";
-		
-		// Create connection
-		$conn = mysqli_connect($servername, $username, $password, $dbName);
-		
-		// Check connection
-		if (!$conn) {
-			die("Connection failed: " . mysqli_connect_error());
+			die("Connection failed");
 		}
 		return $conn;
+	}
+
+	function userLogin($user, $pass) {
+		if($user === "admin" && $pass === "admin") {
+			$_SESSION['loggedUser'] = "admin";
+			$_SESSION['loggedRole'] = "admin";
+			header("Location: ../HalamanUtama/admin.php");
+		}
+		else {
+			$conn = connectDB();
+
+			$sql = "SELECT NIP FROM dosen WHERE username='$user' AND password='$pass' limit 1";
+
+			if($result = pg_query($conn, $sql)) {
+				$hasil = pg_fetch_row($result);
+				if($hasil[0] === "" || $hasil[0] === null) {
+					$sql = "SELECT NPM FROM mahasiswa WHERE username='$user' AND password='$pass' limit 1";
+					if($result = pg_query($conn, $sql)) {
+						$hasil = pg_fetch_row($result);
+						if($hasil[0] === "" || $hasil[0] === null) {
+							$_SESSION['errMsg'] = "Username atau Password Salah";
+						}
+						else {
+							$_SESSION['loggedUser'] = $user;
+							$_SESSION['loggedRole'] = "mahasiswa";
+							$_SESSION['loggedNPM'] = $hasil[0];
+							header("Location:  ../HalamanUtama/mahasiswa.php");
+						}
+					}
+				}
+				else {
+					$_SESSION['loggedUser'] = $user;
+					$_SESSION['loggedRole'] = "dosen";
+					$_SESSION['loggedNIP'] = $hasil[0];
+					header("Location: ../HalamanUtama/dosen.php");
+				}
+			}
+		}
+	}
+
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if($_POST['command'] === 'login') {
+			userLogin($_POST['username'], $_POST['password']);
+		}
 	}
 ?>
 <!DOCTYPE html>
@@ -77,17 +64,25 @@
 	</head>
 	<body id="bodyLogin">
 		<h1>Sistem Informasi Sidang</h1>
-
 		<div id="fullBg" />
 			<div class="container">
-			  <form class="form-signin" action="index.php" method="POST">       
-			      <h1 class="form-signin-heading">Please Login</h1>
-			      <input type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus="" />
-			      <input type="password" class="form-control" name="password" placeholder="Password" required=""/>     
-			      
-			      <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>   
-			    </form>
-			  </div>
+				<form class="form-signin" action="index.php" method="POST">       
+					<h1 class="form-signin-heading">Please Login</h1>
+					<input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
+					<input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+					<input type="hidden" id="login-command" name="command" value="login"/>
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>   
+				</form>
+			</div>
+			<div id="errMsg">
+				<?php
+					if(isset($_SESSION['errMsg'])) {
+						echo "<p>" . $_SESSION['errMsg'] . "</p>";
+						unset($_SESSION['errMsg']);
+					}
+				?>
+			</div>
+		</div>
 	</body>
 </html>
 

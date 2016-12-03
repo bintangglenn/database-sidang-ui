@@ -1,12 +1,40 @@
-<?php
-  session_start();
-  $user='';
-  if(!isset($_SESSION["userlogin"])){
-    $nav = '<li><a href="../Login/login.php">Login</a></li>';
-  }else{
-    $nav = '<li><a href="../Logout/logout.php">Logout</a></li>';
-  }
+<?php session_start();
+	function connectDB() {
+		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=theinvoker');
+		
+		if (!$conn) {
+			die("Connection failed");
+		}
+		return $conn;
+	}
 
+	function selectAllFromMahasiswa() {
+		$conn = connectDB();
+
+		$npm = $_SESSION['loggedNPM'];
+		$sql = "SELECT * FROM mahasiswa WHERE npm = $npm";
+		
+		if(!$result = pg_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		pg_close($conn);
+		return $result;
+	}
+
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if($_POST['command'] === 'logout') {
+			if(isset($_SESSION['loggedUser'])) {
+                unset($_SESSION['loggedUser']);
+                unset($_SESSION['loggedRole']);
+                unset($_SESSION['loggedNPM']);
+                header("Location: ../Login/index.php");
+            }
+		} else if($_POST['command'] === 'tambahMKS') {
+			header("Location: ../mks/create.php");
+		} else if($_POST['command'] === 'lihatSidang') {
+			header("Location: ../LihatJadwalSidang/jadwalMahasiswa.php");
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,45 +42,70 @@
 		<title>Sisidang - Mahasiswa</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<script src="../../libs/jquery.min.js"> </script>
-	    <script src="../../libs/bootstrap.min.js"></script>
-	    <link rel="stylesheet" type="text/css" href="../../libs/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+		<script src="../../libs/js/jquery.min.js"></script>
+		<script src="../../libs/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<div class="container" style="max-width: 70vw;">
 			<div class="menuBar col-md-12" style="margin-top: 2vh; border-bottom: 2px solid lightgrey;">
 				<h3 class="col-md-5" style="margin-top: 10px;">Mahasiswa</h3>
-				<form action="mahasiswa.php" method="post" style="float: right; margin: 5px;">
-					<input type="hidden" id="logout-command" name="command" value="logout">
-					<button type="submit" class="btn btn-danger">Logout</button>
-				</form>
-				<form action="mahasiswa.php" method="post" style="float: right; margin: 5px;">
-					<input type="hidden" id="tambahMKS-command" name="command" value="tambahMKS">
-					<button type="submit" class="btn btn-info">Tambah Peserta MKS</button>
-				</form>
-				<form action="mahasiswa.php" method="post" style="float: right; margin: 5px;">
-					<input type="hidden" id=" lihatSidang-command" name="command" value="lihatSidang">
-					<button type="submit" class="btn btn-info">Lihat Jadwal Sidang</button>
-				</form>
+				<?php
+					if(isset($_SESSION['loggedUser'])) {
+						echo "<form action=\"mahasiswa.php\" method=\"post\" style=\"float: right; margin: 5px;\">
+								<input type=\"hidden\" id=\"logout-command\" name=\"command\" value=\"logout\">
+								<button type=\"submit\" class=\"btn btn-danger\">Logout</button>
+							</form>
+							<form action=\"mahasiswa.php\" method=\"post\" style=\"float: right; margin: 5px;\">
+								<input type=\"hidden\" id=\"tambahMKS-command\" name=\"command\" value=\"tambahMKS\">
+								<button type=\"submit\" class=\"btn btn-info\">Tambah Peserta MKS</button>
+							</form>
+							<form action=\"mahasiswa.php\" method=\"post\" style=\"float: right; margin: 5px;\">
+								<input type=\"hidden\" id=\" lihatSidang-command\" name=\"command\" value=\"lihatSidang\">
+								<button type=\"submit\" class=\"btn btn-info\">Lihat Jadwal Sidang</button>
+							</form>
+							";
+					}
+				?>
 			</div>
-			<div class="col-md-4" style="margin-top: 3vh;padding-right:0px;">
-				<h2>NPM</h2>
-				<h2>Nama</h2>
-				<h2>Username</h2>
-				<h2>Email</h2>
-				<h2>Email Alternatif</h2>
-				<h2>Telepon</h2>
-				<h2>Nomor Telepon</h2>
-			</div>
-			<div class="col-md-8" style="margin-top: 3vh;padding-left:0px;">
-				<h2>1506690264</h2>
-				<h2>Andi</h2>
-				<h2>andi</h2>
-				<h2>andi@univ.ac.id</h2>
-				<h2>andi@mailmail.com</h2>
-				<h2>021727273</h2>
-				<h2>080987777712</h2>
-			</div>
+			<?php
+				if(isset($_SESSION['loggedUser'])) {
+					$data = selectAllFromMahasiswa();
+					echo "<div class=\"col-md-4\" style=\"margin-top: 3vh;padding-right:0px;\">
+						<h2>NPM</h2>
+						<h2>Nama</h2>
+						<h2>Username</h2>
+						<h2>Email</h2>
+						";
+					$row = pg_fetch_row($data);
+					if($row[5] !== null && $row[5] !== "") {
+						echo "<h2>Email Alternatif</h2>";
+					}
+					if($row[6] !== null && $row[6] !== "") {
+						echo "<h2>Telepon</h2>";
+					}
+					if($row[7] !== null && $row[7] !== "") {
+						echo "<h2>Nomor Telepon</h2>";
+					}
+
+					echo "</div>
+						<div class=\"col-md-8\" style=\"margin-top: 3vh;padding-left:0px;\">
+						<h2>: $row[0]</h2>
+						<h2>: $row[1]</h2>
+						<h2>: $row[2]</h2>
+						<h2>: $row[4]</h2>
+						";
+					if($row[5] !== null && $row[5] !== "") {
+						echo "<h2>: $row[5]</h2>";
+					}
+					if($row[6] !== null && $row[6] !== "") {
+						echo "<h2>: $row[6]</h2>";
+					}
+					if($row[7] !== null && $row[7] !== "") {
+						echo "<h2>: $row[7]</h2>";
+					}					
+				}
+			?>
 		</div>
 	</body>
 </html>

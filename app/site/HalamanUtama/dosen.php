@@ -1,12 +1,67 @@
-<?php
-  session_start();
-  $user='';
-  if(!isset($_SESSION["userlogin"])){
-    $nav = '<li><a href="../Login/login.php">Login</a></li>';
-  }else{
-    $nav = '<li><a href="../Logout/logout.php">Logout</a></li>';
-  }
+<?php session_start();
+	function connectDB() {
+		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=theinvoker');
+		
+		if (!$conn) {
+			die("Connection failed");
+		}
+		return $conn;
+	}
 
+	function selectAllFromDosen() {
+		$conn = connectDB();
+
+		$nip = $_SESSION['loggedNIP'];
+		$sql = "SELECT * FROM dosen WHERE nip = $nip";
+		
+		if(!$result = pg_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		pg_close($conn);
+		return $result;
+	}
+
+	function getInfoSidang() {
+		$conn = connectDB();
+
+		$nip = $_SESSION['loggedNIP'];
+		date_default_timezone_set('Asia/Jakarta');
+		$bulan = date('m');
+		$tahun = date('Y');
+		$sql = "SELECT js.tanggal, j.NamaMKS, mks.Judul, m.nama, js.jamMulai, js.jamSelesai, r.namaRuangan
+				FROM jadwal_sidang AS js, mata_kuliah_spesial AS mks, ruangan AS r, jenismks AS j, mahasiswa AS m
+				WHERE EXISTS (
+					SELECT 1 FROM dosen_pembimbing AS db, dosen_penguji AS du
+					WHERE js.idmks = du.idmks AND js.idmks = db.IDMKS AND EXTRACT(MONTH FROM js.tanggal) = $bulan AND EXTRACT(YEAR FROM js.tanggal) = $tahun AND
+					(du.nipdosenpenguji = $nip OR db.NIPdosenpembimbing = $nip))
+					AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND j.ID = mks.IdJenisMKS AND m.npm = mks.NPM
+				ORDER BY js.tanggal";
+		
+		if(!$result = pg_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		pg_close($conn);
+		return $result;
+	}
+
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if($_POST['command'] === 'logout') {
+			if(isset($_SESSION['loggedUser'])) {
+                unset($_SESSION['loggedUser']);
+                unset($_SESSION['loggedRole']);
+                unset($_SESSION['loggedNIP']);
+                header("Location: ../Login/index.php");
+            }
+		} else if($_POST['command'] === 'tambahMKS') {
+			header("Location: ../mks/create.php");
+		} else if($_POST['command'] === 'lihatSidang') {
+			header("Location: ../LihatJadwalSidang/jadwalDosen.php");
+		} else if($_POST['command'] === 'nonSidang') {
+			header("Location: ../JadwalNonSidang/dosen.php");
+		} else if($_POST['command'] === 'lihatMKS') {
+			header("Location: ../mks/index.php");
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,113 +69,80 @@
 		<title>Sisidang - Dosen</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-        <script src="../../libs/jquery.min.js"> </script>
-        <script src="../../libs/bootstrap.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="../../libs/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
+	    <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=fontawesome">
+	    <link rel="stylesheet" href="../../libs/css/style-personal.css">
+	    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+	    <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
+	    <script src="../../libs/js/simplecalendar.js" type="text/javascript"></script>
+		<script src="../../libs/js/bootstrap.min.js"></script>
+		<style type="text/css">
+            th {
+                text-align: center;
+                vertical-align: middle !important;
+            }
+        </style>
 	</head>
 	<body>
 		<div class="container" style="max-width: 70vw;">
 			<div class="menuBar col-md-12" style="margin-top: 2vh; border-bottom: 2px solid lightgrey;">
 				<h3 class="col-md-1" style="margin-top: 10px;">Dosen</h3>
-				<form action="dosen.php" method="post" style="float: right; margin: 5px;">
-					<input type="hidden" id="logout-command" name="command" value="logout">
-					<button type="submit" class="btn btn-danger">Logout</button>
-				</form>
-				<form action="dosen.php" method="post" style="float: right; margin: 5px;">
-					<input type="hidden" id="tambahMKS-command" name="command" value="tambahMKS">
-					<button type="submit" class="btn btn-info">Tambah Peserta MKS</button>
-				</form>
-				<form action="dosen.php" method="post" style="float: right; margin: 5px;">
-					<input type="hidden" id=" lihatSidang-command" name="command" value="lihatSidang">
-					<button type="submit" class="btn btn-info">Lihat Jadwal Sidang</button>
-				</form>
-				<form action="dosen.php" method="post" style="float: right; margin: 5px;">
-					<input type="hidden" id=" nonSidang-command" name="command" value="nonSidang">
-					<button type="submit" class="btn btn-info">Buat Jadwal Non-Sidang</button>
-				</form>
-				<form action="dosen.php" method="post" style="float: right; margin: 5px;">
-					<input type="hidden" id=" lihatMKS-command" name="command" value="lihatMKS">
-					<button type="submit" class="btn btn-info">Lihat Daftar MKS</button>
-				</form>
+				<?php
+					if(isset($_SESSION['loggedUser'])) {
+						echo "<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
+								<input type=\"hidden\" id=\"logout-command\" name=\"command\" value=\"logout\">
+								<button type=\"submit\" class=\"btn btn-danger\">Logout</button>
+							</form>
+							<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
+								<input type=\"hidden\" id=\"tambahMKS-command\" name=\"command\" value=\"tambahMKS\">
+								<button type=\"submit\" class=\"btn btn-info\">Tambah Peserta MKS</button>
+							</form>
+							<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
+								<input type=\"hidden\" id=\" lihatSidang-command\" name=\"command\" value=\"lihatSidang\">
+								<button type=\"submit\" class=\"btn btn-info\">Lihat Jadwal Sidang</button>
+							</form>
+
+							<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
+								<input type=\"hidden\" id=\" nonSidang-command\" name=\"command\" value=\"nonSidang\">
+								<button type=\"submit\" class=\"btn btn-info\">Buat Jadwal Non-Sidang</button>
+							</form>
+							<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
+								<input type=\"hidden\" id=\" lihatMKS-command\" name=\"command\" value=\"lihatMKS\">
+								<button type=\"submit\" class=\"btn btn-info\">Lihat Daftar MKS</button>
+							</form>
+							";
+					}
+				?>
 			</div>
 			<div class="content col-md-12" style="margin-top: 10px">
 				<div class="calendar col-md-4">
-					<table class="table-condensed table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th colspan="7">
-                                <span class="btn-group">
-                           
-                        	<p style="margin-left: 48px;">Februari 2012</p>
-                        	
-                        </span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>Su</th>
-                            <th>Mo</th>
-                            <th>Tu</th>
-                            <th>We</th>
-                            <th>Th</th>
-                            <th>Fr</th>
-                            <th>Sa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="muted">29</td>
-                            <td class="muted">30</td>
-                            <td class="muted">31</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>6</td>
-                            <td>7</td>
-                            <td>8</td>
-                            <td>9</td>
-                            <td>10</td>
-                            <td>11</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>13</td>
-                            <td class="btn-primary"><strong>14</strong></td>
-                            <td>15</td>
-                            <td>16</td>
-                            <td>17</td>
-                            <td>18</td>
-                        </tr>
-                        <tr>
-                            <td>19</td>
-                            <td class="btn-primary"><strong>20</strong></td>
-                            <td>21</td>
-                            <td>22</td>
-                            <td>23</td>
-                            <td>24</td>
-                            <td>25</td>
-                        </tr>
-                        <tr>
-                            <td>26</td>
-                            <td>27</td>
-                            <td>28</td>
-                            <td>29</td>
-                            <td class="muted">1</td>
-                            <td class="muted">2</td>
-                            <td class="muted">3</td>
-                        </tr>
-                    </tbody>
-                </table>
+					<div class="calendar hidden-print">
+	                    <header>
+	                        <h2 class="month"></h2>
+	                        <a class="btn-prev fontawesome-angle-left" href="#"></a>
+	                        <a class="btn-next fontawesome-angle-right" href="#"></a>
+	                    </header>
+	                    <table>
+	                        <thead class="event-days">
+	                            <tr></tr>
+	                        </thead>
+	                        <tbody class="event-calendar">
+	                            <tr class="1"></tr>
+	                            <tr class="2"></tr>
+	                            <tr class="3"></tr>
+	                            <tr class="4"></tr>
+	                            <tr class="5"></tr>
+	                        </tbody>
+	                    </table>
+	                    <div class="list">
+	                    </div>
+	                </div>
 				</div>
 				<div class="info col-md-8">
 					<div class="table-responsive">
-                        <table class="table table-condensed table-bordered">
+                        <table class="table table-responsive table-bordered">
                             <thead>
-                                <tr>
+                                <tr></tr>
                                     <th>Tanggal</th>
                                     <th>Jenis Sidang</th>
                                     <th>Judul</th>
@@ -129,61 +151,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="tanggal" class="active" rowspan="2">
-                                        <div class="dayofmonth">14</div>
-                                        <div class="shortdate">Februari 2012,</div>
-                                        <div class="dayofweek">Selasa</div>
-                                    </td>
-                                    <td class="jenisSidang">
-                                        Skripsi
-                                    </td>
-                                    <td class="judul">
-                                        Green ICT
-                                    </td>
-                                    <td class="mahasiswa">
-                                        Andi
-                                    </td>
-                                    <td class="waktuLokasi">
-                                        <div class="waktu">09:00 - 10:30 WIB</div>
-                                        <div class="lokasi">2.2301</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="jenisSidang">
-                                        Skripsi
-                                    </td>
-                                    <td class="judul">
-                                        Analisa Algoritma Sorting
-                                    </td>
-                                    <td class="mahasiswa">
-                                        Budi
-                                    </td>
-                                    <td class="waktuLokasi">
-                                        <div class="waktu">15:00 - 16:30 WIB</div>
-                                        <div class="lokasi">2.2502</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tanggal" class="active" rowspan="1">
-                                        <div class="dayofmonth">20</div>
-                                        <div class="shortdate">Februari 2012,</div>
-                                        <div class="dayofweek">Senin</div>
-                                    </td>
-                                    <td class="jenisSidang">
-                                        Skripsi
-                                    </td>
-                                    <td class="judul">
-                                        Adaptive Stack Implementation
-                                    </td>
-                                    <td class="mahasiswa">
-                                        Chanek
-                                    </td>
-                                    <td class="waktuLokasi">
-                                        <div class="waktu">10:00 - 11:30 WIB</div>
-                                        <div class="lokasi">2.2302</div>
-                                    </td>
-                                </tr>
+                            	<?php
+                            		$data = getInfoSidang();
+                            		while($row = pg_fetch_row($data)) {
+                            			$date = date_format(date_create($row[0]), "d F Y");
+                            			$waktu = substr($row[4], 0, 5) . " - " . substr($row[5], 0, 5);
+                            			echo "<tr>
+                            					<td>$date</td>
+                            					<td>$row[1]</td>
+                            					<td>$row[2]</td>
+                            					<td>$row[3]</td>
+                            					<td>$waktu <br> $row[6]</td>
+                            				</tr>";
+                            		}
+                            	?>
                             </tbody>
                         </table>
                     </div>
