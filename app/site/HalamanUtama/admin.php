@@ -244,41 +244,40 @@
         </style>
 	</head>
 	<body>
-	<header>
-           <nav class="navbar navbar-inverse">
-             <div class="container">
-                 <a class="navbar-brand" href="../HalamanUtama/admin.html"> Sisidang </a>
-                <ul class="nav navbar-nav">
-                     
-                     <li class="nav-item">
-                         <li class="dropdown">
-                        <a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
-                        <ul class="dropdown-menu">
-                              <li><a href="../mks/index.html"> Lihat Daftar </a></li>
-                              <li><a href="../mks/create.html"> Tambah MKS </a></li>
-                          </ul>
-                        </li> <!--dropdown-->
-                     </li> <!--nav-item-->
-                     <li class="nav-item">
-                      <li class="dropdown">
-                          <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
-                          <ul class="dropdown-menu">
-                            <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
-                            <li><a href="../JadwalSidang/create.html">Buat</a></li>
-                            <li><a href="../JadwalSidang/edit.html">Edit</a></li>
-                                  </ul>
-                          </li> <!--dropdown-->    
-                      </li> <!--nav-item-->  
-                      <li class="nav-item">
-                        <li><a href="../JadwalNonSidang/admin.html">Jadwal Non Sidang</a></li>
-                     </li><!--nav-item-->
-                     <li class="nav-item">
-                        <li><a href="../Logout/logout.php">Logout</a></li>
-                     </li><!--nav-item-->           
-                 </ul>
-             </div>
-         </nav>
-        </header>
+    <header>
+      <nav class="navbar navbar-inverse">
+        <div class="container">
+          <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../mks/index.html"> Lihat Daftar </a></li>
+                  <li><a href="../mks/create.html"> Tambah MKS </a></li>
+                </ul>
+              </li> <!--dropdown-->
+            </li> <!--nav-item-->
+            <li class="nav-item">
+              <li class="dropdown">
+              <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
+              <ul class="dropdown-menu">
+                <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
+                <li><a href="../JadwalSidang/create.html">Buat</a></li>
+                <li><a href="../JadwalSidang/edit.html">Edit</a></li>
+              </ul>
+              </li> <!--dropdown-->    
+            </li> <!--nav-item-->  
+            <li class="nav-item">
+              <li><a href="../JadwalNonSidang/admin.html">Jadwal Non Sidang</a></li>
+            </li><!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../Logout/logout.php">Logout</a></li>
+            </li><!--nav-item-->           
+          </ul>
+        </div>
+      </nav>
+    </header>
 		<div class="container" style="max-width: 80vw;">
 			
 			<div class="daftarMahasiswa col-md-12" style="margin-top: 3vh;">

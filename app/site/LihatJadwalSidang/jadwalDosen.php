@@ -99,17 +99,6 @@
         pg_close($conn);
         return $result; 
     }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if($_POST['command'] === 'logout') {
-            if(isset($_SESSION['loggedUser'])) {
-                unset($_SESSION['loggedUser']);
-                unset($_SESSION['loggedRole']);
-                unset($_SESSION['loggedNIP']);
-                header("Location: ../Login/index.php");
-            }
-        }
-    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -148,18 +137,19 @@
         </style>
 	</head>
 	<body>
+        <header>
+            <nav class="navbar navbar-inverse">
+                <div class="container">
+                    <a class="navbar-brand" href="../HalamanUtama/dosen.php"> Sisidang </a>
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <li><a href="../Logout/logout.php">Logout</a></li>
+                        </li><!--nav-item-->           
+                    </ul>
+                </div>
+            </nav>
+        </header>
 		<div class="container" style="max-width: 80vw;">
-			<div class="menuBar col-md-12" style="margin-top: 2vh; border-bottom: 2px solid lightgrey;">
-				<h3 class="col-md-1" style="margin-top: 10px;">Dosen</h3>
-				<?php
-                    if(isset($_SESSION['loggedUser'])) {
-                        echo "<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-                                <input type=\"hidden\" id=\"logout-command\" name=\"command\" value=\"logout\">
-                                <button type=\"submit\" class=\"btn btn-danger\">Logout</button>
-                            </form>";
-                    }
-                ?>
-			</div>
 			<div class="daftarMahasiswa col-md-12" style="margin-top: 10px;">
 				<div class="table-responsive">
                     <table class="table table-condensed table-bordered">

@@ -20,21 +20,6 @@
 		pg_close($conn);
 		return $result;
 	}
-
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		if($_POST['command'] === 'logout') {
-			if(isset($_SESSION['loggedUser'])) {
-                unset($_SESSION['loggedUser']);
-                unset($_SESSION['loggedRole']);
-                unset($_SESSION['loggedNPM']);
-                header("Location: ../Login/index.php");
-            }
-		} else if($_POST['command'] === 'tambahMKS') {
-			header("Location: ../mks/create.php");
-		} else if($_POST['command'] === 'lihatSidang') {
-			header("Location: ../LihatJadwalSidang/jadwalMahasiswa.php");
-		}
-	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,6 +32,24 @@
 		<script src="../../libs/js/bootstrap.min.js"></script>
 	</head>
 	<body>
+		<header>
+			<nav class="navbar navbar-inverse">
+				<div class="container">
+					<a class="navbar-brand" href="../HalamanUtama/mahasiswa.php"> Sisidang </a>
+					<ul class="nav navbar-nav">
+						<li class="nav-item">
+							<li><a href="../mks/create.html">Tambah MKS</a></li>
+						</li> <!--nav-item-->
+						<li class="nav-item">
+							<li><a href="../LihatJadwalSidang/jadwalMahasiswa.php">Lihat Jadwal Sidang</a></li>
+						</li> <!--nav-item--> 
+						<li class="nav-item">
+							<li><a href="../Logout/logout.php">Logout</a></li>
+						</li><!--nav-item-->           
+					</ul>
+				</div>
+			</nav>
+		</header>
 		<div class="container" style="max-width: 70vw;">
 			<div class="menuBar col-md-12" style="margin-top: 2vh; border-bottom: 2px solid lightgrey;">
 				<h3 class="col-md-5" style="margin-top: 10px;">Mahasiswa</h3>

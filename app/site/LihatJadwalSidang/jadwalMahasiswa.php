@@ -83,17 +83,6 @@
 
     return $hasil;
   } 
-
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if($_POST['command'] === 'logout') {
-    	if(isset($_SESSION['loggedUser'])) {
-    		unset($_SESSION['loggedUser']);
-    		unset($_SESSION['loggedRole']);
-    		unset($_SESSION['loggedNPM']);
-    		header("Location: ../Login/index.php");
-    	}
-    } 
-  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -106,19 +95,19 @@
         <script src="../../libs/js/bootstrap.min.js"></script>
 	</head>
 	<body>
+        <header>
+            <nav class="navbar navbar-inverse">
+                <div class="container">
+                    <a class="navbar-brand" href="../HalamanUtama/mahasiswa.php"> Sisidang </a>
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <li><a href="../Logout/logout.php">Logout</a></li>
+                        </li><!--nav-item-->           
+                    </ul>
+                </div>
+            </nav>
+        </header>
 		<div class="container" style="max-width: 80vw;">
-			<div class="menuBar col-md-12" style="margin-top: 2vh; border-bottom: 2px solid lightgrey;">
-				<h3 class="col-md-1" style="margin-top: 10px;">Mahasiswa</h3>
-				<?php
-		          if(isset($_SESSION['loggedUser'])) {
-		            echo "<form action=\"jadwalMahasiswa.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-		                <input type=\"hidden\" id=\"logout-command\" name=\"command\" value=\"logout\">
-		                <button type=\"submit\" class=\"btn btn-danger\">Logout</button>
-		              </form>
-		              ";
-		          }
-		        ?>
-			</div>
 			<?php 
 				if(checkSiapSidang() == false) {
 					echo "<h1 class=\"col-md-12\" style=\"text-align: center;\">Jadwal Sidang Anda Belum Ada</h1>";

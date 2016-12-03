@@ -43,25 +43,6 @@
 		pg_close($conn);
 		return $result;
 	}
-
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		if($_POST['command'] === 'logout') {
-			if(isset($_SESSION['loggedUser'])) {
-                unset($_SESSION['loggedUser']);
-                unset($_SESSION['loggedRole']);
-                unset($_SESSION['loggedNIP']);
-                header("Location: ../Login/index.php");
-            }
-		} else if($_POST['command'] === 'tambahMKS') {
-			header("Location: ../mks/create.php");
-		} else if($_POST['command'] === 'lihatSidang') {
-			header("Location: ../LihatJadwalSidang/jadwalDosen.php");
-		} else if($_POST['command'] === 'nonSidang') {
-			header("Location: ../JadwalNonSidang/dosen.php");
-		} else if($_POST['command'] === 'lihatMKS') {
-			header("Location: ../mks/index.php");
-		}
-	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,36 +65,34 @@
         </style>
 	</head>
 	<body>
+		<header>
+			<nav class="navbar navbar-inverse">
+				<div class="container">
+					<a class="navbar-brand" href="../HalamanUtama/dosen.php"> Sisidang </a>
+					<ul class="nav navbar-nav">
+						<li class="nav-item"">
+							<li class="dropdown">
+								<a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
+								<ul class="dropdown-menu">
+									<li><a href="../mks/index.html"> Lihat Daftar </a></li>
+									<li><a href="../mks/create.html"> Tambah MKS </a></li>
+								</ul>
+							</li> <!--dropdown-->
+						</li> <!--nav-item-->
+						<li class="nav-item">
+							<li><a href="../LihatJadwalSidang/jadwalDosen.php">Lihat Jadwal Sidang</a></li>
+						</li> <!--nav-item-->  
+						<li class="nav-item">
+							<li><a href="../JadwalNonSidang/dosen.html">Jadwal Non Sidang</a></li>
+						</li><!--nav-item-->
+						<li class="nav-item">
+							<li><a href="../Logout/logout.php">Logout</a></li>
+						</li><!--nav-item-->           
+					</ul>
+				</div>
+			</nav>
+		</header>
 		<div class="container" style="max-width: 70vw;">
-			<div class="menuBar col-md-12" style="margin-top: 2vh; border-bottom: 2px solid lightgrey;">
-				<h3 class="col-md-1" style="margin-top: 10px;">Dosen</h3>
-				<?php
-					if(isset($_SESSION['loggedUser'])) {
-						echo "<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-								<input type=\"hidden\" id=\"logout-command\" name=\"command\" value=\"logout\">
-								<button type=\"submit\" class=\"btn btn-danger\">Logout</button>
-							</form>
-							<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-								<input type=\"hidden\" id=\"tambahMKS-command\" name=\"command\" value=\"tambahMKS\">
-								<button type=\"submit\" class=\"btn btn-info\">Tambah Peserta MKS</button>
-							</form>
-							<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-								<input type=\"hidden\" id=\" lihatSidang-command\" name=\"command\" value=\"lihatSidang\">
-								<button type=\"submit\" class=\"btn btn-info\">Lihat Jadwal Sidang</button>
-							</form>
-
-							<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-								<input type=\"hidden\" id=\" nonSidang-command\" name=\"command\" value=\"nonSidang\">
-								<button type=\"submit\" class=\"btn btn-info\">Buat Jadwal Non-Sidang</button>
-							</form>
-							<form action=\"dosen.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-								<input type=\"hidden\" id=\" lihatMKS-command\" name=\"command\" value=\"lihatMKS\">
-								<button type=\"submit\" class=\"btn btn-info\">Lihat Daftar MKS</button>
-							</form>
-							";
-					}
-				?>
-			</div>
 			<div class="content col-md-12" style="margin-top: 10px">
 				<div class="calendar col-md-4">
 					<div class="calendar hidden-print">

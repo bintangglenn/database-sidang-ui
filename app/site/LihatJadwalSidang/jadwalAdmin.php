@@ -68,18 +68,6 @@
 
     return $hasil;
   }
-
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if($_POST['command'] === 'logout') {
-      if(isset($_SESSION['loggedUser'])) {
-                unset($_SESSION['loggedUser']);
-                unset($_SESSION['loggedRole']);
-                header("Location: ../Login/index.php");
-            }
-    } else if($_POST['command'] === 'tambahSidang') {
-      header("Location: ../JadwalSidang/create.php");
-    }
-  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -118,23 +106,22 @@
         </style>
 	</head>
 	<body>
+		<header>
+			<nav class="navbar navbar-inverse">
+				<div class="container">
+					<a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
+					<ul class="nav navbar-nav">
+						<li class="nav-item">
+							<li><a href="../mks/create.html">Tambah MKS</a></li>
+						</li> <!--nav-item-->
+						<li class="nav-item">
+							<li><a href="../Logout/logout.php">Logout</a></li>
+						</li><!--nav-item-->           
+					</ul>
+				</div>
+			</nav>
+		</header>
 		<div class="container" style="max-width: 80vw;">
-			<div class="menuBar col-md-12" style="margin-top: 2vh; border-bottom: 2px solid lightgrey;">
-				<h3 class="col-md-1" style="margin-top: 10px;">Admin</h3>
-				<?php
-					if(isset($_SESSION['loggedUser'])) {
-						echo "<form action=\"jadwalAdmin.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-							<input type=\"hidden\" id=\"logout-command\" name=\"command\" value=\"logout\">
-							<button type=\"submit\" class=\"btn btn-danger\">Logout</button>
-							</form>
-							<form action=\"jadwalAdmin.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-							<input type=\"hidden\" id=\"tambahSidang-command\" name=\"command\" value=\"tambahSidang\">
-							<button type=\"submit\" class=\"btn btn-info\">Tambah</button>
-							</form>
-						";
-					}
-				?>
-			</div>
 			<div class="daftarMahasiswa col-md-12" style="margin-top: 10px;">
 				<div class="table-responsive">    
 					<table class="table table-condensed table-bordered">
