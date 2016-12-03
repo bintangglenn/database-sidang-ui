@@ -45,4 +45,22 @@
 
           return ['mkslist' => pg_fetch_all($MKSList), 'total' => pg_fetch_row($count)[0] / $take];
       }
+
+      public static function getMKSWithTerm($db, $skip, $take, $sort, $term)
+      {
+          $query = "SELECT MKS.idmks, MKS.judul, M.nama, MKS.tahun, MKS.semester, J.namamks as jenis, MKS.IsSiapSidang, MKS.PengumpulanHardCopy, MKS.IjinMajuSidang
+         FROM SISIDANG.MATA_KULIAH_SPESIAL AS MKS, SISIDANG.MAHASISWA AS M, SISIDANG.JENISMKS AS J
+         WHERE MKS.npm = M.npm AND MKS.idjenismks = J.id AND MKS.tahun = $term[0] AND MKS.semester = $term[1]
+         OFFSET $skip LIMIT $take";
+          if ($sort != '') {
+              $query .= " ORDER BY $sort";
+          }
+          $MKSList = pg_query($db, $query);
+          $query = "SELECT COUNT(*) FROM SISIDANG.MATA_KULIAH_SPESIAL AS MKS
+            WHERE MKS.tahun = $term[0] AND MKS.semester = $term[1]
+          ";
+          $count = pg_query($db, $query);
+
+          return ['mkslist' => pg_fetch_all($MKSList), 'total' => pg_fetch_row($count)[0] / $take];
+      }
   }

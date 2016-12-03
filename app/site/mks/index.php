@@ -1,8 +1,8 @@
 <?php
   session_start();
   $user='';
-  if(!isset($_SESSION["userlogin"])){
-    //header("Location: ../Login/index.php");
+  if(!isset($_SESSION["loggedRole"])){
+    header("Location: ../Login/index.php");
   }else{
     $nav = '';
   }
@@ -18,9 +18,8 @@
     <script src="../../libs/js/bootstrap.min.js"></script>
     <script src="../../src/js/generator.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../../libs/css/reset.css">
-    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css" />
 </head>
-
 <body>
 <header>
     <nav class="navbar navbar-inverse">
@@ -44,8 +43,8 @@
                   <li><a href="../JadwalSidang/create.php">Buat</a></li>
                   <li><a href="../JadwalSidang/edit.php">Edit</a></li>
                 </ul>
-              </li> <!--dropdown-->    
-           </li> <!--nav-item-->  
+              </li> <!--dropdown-->
+           </li> <!--nav-item-->
            <li class="nav-item">
               <li><a href="../JadwalNonSidang/admin.php">Jadwal Non Sidang</a></li>
            </li><!--nav-item-->
@@ -63,7 +62,11 @@
                     <div class="panel-heading">
                         <div class="pull-left">
                             <h2> Mata Kuliah Spesial </h2>
-                            <a class="btn btn-primary" href="create.html"> Tambah MKS </a>
+                            <?php
+                                if($_SESSION['loggedRole'] == "admin") {
+                                    echo '<a class="btn btn-primary" href="create.html"> Tambah MKS </a>';
+                                }
+                            ?>
                         </div>
                         <div class="pull-right">
                             <div class="input-group">
@@ -72,6 +75,10 @@
                                     <option value="10"> 10 </option>
                                     <option value="20"> 20 </option>
                                     <option value="50"> 50 </option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <select id="selectTerm" class="form-control" name="selectTerm">
                                 </select>
                             </div>
                         </div>
@@ -109,7 +116,7 @@
     <script>
         var currentPage = 3;
         var totalPage = 0;
-
+        var term;
         function getMks(data) {
             $.ajax({
                 url: "../../request/request.php",
@@ -145,27 +152,56 @@
                 }
             });
         }
-        $.when(getMks({
-            action: "GET_MKS",
-            skip: 0,
-            take: 10,
-            sort: ""
-        })).then(function() {
-            console.log("load done", totalPage);
-            for (var i = 1; i <= totalPage; i++) {
-                var page = '<option value="' + i + '">' + i + '</option>';
-                pagination.append(page);
-            }
+
+        function getTerm() {
+            $.ajax({
+                url: "../../request/request.php",
+                method: "GET",
+                dataType: "JSON",
+                data: {
+                    "action": "GET_TERM"
+                },
+                success: function(response) {
+                    var data = response.data;
+                    var selectTerm = $("#selectTerm");
+                    selectTerm.empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var semester = (data[i].semester == 1) ? 'Gasal' : (data[i].semester == 2) ? 'Genap' : 'Pendek';
+                        selectTerm.append('<option value="' + data[i].tahun + ' ' + data[i].semester + '">' + data[i].tahun + '/' + semester + '</option>');
+                    }
+                    term = selectTerm.val().split(" ");
+                    console.log("term", term);
+                },
+                error: function(err) {
+                    console.log("error : ", err.responseText);
+                }
+            });
+        }
+        $.when(getTerm()).then(function(){
+            $.when(getMks({
+                action: "GET_MKS_WITH_TERM",
+                skip: 0,
+                take: 10,
+                sort: "",
+                term : term
+            })).then(function() {
+                console.log("load done", totalPage);
+                for (var i = 1; i <= totalPage; i++) {
+                    var page = '<option value="' + i + '">' + i + '</option>';
+                    pagination.append(page);
+                }
+            });
         });
         var pagination = $("#pagination");
         pagination.change(function() {
             currentPage = $(this).val();
             showperpage = $("#showperpage").val();
             var data = {
-                action: "GET_MKS",
+                action: "GET_MKS_WITH_TERM",
                 skip: currentPage * showperpage,
                 take: showperpage,
-                sort: ""
+                sort: "",
+                term : term
             };
 
             getMks(data);
@@ -175,13 +211,31 @@
             currentPage = pagination.val();
             showperpage = $(this).val();
             var data = {
-                action: "GET_MKS",
+                action: "GET_MKS_WITH_TERM",
                 skip: currentPage * showperpage,
                 take: showperpage,
-                sort: ""
+                sort: "",
+                term : term
             };
             getMks(data);
         });
+
+        $("#selectTerm").change(function(){
+            term = $(this).val().split(" ");
+            $.when(getMks({
+                action: "GET_MKS_WITH_TERM",
+                skip: 0,
+                take: 10,
+                sort: "",
+                term : term
+            })).then(function() {
+                console.log("load done", totalPage);
+                for (var i = 1; i <= totalPage; i++) {
+                    var page = '<option value="' + i + '">' + i + '</option>';
+                    pagination.append(page);
+                }
+            });
+        })
     </script>
 </body>
 </html
