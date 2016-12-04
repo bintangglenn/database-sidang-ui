@@ -45,7 +45,16 @@
               </li> <!--dropdown-->    
             </li> <!--nav-item-->  
             <li class="nav-item">
-              <li><a href="../JadwalNonSidang/admin.php">Jadwal Non Sidang</a></li>
+             <li class="dropdown">
+                <a href="#" data-toggle="dropdown"> Jadwal Non Sidang <span class="arrow">&#9660;  </span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../JadwalNonSidang/lihatNonSidang.php"> Tambah Jadwal Non Sidang </a></li>
+                  <li><a href="../JadwalNonSidang/daftarNonSidang.php"> Daftar Jadwal Non Sidang </a></li>
+                </ul>
+              </li> <!--dropdown-->
+            </li><!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../IzinMajuSidang/admin.php">Izin Jadwal Sidang</a></li>
             </li><!--nav-item-->
             <li class="nav-item">
               <li><a href="../Logout/logout.php">Logout</a></li>

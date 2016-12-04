@@ -12,7 +12,7 @@
         $conn = connectDB();
 
         $nip = $_SESSION['loggedNIP'];
-        $sql = "SELECT * FROM SISIDANG.dosen WHERE nip = $nip";
+        $sql = "SELECT * FROM SISIDANG.dosen WHERE nip = '$nip'";
         
         if(!$result = pg_query($conn, $sql)) {
             die("Error: $sql");
@@ -23,9 +23,7 @@
 
     function getInfoSidang() {
         $conn = connectDB();
-
         $nip = $_SESSION['loggedNIP'];
-
         $sql = "SELECT m.nama, j.NamaMKS, mks.Judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.IjinMajuSidang, mks.PengumpulanHardCopy, mks.idMKS
                 FROM SISIDANG.jadwal_sidang AS js, SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.ruangan AS r, SISIDANG.jenismks AS j, SISIDANG.mahasiswa AS m
                 WHERE EXISTS (
@@ -149,7 +147,16 @@
               <li><a href="../LihatJadwalSidang/jadwalDosen.php" >Jadwal Sidang </a></li>    
             </li> <!--nav-item-->  
             <li class="nav-item">
-              <li><a href="../JadwalNonSidang/dosen.php">Jadwal Non Sidang</a></li>
+             <li class="dropdown">
+                <a href="#" data-toggle="dropdown"> Jadwal Non Sidang <span class="arrow">&#9660;  </span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../JadwalNonSidang/lihatNonSidang.php"> Tambah Jadwal Non Sidang </a></li>
+                  <li><a href="../JadwalNonSidang/daftarNonSidang.php"> Daftar Jadwal Non Sidang </a></li>
+                </ul>
+              </li> <!--dropdown-->
+            </li><!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../IzinMajuSidang/admin.php">Izin Jadwal Sidang</a></li>
             </li><!--nav-item-->
             <li class="nav-item">
               <li><a href="../Logout/logout.php">Logout</a></li>

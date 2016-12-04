@@ -1,32 +1,10 @@
-<?php
-  session_start();
-  $user='';
-  if(!isset($_SESSION["loggedRole"])){
-    header("Location: ../Login/index.php");
-  }else{
-    $nav = '';
-  }
+<?php session_start();
   
-
-
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Sisidang - Daftar Mata Kuliah Spesial</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
-    <script src="../../libs/js/bootstrap.min.js"></script>
-    <script src="../../src/js/generator.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="../../libs/css/reset.css">
-    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css" />
-</head>
-<body>
-<header>
-<?php
     if($_SESSION['loggedRole'] == "admin") {
-        echo '<nav class="navbar navbar-inverse">
+      $opsiDosen = '<select class="form-control penguji" id="penguji" name="penguji">
+                    </select>
+                    <option value="0">Pilih Dosen</option>';
+        $nav = '<nav class="navbar navbar-inverse">
         <div class="container">
           <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
           <ul class="nav navbar-nav">
@@ -48,7 +26,7 @@
               </ul>
               </li> <!--dropdown-->    
             </li> <!--nav-item-->  
-           <li class="nav-item">
+            <li class="nav-item">
              <li class="dropdown">
                 <a href="#" data-toggle="dropdown"> Jadwal Non Sidang <span class="arrow">&#9660;  </span></a>
                 <ul class="dropdown-menu">
@@ -66,8 +44,15 @@
           </ul>
         </div>
       </nav>';
-    }else{
-        echo '<nav class="navbar navbar-inverse">
+    }else if($_SESSION['loggedRole'] == "dosen"){
+        $data = selectAllFromDosen();
+        $row = pg_fetch_row($data);
+                            
+        $opsiDosen = '<select class="form-control penguji" id="dosenUji" name="dosenUji">
+                    <option value="0">' . $row[1] . '</option></select>';
+                    
+                    
+        $nav = '<nav class="navbar navbar-inverse">
         <div class="container">
           <a class="navbar-brand" href="../HalamanUtama/dosen.php"> Sisidang </a>
           <ul class="nav navbar-nav">
@@ -96,10 +81,50 @@
         </div>
       </nav>';
     }
+
+    function connectDB() {
+       $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
+       
+        if (!$conn) {
+            die("Connection failed");
+        }
+        return $conn;
+    }
+
+    function selectAllFromDosen() {
+        $conn = connectDB();
+
+        $nip = $_SESSION['loggedNIP'];
+        $sql = "SELECT * FROM SISIDANG.dosen WHERE nip = '$nip'";
+        
+        if(!$result = pg_query($conn, $sql)) {
+            die("Error: $sql");
+        }
+        pg_close($conn);
+        return $result;
+    }
+
+    
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Jadwal Non Sidang Dosen (admin)</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
+  <script src="../../libs/js/bootstrap.min.js"></script>
+  <script src="../../src/js/generator.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="../../libs/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+<header>
+<?php
+    echo $nav;
 ?>
 
 </header>
-    <div class="container">
+  <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel">
@@ -108,7 +133,8 @@
                             <h2> Mata Kuliah Spesial </h2>
                             <?php
                                 if($_SESSION['loggedRole'] == "admin") {
-                                    echo '<a class="btn btn-primary" href="create.php"> Tambah MKS </a>';
+                                    echo '<a class="btn btn-primary" href="../JadwalNonSidang/lihatNonSidang.php"> Tambah Jadwal Non-Sidang </a>';
+
                                 }
                             ?>
                         </div>
@@ -132,12 +158,9 @@
                         <table id="mkstable" class="table table-inverse">
                             <thead>
                                 <tr>
-                                    <th> ID </th>
-                                    <th colspan="1"> Judul </th>
-                                    <th> Mahasiswa </th>
-                                    <th> Term </th>
-                                    <th> Jenis MKS </th>
-                                    <th> STATUS </th>
+                                    <th> Tanggal </th>
+                                    <th> Jam </th>
+                                    <th> Keterangan </th>
                                     <th> ACTION </th>
                                 </tr>
                             </thead>
@@ -157,19 +180,18 @@
             </div>
         </div>
     </div>
-
-    <script>
+   <script>
         var currentPage = 3;
         var totalPage = 0;
         var term;
-        function getMks(data) {
+        function getTanggal(data) {
             $.ajax({
                 url: "../../request/request.php",
                 dataType: "JSON",
                 data: data,
                 method: "GET",
                 success: function(response) {
-                    var table = $("#mkstable");
+                    var table = $("#tanggalTable");
                     var thead = table.find("thead");
                     var tbody = table.find("tbody");
                     console.log("get mks success", response);
