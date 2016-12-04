@@ -1,6 +1,6 @@
 <?php session_start();
 	function connectDB() {
-		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=theinvoker');
+		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
 		
 		if (!$conn) {
 			die("Connection failed");
@@ -12,7 +12,7 @@
 		$conn = connectDB();
 
 		$nip = $_SESSION['loggedNIP'];
-		$sql = "SELECT * FROM dosen WHERE nip = $nip";
+		$sql = "SELECT * FROM SISIDANG.dosen WHERE nip = $nip";
 		
 		if(!$result = pg_query($conn, $sql)) {
 			die("Error: $sql");
@@ -29,11 +29,11 @@
 		$bulan = date('m');
 		$tahun = date('Y');
 		$sql = "SELECT js.tanggal, j.NamaMKS, mks.Judul, m.nama, js.jamMulai, js.jamSelesai, r.namaRuangan
-				FROM jadwal_sidang AS js, mata_kuliah_spesial AS mks, ruangan AS r, jenismks AS j, mahasiswa AS m
+				FROM SISIDANG.jadwal_sidang AS js, SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.ruangan AS r, SISIDANG.jenismks AS j, SISIDANG.mahasiswa AS m
 				WHERE EXISTS (
-					SELECT 1 FROM dosen_pembimbing AS db, dosen_penguji AS du
+					SELECT 1 FROM SISIDANG.dosen_pembimbing AS db, SISIDANG.dosen_penguji AS du
 					WHERE js.idmks = du.idmks AND js.idmks = db.IDMKS AND EXTRACT(MONTH FROM js.tanggal) = $bulan AND EXTRACT(YEAR FROM js.tanggal) = $tahun AND
-					(du.nipdosenpenguji = $nip OR db.NIPdosenpembimbing = $nip))
+					(du.nipdosenpenguji = '$nip' OR db.nipdosenpembimbing = '$nip'))
 					AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND j.ID = mks.IdJenisMKS AND m.npm = mks.NPM
 				ORDER BY js.tanggal";
 		
@@ -53,7 +53,7 @@
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
 	    <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=fontawesome">
 	    <link rel="stylesheet" href="../../libs/css/style-personal.css">
-	    <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
+	    <link rel="stylesheet" type="text/css" href="../../libs/css/bootstrap.min.css">
 	    <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
 	    <script src="../../libs/js/simplecalendar.js" type="text/javascript"></script>
 		<script src="../../libs/js/bootstrap.min.js"></script>
@@ -67,30 +67,24 @@
 	<body>
 		<header>
 			<nav class="navbar navbar-inverse">
-				<div class="container">
-					<a class="navbar-brand" href="../HalamanUtama/dosen.php"> Sisidang </a>
-					<ul class="nav navbar-nav">
-						<li class="nav-item"">
-							<li class="dropdown">
-								<a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
-								<ul class="dropdown-menu">
-									<li><a href="../mks/index.html"> Lihat Daftar </a></li>
-									<li><a href="../mks/create.html"> Tambah MKS </a></li>
-								</ul>
-							</li> <!--dropdown-->
-						</li> <!--nav-item-->
-						<li class="nav-item">
-							<li><a href="../LihatJadwalSidang/jadwalDosen.php">Lihat Jadwal Sidang</a></li>
-						</li> <!--nav-item-->  
-						<li class="nav-item">
-							<li><a href="../JadwalNonSidang/dosen.html">Jadwal Non Sidang</a></li>
-						</li><!--nav-item-->
-						<li class="nav-item">
-							<li><a href="../Logout/logout.php">Logout</a></li>
-						</li><!--nav-item-->           
-					</ul>
-				</div>
-			</nav>
+        <div class="container">
+          <a class="navbar-brand" href="../HalamanUtama/dosen.php"> Sisidang </a>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <li><a href="../mks/index.php" > Mata Kuliah Spesial</a></li>
+            </li> <!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../LihatJadwalSidang/jadwalDosen.php" >Jadwal Sidang </a></li>    
+            </li> <!--nav-item-->  
+            <li class="nav-item">
+              <li><a href="../JadwalNonSidang/dosen.php">Jadwal Non Sidang</a></li>
+            </li><!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../Logout/logout.php">Logout</a></li>
+            </li><!--nav-item-->           
+          </ul>
+        </div>
+      </nav>
 		</header>
 		<div class="container" style="max-width: 70vw;">
 			<div class="content col-md-12" style="margin-top: 10px">

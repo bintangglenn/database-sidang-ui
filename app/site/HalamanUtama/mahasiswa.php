@@ -1,6 +1,6 @@
 <?php session_start();
 	function connectDB() {
-		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=theinvoker');
+		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
 		
 		if (!$conn) {
 			die("Connection failed");
@@ -12,7 +12,7 @@
 		$conn = connectDB();
 
 		$npm = $_SESSION['loggedNPM'];
-		$sql = "SELECT * FROM mahasiswa WHERE npm = $npm";
+		$sql = "SELECT * FROM SISIDANG.mahasiswa WHERE npm = '$npm'";
 		
 		if(!$result = pg_query($conn, $sql)) {
 			die("Error: $sql");
@@ -38,9 +38,6 @@
 					<a class="navbar-brand" href="../HalamanUtama/mahasiswa.php"> Sisidang </a>
 					<ul class="nav navbar-nav">
 						<li class="nav-item">
-							<li><a href="../mks/create.html">Tambah MKS</a></li>
-						</li> <!--nav-item-->
-						<li class="nav-item">
 							<li><a href="../LihatJadwalSidang/jadwalMahasiswa.php">Lihat Jadwal Sidang</a></li>
 						</li> <!--nav-item--> 
 						<li class="nav-item">
@@ -53,23 +50,7 @@
 		<div class="container" style="max-width: 70vw;">
 			<div class="menuBar col-md-12" style="margin-top: 2vh; border-bottom: 2px solid lightgrey;">
 				<h3 class="col-md-5" style="margin-top: 10px;">Mahasiswa</h3>
-				<?php
-					if(isset($_SESSION['loggedUser'])) {
-						echo "<form action=\"mahasiswa.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-								<input type=\"hidden\" id=\"logout-command\" name=\"command\" value=\"logout\">
-								<button type=\"submit\" class=\"btn btn-danger\">Logout</button>
-							</form>
-							<form action=\"mahasiswa.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-								<input type=\"hidden\" id=\"tambahMKS-command\" name=\"command\" value=\"tambahMKS\">
-								<button type=\"submit\" class=\"btn btn-info\">Tambah Peserta MKS</button>
-							</form>
-							<form action=\"mahasiswa.php\" method=\"post\" style=\"float: right; margin: 5px;\">
-								<input type=\"hidden\" id=\" lihatSidang-command\" name=\"command\" value=\"lihatSidang\">
-								<button type=\"submit\" class=\"btn btn-info\">Lihat Jadwal Sidang</button>
-							</form>
-							";
-					}
-				?>
+				
 			</div>
 			<?php
 				if(isset($_SESSION['loggedUser'])) {

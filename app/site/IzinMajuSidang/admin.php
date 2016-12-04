@@ -30,8 +30,8 @@
               <li class="dropdown">
                 <a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="../mks/index.html"> Lihat Daftar </a></li>
-                  <li><a href="../mks/create.html"> Tambah MKS </a></li>
+                  <li><a href="../mks/index.php"> Lihat Daftar </a></li>
+                  <li><a href="../mks/create.php"> Tambah MKS </a></li>
                 </ul>
               </li> <!--dropdown-->
             </li> <!--nav-item-->
@@ -40,12 +40,12 @@
               <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
               <ul class="dropdown-menu">
                 <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
-                <li><a href="../JadwalSidang/create.html">Buat</a></li>
+                <li><a href="../JadwalSidang/create.php">Buat</a></li>
               </ul>
               </li> <!--dropdown-->    
             </li> <!--nav-item-->  
             <li class="nav-item">
-              <li><a href="../JadwalNonSidang/admin.html">Jadwal Non Sidang</a></li>
+              <li><a href="../JadwalNonSidang/admin.php">Jadwal Non Sidang</a></li>
             </li><!--nav-item-->
             <li class="nav-item">
               <li><a href="../Logout/logout.php">Logout</a></li>

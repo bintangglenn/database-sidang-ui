@@ -12,7 +12,7 @@
         $conn = connectDB();
 
         $nip = $_SESSION['loggedNIP'];
-        $sql = "SELECT * FROM dosen WHERE nip = $nip";
+        $sql = "SELECT * FROM SISIDANG.dosen WHERE nip = $nip";
         
         if(!$result = pg_query($conn, $sql)) {
             die("Error: $sql");
@@ -27,11 +27,11 @@
         $nip = $_SESSION['loggedNIP'];
 
         $sql = "SELECT m.nama, j.NamaMKS, mks.Judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.IjinMajuSidang, mks.PengumpulanHardCopy, mks.idMKS
-                FROM jadwal_sidang AS js, mata_kuliah_spesial AS mks, ruangan AS r, jenismks AS j, mahasiswa AS m
+                FROM SISIDANG.jadwal_sidang AS js, SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.ruangan AS r, SISIDANG.jenismks AS j, SISIDANG.mahasiswa AS m
                 WHERE EXISTS (
-                    SELECT 1 FROM dosen_pembimbing AS db, dosen_penguji AS du
+                    SELECT 1 FROM Sisidang.dosen_pembimbing AS db, sisidang.dosen_penguji AS du
                     WHERE js.idmks = du.idmks AND js.idmks = db.IDMKS AND
-                    (du.nipdosenpenguji = $nip OR db.NIPdosenpembimbing = $nip))
+                    (du.nipdosenpenguji = '$nip' OR db.NIPdosenpembimbing = '$nip'))
                     AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND j.ID = mks.IdJenisMKS AND m.npm = mks.NPM
                 ORDER BY js.tanggal, js.jamMulai";
         
@@ -47,7 +47,7 @@
 
         $nip = $_SESSION['loggedNIP'];
 
-        $sql = "SELECT 1 FROM dosen_pembimbing WHERE NIPdosenpembimbing = $nip AND IDMKS = $idMKS";
+        $sql = "SELECT 1 FROM SISIDANG.dosen_pembimbing WHERE NIPdosenpembimbing = '$nip' AND IDMKS = $idMKS";
         
         if(!$result = pg_query($conn, $sql)) {
             die("Error: $sql");
@@ -78,7 +78,7 @@
         $conn = connectDB();
 
         $nip = $_SESSION['loggedNIP'];
-        $sql = "SELECT d.nama FROM dosen_penguji AS du, dosen AS d, mata_kuliah_spesial AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS AND d.nama NOT IN (SELECT nama FROM dosen WHERE NIP = $nip)";
+        $sql = "SELECT d.nama FROM SISIDANG.dosen_penguji AS du, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS AND d.nama NOT IN (SELECT nama FROM SISIDANG.dosen WHERE NIP = '$nip')";
 
         if(!$result = pg_query($conn, $sql)) {
           die("Error: $sql");
@@ -91,7 +91,7 @@
         $conn = connectDB();
 
         $nip = $_SESSION['loggedNIP'];
-        $sql = "SELECT d.nama FROM dosen_pembimbing AS dp, dosen AS d, mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS AND d.nama NOT IN (SELECT nama FROM dosen WHERE NIP = $nip)";
+        $sql = "SELECT d.nama FROM SISIDANG.dosen_pembimbing AS dp, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS AND d.nama NOT IN (SELECT nama FROM SISIDANG.dosen WHERE NIP = '$nip')";
 
         if(!$result = pg_query($conn, $sql)) {
           die("Error: $sql");
@@ -138,16 +138,25 @@
 	</head>
 	<body>
         <header>
-            <nav class="navbar navbar-inverse">
-                <div class="container">
-                    <a class="navbar-brand" href="../HalamanUtama/dosen.php"> Sisidang </a>
-                    <ul class="nav navbar-nav">
-                        <li class="nav-item">
-                            <li><a href="../Logout/logout.php">Logout</a></li>
-                        </li><!--nav-item-->           
-                    </ul>
-                </div>
-            </nav>
+       <nav class="navbar navbar-inverse">
+        <div class="container">
+          <a class="navbar-brand" href="../HalamanUtama/dosen.php"> Sisidang </a>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <li><a href="../mks/index.php" > Mata Kuliah Spesial</a></li>
+            </li> <!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../LihatJadwalSidang/jadwalDosen.php" >Jadwal Sidang </a></li>    
+            </li> <!--nav-item-->  
+            <li class="nav-item">
+              <li><a href="../JadwalNonSidang/dosen.php">Jadwal Non Sidang</a></li>
+            </li><!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../Logout/logout.php">Logout</a></li>
+            </li><!--nav-item-->           
+          </ul>
+        </div>
+      </nav>
         </header>
 		<div class="container" style="max-width: 80vw;">
 			<div class="daftarMahasiswa col-md-12" style="margin-top: 10px;">

@@ -22,7 +22,9 @@
 </head>
 <body>
 <header>
-<nav class="navbar navbar-inverse">
+<?php
+    if($_SESSION['loggedRole'] == "admin") {
+        echo '<nav class="navbar navbar-inverse">
         <div class="container">
           <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
           <ul class="nav navbar-nav">
@@ -52,7 +54,30 @@
             </li><!--nav-item-->           
           </ul>
         </div>
-      </nav>
+      </nav>';
+    }else{
+        echo '<nav class="navbar navbar-inverse">
+        <div class="container">
+          <a class="navbar-brand" href="../HalamanUtama/dosen.php"> Sisidang </a>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <li><a href="../mks/index.php" > Mata Kuliah Spesial</a></li>
+            </li> <!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../LihatJadwalSidang/jadwalDosen.php" >Jadwal Sidang </a></li>    
+            </li> <!--nav-item-->  
+            <li class="nav-item">
+              <li><a href="../JadwalNonSidang/dosen.php">Jadwal Non Sidang</a></li>
+            </li><!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../Logout/logout.php">Logout</a></li>
+            </li><!--nav-item-->           
+          </ul>
+        </div>
+      </nav>';
+    }
+?>
+
 </header>
     <div class="container">
         <div class="row">

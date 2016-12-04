@@ -1,3 +1,28 @@
+<?php session_start();
+    function connectDB() {
+       $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
+       
+        if (!$conn) {
+            die("Connection failed");
+        }
+        return $conn;
+    }
+
+    function selectAllFromDosen() {
+        $conn = connectDB();
+
+        $nip = $_SESSION['loggedNIP'];
+        $sql = "SELECT * FROM SISIDANG.dosen WHERE nip = $nip";
+        
+        if(!$result = pg_query($conn, $sql)) {
+            die("Error: $sql");
+        }
+        pg_close($conn);
+        return $result;
+    }
+
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,38 +36,25 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-inverse">
-      <div class="container">
-        <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
-         <ul class="nav navbar-nav">
-           <li class="nav-item">
-              <li class="dropdown">
-                <a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="../mks/index.php"> Lihat Daftar </a></li>
-                    <li><a href="../mks/create.php"> Tambah MKS </a></li>
-                </ul>
-              </li> <!--dropdown-->
-           </li> <!--nav-item-->
-           <li class="nav-item">
-              <li class="dropdown">
-                <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
-                  <li><a href="../JadwalSidang/create.php">Buat</a></li>
-                  <li><a href="../JadwalSidang/edit.php">Edit</a></li>
-                </ul>
-              </li> <!--dropdown-->    
-           </li> <!--nav-item-->  
-           <li class="nav-item">
-              <li><a href="../JadwalNonSidang/admin.php">Jadwal Non Sidang</a></li>
-           </li><!--nav-item-->
-           <li class="nav-item">
-              <?php echo $nav; ?>
-           </li><!--nav-item-->
-      </ul>
-    </div>
-  </nav>
+  <nav class="navbar navbar-inverse">
+        <div class="container">
+          <a class="navbar-brand" href="../HalamanUtama/dosen.php"> Sisidang </a>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <li><a href="../mks/index.php" > Mata Kuliah Spesial</a></li>
+            </li> <!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../LihatJadwalSidang/jadwalDosen.php" >Jadwal Sidang </a></li>    
+            </li> <!--nav-item-->  
+            <li class="nav-item">
+              <li><a href="../JadwalNonSidang/dosen.php">Jadwal Non Sidang</a></li>
+            </li><!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../Logout/logout.php">Logout</a></li>
+            </li><!--nav-item-->           
+          </ul>
+        </div>
+      </nav>
 </header>
   <div class="container">
        <h2>Tambah Jadwal Non-Sidang Dosen</h2> 

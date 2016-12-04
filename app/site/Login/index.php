@@ -17,12 +17,12 @@
 		else {
 			$conn = connectDB();
 
-			$sql = "SELECT NIP FROM dosen WHERE username='$user' AND password='$pass' limit 1";
+			$sql = "SELECT NIP FROM SISIDANG.Dosen WHERE username='$user' AND password='$pass' limit 1";
 
 			if($result = pg_query($conn, $sql)) {
 				$hasil = pg_fetch_row($result);
 				if($hasil[0] === "" || $hasil[0] === null) {
-					$sql = "SELECT NPM FROM mahasiswa WHERE username='$user' AND password='$pass' limit 1";
+					$sql = "SELECT NPM FROM SISIDANG.Mahasiswa WHERE username='$user' AND password='$pass' limit 1";
 					if($result = pg_query($conn, $sql)) {
 						$hasil = pg_fetch_row($result);
 						if($hasil[0] === "" || $hasil[0] === null) {

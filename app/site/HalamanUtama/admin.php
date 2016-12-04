@@ -11,7 +11,7 @@
   function selectAll() {
     $conn = connectDB();
     
-    $sql = "SELECT j.NamaMKS, m.nama, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.idMKS FROM jenismks AS j, mahasiswa AS m, mata_kuliah_spesial AS mks, jadwal_sidang AS js, ruangan AS r WHERE j.ID = mks.IdJenisMKS AND m.npm = mks.NPM AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND mks.IsSiapSidang = true ORDER BY js.tanggal";
+    $sql = "SELECT j.NamaMKS, m.nama, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.idMKS FROM SISIDANG.JENISMKS AS j, SISIDANG.MAHASISWA AS m, SISIDANG.MATA_KULIAH_SPESIAL AS mks, SISIDANG.JADWAL_SIDANG AS js, SISIDANG.RUANGAN AS r WHERE j.ID = mks.IdJenisMKS AND m.npm = mks.NPM AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND mks.IsSiapSidang = true ORDER BY js.tanggal";
     
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -23,7 +23,7 @@
   function selectDosenPenguji($idMKS) {
       $conn = connectDB();
 
-      $sql = "SELECT d.nama FROM dosen_penguji AS du, dosen AS d, mata_kuliah_spesial AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS";
+      $sql = "SELECT d.nama FROM SISIDANG.DOSEN_PENGUJI AS du, SISIDANG.DOSEN AS d, SISIDANG.MATA_KULIAH_SPESIAL AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IdMKS = mks.IdMKS AND mks.idMKS = $idMKS";
 
       if(!$result = pg_query($conn, $sql)) {
         die("Error: $sql");
@@ -35,7 +35,7 @@
   function selectDosenPembimbing($idMKS) {
       $conn = connectDB();
 
-      $sql = "SELECT d.nama FROM dosen_pembimbing AS dp, dosen AS d, mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS";
+      $sql = "SELECT d.nama FROM SISIDANG.dosen_pembimbing AS dp, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS";
 
       if(!$result = pg_query($conn, $sql)) {
         die("Error: $sql");
@@ -48,7 +48,7 @@
     $conn = connectDB();
 
       $sql = "SELECT j.NamaMKS, m.nama, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.idMKS
-          FROM jenismks AS j, mahasiswa AS m, mata_kuliah_spesial AS mks, jadwal_sidang AS js, ruangan AS r
+          FROM SISIDANG.jenismks AS j, SISIDANG.mahasiswa AS m, SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.jadwal_sidang AS js, SISIDANG.ruangan AS r
           WHERE j.ID = mks.IdJenisMKS AND m.npm = mks.NPM AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND mks.Semester = $term AND mks.IdJenisMKS = $jenis AND mks.IsSiapSidang = true";
 
       if(!$result = pg_query($conn, $sql)) {
@@ -102,7 +102,7 @@
 
     $nama = strtolower($nama);
       $sql = "SELECT j.NamaMKS, m.nama, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.idMKS
-          FROM jenismks AS j, mahasiswa AS m, mata_kuliah_spesial AS mks, jadwal_sidang AS js, ruangan AS r
+          FROM SISIDANG.Jenismks AS j, SISIDANG.Mahasiswa AS m, SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.jadwal_sidang AS js, SISIDANG.ruangan AS r
           WHERE j.ID = mks.IdJenisMKS AND m.npm = mks.NPM AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND m.nama LIKE \"%$nama%\" AND mks.IsSiapSidang = true";
 
       if(!$result = pg_query($conn, $sql)) {
@@ -245,7 +245,7 @@
 	</head>
 	<body>
     <header>
-      <nav class="navbar navbar-inverse">
+     <nav class="navbar navbar-inverse">
         <div class="container">
           <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
           <ul class="nav navbar-nav">

@@ -10,8 +10,8 @@
 
   function checkSiapSidang() {
   	$conn = connectDB();
-
-    $sql = "SELECT * FROM mata_kuliah_spesial WHERE NPM = " . $_SESSION['loggedNPM'] . " AND IsSiapSidang = true";
+    $npm = $_SESSION['loggedNPM'];
+    $sql = "SELECT * FROM SISIDANG.mata_kuliah_spesial WHERE NPM = '$npm' AND IsSiapSidang = true";
     
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -26,7 +26,7 @@
   function selectAll($npm) {
     $conn = connectDB();
     
-    $sql = "SELECT mks.IdMKS, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan FROM mata_kuliah_spesial AS mks, jadwal_sidang AS js, ruangan AS r WHERE mks.IdMKS = js.idmks AND r.idRuangan = js.idRuangan AND mks.NPM = $npm";
+    $sql = "SELECT mks.IdMKS, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan FROM SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.jadwal_sidang AS js, SISIDANG.ruangan AS r WHERE mks.IdMKS = js.idmks AND r.idRuangan = js.idRuangan AND mks.NPM = '$npm'";
     
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -38,7 +38,7 @@
   function selectDosenPenguji($id) {
     $conn = connectDB();
 
-    $sql = "SELECT d.nama FROM dosen_penguji AS du, dosen AS d, mata_kuliah_spesial AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IDMKS = mks.IdMKS AND mks.NPM = $id";
+    $sql = "SELECT d.nama FROM SISIDANG.dosen_penguji AS du, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IDMKS = mks.IdMKS AND mks.NPM = $id";
 
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -50,7 +50,7 @@
   function selectDosenPembimbing($id) {
     $conn = connectDB();
 
-    $sql = "SELECT d.nama FROM dosen_pembimbing AS dp, dosen AS d, mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.NPM = $id";
+    $sql = "SELECT d.nama FROM SISIDANG.dosen_pembimbing AS dp, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.NPM = '$id'";
 
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -62,7 +62,7 @@
   function getStatus($id) {
     $conn = connectDB();
 
-    $sql = "SELECT mks.PengumpulanHardCopy, mks.IjinMajuSidang FROM mata_kuliah_spesial AS mks WHERE mks.idmks = $id";
+    $sql = "SELECT mks.PengumpulanHardCopy, mks.IjinMajuSidang FROM SISIDANG.mata_kuliah_spesial AS mks WHERE mks.idmks = '$id'";
 
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -100,6 +100,9 @@
                 <div class="container">
                     <a class="navbar-brand" href="../HalamanUtama/mahasiswa.php"> Sisidang </a>
                     <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <li><a href="../LihatJadwalSidang/jadwalMahasiswa.php">Lihat Jadwal Sidang</a></li>
+                        </li> <!--nav-item--> 
                         <li class="nav-item">
                             <li><a href="../Logout/logout.php">Logout</a></li>
                         </li><!--nav-item-->           

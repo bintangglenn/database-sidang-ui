@@ -11,7 +11,7 @@
   function selectAll() {
     $conn = connectDB();
     
-    $sql = "SELECT m.nama, j.NamaMKS, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.idMKS FROM jenismks AS j, mahasiswa AS m, mata_kuliah_spesial AS mks, jadwal_sidang AS js, ruangan AS r WHERE j.ID = mks.IdJenisMKS AND m.npm = mks.NPM AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND mks.IsSiapSidang = true ORDER BY m.nama";
+    $sql = "SELECT m.nama, j.NamaMKS, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.idMKS FROM SISIDANG.jenismks AS j, SISIDANG.mahasiswa AS m, SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.jadwal_sidang AS js, SISIDANG.ruangan AS r WHERE j.ID = mks.IdJenisMKS AND m.npm = mks.NPM AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND mks.IsSiapSidang = true ORDER BY m.nama";
     
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -23,7 +23,7 @@
   function selectDosenPenguji($idMKS) {
     $conn = connectDB();
 
-    $sql = "SELECT d.nama FROM dosen_penguji AS du, dosen AS d, mata_kuliah_spesial AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS";
+    $sql = "SELECT d.nama FROM SISIDANG.dosen_penguji AS du, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS";
 
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -35,7 +35,7 @@
   function selectDosenPembimbing($idMKS) {
     $conn = connectDB();
 
-    $sql = "SELECT d.nama FROM dosen_pembimbing AS dp, dosen AS d, mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS";
+    $sql = "SELECT d.nama FROM SISIDANG.dosen_pembimbing AS dp, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.idMKS = $idMKS";
 
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -47,7 +47,7 @@
   function getStatus($idMKS) {
     $conn = connectDB();
 
-    $sql = "SELECT mks.PengumpulanHardCopy, mks.IjinMajuSidang FROM mata_kuliah_spesial AS mks WHERE mks.idmks = $idMKS";
+    $sql = "SELECT mks.PengumpulanHardCopy, mks.IjinMajuSidang FROM SISIDANG.mata_kuliah_spesial AS mks WHERE mks.idmks = $idMKS";
 
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
