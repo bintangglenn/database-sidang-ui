@@ -1,10 +1,10 @@
 <?php
   session_start();
   $user='';
-  if(!isset($_SESSION["userlogin"])){
-    //header("Location: ../Login/index.php");
+  if(!isset($_SESSION["loggedRole"])){
+    header("Location: ../Login/index.php");
   }else{
-    
+    $nav = '';
   }
 
 ?>
@@ -12,7 +12,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-  <title>Membuat Jadwal Sidang</title>
+  <title>Sisidang - Membuat Jadwal Sidang</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="../../image/icon.png">
   <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
@@ -23,6 +23,7 @@
 </head>
 <body>
 <header>
+    
     <nav class="navbar navbar-inverse">
       <div class="container">
         <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
@@ -42,7 +43,6 @@
                 <ul class="dropdown-menu">
                   <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
                   <li><a href="../JadwalSidang/create.php">Buat</a></li>
-                  <li><a href="../JadwalSidang/edit.php">Edit</a></li>
                 </ul>
               </li> <!--dropdown-->    
            </li> <!--nav-item-->  

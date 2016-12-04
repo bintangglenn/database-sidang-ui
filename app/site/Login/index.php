@@ -1,6 +1,6 @@
 <?php session_start();
 	function connectDB() {
-		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=theinvoker');
+		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
 		
 		if (!$conn) {
 			die("Connection failed");
@@ -57,8 +57,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>SISIDANG - Login</title>
-		<script src="../../libs/jquery.min.js"> </script>
-		<script src="../../libs/bootstrap.min.js"></script>
+		<script src="../../libs/js/jquery.min.js"> </script>
+		<script src="../../libs/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="../../libs/css/login.css" >
 		<link rel="stylesheet" type="text/css" href="../../libs/css/bootstrap.min.css" >
 	</head>

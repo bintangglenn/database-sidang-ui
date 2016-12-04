@@ -1,8 +1,8 @@
 <?php
   session_start();
   $user='';
-  if(!isset($_SESSION["userlogin"])){
-    //header("Location: ../Login/index.php");
+  if(!isset($_SESSION["loggedRole"])){
+    header("Location: ../Login/index.php");
   }else{
     $nav = '';
   }
@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Tutorial 8</title>
+    <title>Sisidang - Membuat Mata Kuliah Spesial</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
@@ -22,38 +22,37 @@
 
     <body>
 <header>
-    <nav class="navbar navbar-inverse">
-      <div class="container">
-        <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
-         <ul class="nav navbar-nav">
-           <li class="nav-item">
+<nav class="navbar navbar-inverse">
+        <div class="container">
+          <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
               <li class="dropdown">
                 <a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="../mks/index.php"> Lihat Daftar </a></li>
-                    <li><a href="../mks/create.php"> Tambah MKS </a></li>
+                  <li><a href="../mks/index.php"> Lihat Daftar </a></li>
+                  <li><a href="../mks/create.php"> Tambah MKS </a></li>
                 </ul>
               </li> <!--dropdown-->
-           </li> <!--nav-item-->
-           <li class="nav-item">
+            </li> <!--nav-item-->
+            <li class="nav-item">
               <li class="dropdown">
-                <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
-                  <li><a href="../JadwalSidang/create.php">Buat</a></li>
-                  <li><a href="../JadwalSidang/edit.php">Edit</a></li>
-                </ul>
+              <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
+              <ul class="dropdown-menu">
+                <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
+                <li><a href="../JadwalSidang/create.php">Buat</a></li>
+              </ul>
               </li> <!--dropdown-->    
-           </li> <!--nav-item-->  
-           <li class="nav-item">
+            </li> <!--nav-item-->  
+            <li class="nav-item">
               <li><a href="../JadwalNonSidang/admin.php">Jadwal Non Sidang</a></li>
-           </li><!--nav-item-->
-           <li class="nav-item">
+            </li><!--nav-item-->
+            <li class="nav-item">
               <li><a href="../Logout/logout.php">Logout</a></li>
-           </li><!--nav-item-->
-      </ul>
-    </div>
-  </nav>
+            </li><!--nav-item-->           
+          </ul>
+        </div>
+      </nav>
 </header>
         <div class="container">
             <div class="row">

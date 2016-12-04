@@ -1,6 +1,6 @@
 <?php session_start();
   function connectDB() {
-    $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=theinvoker');
+    $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
     
     if (!$conn) {
       die("Connection failed");
@@ -213,8 +213,8 @@
 		<title>Sisidang - Admin</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<script src="../../libs/jquery.min.js"> </script>
-	    <script src="../../libs/bootstrap.min.js"></script>
+		<script src="../../libs/js/jquery.min.js"> </script>
+	    <script src="../../libs/js/bootstrap.min.js"></script>
 	    <link rel="stylesheet" type="text/css" href="../../libs/css/bootstrap.min.css">
       <style type="text/css">
             body {
@@ -253,8 +253,8 @@
               <li class="dropdown">
                 <a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="../mks/index.html"> Lihat Daftar </a></li>
-                  <li><a href="../mks/create.html"> Tambah MKS </a></li>
+                  <li><a href="../mks/index.php"> Lihat Daftar </a></li>
+                  <li><a href="../mks/create.php"> Tambah MKS </a></li>
                 </ul>
               </li> <!--dropdown-->
             </li> <!--nav-item-->
@@ -263,13 +263,12 @@
               <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
               <ul class="dropdown-menu">
                 <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
-                <li><a href="../JadwalSidang/create.html">Buat</a></li>
-                <li><a href="../JadwalSidang/edit.html">Edit</a></li>
+                <li><a href="../JadwalSidang/create.php">Buat</a></li>
               </ul>
               </li> <!--dropdown-->    
             </li> <!--nav-item-->  
             <li class="nav-item">
-              <li><a href="../JadwalNonSidang/admin.html">Jadwal Non Sidang</a></li>
+              <li><a href="../JadwalNonSidang/admin.php">Jadwal Non Sidang</a></li>
             </li><!--nav-item-->
             <li class="nav-item">
               <li><a href="../Logout/logout.php">Logout</a></li>
@@ -279,7 +278,6 @@
       </nav>
     </header>
 		<div class="container" style="max-width: 80vw;">
-			
 			<div class="daftarMahasiswa col-md-12" style="margin-top: 3vh;">
         <div class="search col-md-4">
           <div class="jenisSidang col-md-12"  style="border: 2px solid lightgrey;"> 

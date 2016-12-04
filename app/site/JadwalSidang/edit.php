@@ -1,8 +1,8 @@
 <?php
   session_start();
   $user='';
-  if(!isset($_SESSION["userlogin"])){
-    //header("Location: ../Login/index.php");
+  if(!isset($_SESSION["loggedRole"])){
+    header("Location: ../Login/index.php");
   }else{
     $nav = '';
   }
@@ -14,7 +14,7 @@
 	<title>Mengubah Jadwal Sidang</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="../../libs/jquery.min.js" type="text/javascript"></script>
+	<script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
   <script src="../../libs/js/bootstrap.min.js"></script>
 	<script src="../../src/js/generator.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -40,7 +40,6 @@
                 <ul class="dropdown-menu">
                   <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
                   <li><a href="../JadwalSidang/create.php">Buat</a></li>
-                  <li><a href="../JadwalSidang/edit.php">Edit</a></li>
                 </ul>
               </li> <!--dropdown-->    
            </li> <!--nav-item-->  

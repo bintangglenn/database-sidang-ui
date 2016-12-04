@@ -1,6 +1,6 @@
 <?php session_start();
   function connectDB() {
-   $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=theinvoker');
+   $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
     
     if (!$conn) {
       die("Connection failed");
@@ -108,18 +108,36 @@
 	<body>
 		<header>
 			<nav class="navbar navbar-inverse">
-				<div class="container">
-					<a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
-					<ul class="nav navbar-nav">
-						<li class="nav-item">
-							<li><a href="../mks/create.html">Tambah MKS</a></li>
-						</li> <!--nav-item-->
-						<li class="nav-item">
-							<li><a href="../Logout/logout.php">Logout</a></li>
-						</li><!--nav-item-->           
-					</ul>
-				</div>
-			</nav>
+        <div class="container">
+          <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown"> Mata Kuliah Spesial <span class="arrow">&#9660;  </span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="../mks/index.php"> Lihat Daftar </a></li>
+                  <li><a href="../mks/create.php"> Tambah MKS </a></li>
+                </ul>
+              </li> <!--dropdown-->
+            </li> <!--nav-item-->
+            <li class="nav-item">
+              <li class="dropdown">
+              <a href="#" data-toggle="dropdown">Jadwal Sidang <span class="arrow">&#9660;  </span></a>
+              <ul class="dropdown-menu">
+                <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
+                <li><a href="../JadwalSidang/create.php">Buat</a></li>
+              </ul>
+              </li> <!--dropdown-->    
+            </li> <!--nav-item-->  
+            <li class="nav-item">
+              <li><a href="../JadwalNonSidang/admin.php">Jadwal Non Sidang</a></li>
+            </li><!--nav-item-->
+            <li class="nav-item">
+              <li><a href="../Logout/logout.php">Logout</a></li>
+            </li><!--nav-item-->           
+          </ul>
+        </div>
+      </nav>
 		</header>
 		<div class="container" style="max-width: 80vw;">
 			<div class="daftarMahasiswa col-md-12" style="margin-top: 10px;">
