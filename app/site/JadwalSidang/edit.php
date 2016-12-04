@@ -77,13 +77,13 @@
                     </div>
                     <div class="form-group">
                        <label for="tanggal"> Tanggal </label>
-                       <input type="text" class="form-control" id="tanggal" placeholder="19-11-2016" /> </select>
+                       <input type="text" class="form-control" required="" id="tanggal" placeholder="19-11-2016" /> </select>
                     </div>
                     <div class="form-group">
                        <label for="jamMulai"> Jam Mulai </label>
-                       <input type="text" class="form-control" id="jamMulai" placeholder="12:30"/>
+                       <input type="text" class="form-control" required="" id="jamMulai" placeholder="12:30"/>
                        <label for="jamSelesai"> Jam Selesai </label>
-                        <input type="text" class="form-control" id="jamSelesai" placeholder="12:00"/>
+                        <input type="text" class="form-control" required="" id="jamSelesai" placeholder="12:00"/>
                        </select>
                        <label for="ruangan"> Ruangan </label>
                           <select class="form-control penguji" id="ruangan" name="ruangan">
@@ -93,7 +93,7 @@
 
                     <div class="form-group">
                        <label for="pHardCopy"> Pengumpulan HardCopy</label>
-                       <label><input type="radio" name="HardCopy"> Sudah </label>
+                       <label><input type="radio" name="HardCopy" required=""> Sudah </label>
                     </div>
                 </div>
             <div class="col-lg-6">
@@ -114,8 +114,8 @@
               <div id="tambah-penguji" class="btn btn-default"> Tambah penguji </div>
             </div> <!--col-lg-6-->
             </div> <!--row-->
-           <button id="btnCreate"type="button" class="btn btn-primary"> Create </button>
-           <button id="btnCancel"type="button" class="btn btn-primary"> Cancel </button>
+           <button id="btnCreate" type="button" class="btn btn-primary"> Create </button>
+           <button id="btnCancel" type="button" class="btn btn-primary"> Cancel </button>
         </form>
 	</div>
 </body>
