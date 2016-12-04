@@ -104,15 +104,14 @@
 	                	
 	                </select>
 	            </div>
-	            <div class="form-group">
-	                <label for="penguji2"> Penguji 2 </label>
-	                <select class="form-control penguji" id="penguji2" name="penguji2">
-	                    <option value='0'>Pilih Dosen Penguji</option>
-	                    
-	                </select>
-	            </div>
-	            <div id="tambah-penguji" class="btn btn-default"> Tambah penguji </div>
-
+	             <div id="penguji-wrapper">
+                  <div class="form-group ">
+                    <select class="form-control penguji" id="penguji" name="penguji">
+                      <option value="0">Pilih Dosen</option>
+                    </select>
+                  </div>
+              </div>
+              <div id="tambah-penguji" class="btn btn-default"> Tambah penguji </div>
             </div> <!--col-lg-6-->
             </div> <!--row-->
            <button id="btnCreate"type="button" class="btn btn-primary"> Create </button>

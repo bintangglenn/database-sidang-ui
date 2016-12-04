@@ -18,7 +18,6 @@
   <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
   <script src="../../libs/js/bootstrap.min.js"></script>
 	<script src="../../src/js/generator.js" type="text/javascript"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
 </head>
 <body>
@@ -105,12 +104,13 @@
 	                	<option value='0'>Pilih Dosen Penguji</option>
 	                </select>
 	            </div>
-	            <div class="form-group">
-	                <label for="penguji2"> Penguji 2 </label>
-	                <select class="form-control penguji" id="penguji2" name="penguji2">
-	                    <option value='0'>Pilih Dosen Penguji</option>
-	                </select>
-	            </div>
+	            <div id="penguji-wrapper">
+                  <div class="form-group ">
+                    <select class="form-control penguji" id="penguji" name="penguji">
+                      <option value="0">Pilih Dosen</option>
+                    </select>
+                  </div>
+              </div>
 	            <div id="tambah-penguji" class="btn btn-default"> Tambah penguji </div>
             </div>
             </div>
