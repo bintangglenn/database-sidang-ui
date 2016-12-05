@@ -1,3 +1,4 @@
+    var term;
     var dosenList;
     var dosenOption;
 
@@ -17,29 +18,44 @@
                 var semester = (data[i].semester == 1) ? 'Gasal' : (data[i].semester == 2) ? 'Genap' : 'Pendek';
                 selectTerm.append('<option value="' + data[i].tahun + ' ' + data[i].semester + '">' + data[i].tahun + '/' + semester + '</option>');
             }
+            term = selectTerm.val().split(" ");
+            getMahasiswaWithoutMKS(term);
         },
         error: function(err) {
             console.log("error : ", err.responseText);
         }
     });
 
-    $.ajax({
-        url: "../../request/request.php",
-        method: "GET",
-        dataType: "JSON",
-        data: {
-            "action": "GET_MAHASISWA"
-        },
-        success: function(response) {
-            var data = response.data;
-            var selectMahasiswa = $("#mahasiswa");
-            selectMahasiswa.empty();
-            for (var i = 0; i < data.length; i++) {
-                selectMahasiswa.append('<option value=' + data[i].npm + '>' + data[i].nama + '</option>');
-            }
-        }
-    });
 
+    function getMahasiswaWithoutMKS(term) {
+        console.log("term", term);
+        $.ajax({
+            url: "../../request/request.php",
+            method: "GET",
+            dataType: "JSON",
+            data: {
+                action: "GET_MAHASISWA_WITHOUT_MKS_TERM",
+                term : term
+            },
+            success: function(response) {
+                console.log("response", response);
+                var data = response.data;
+                var selectMahasiswa = $("#mahasiswa");
+                selectMahasiswa.empty();
+                for (var i = 0; i < data.length; i++) {
+                    selectMahasiswa.append('<option value=' + data[i].npm + '>' + data[i].nama + '</option>');
+                }
+            },
+            error : function(err) {
+                console.log("error", err.responseText);
+            }
+        });
+    }
+
+    $("#term").change(function() {
+        term = $(this).val().split(" ");
+        getMahasiswaWithoutMKS(term);
+    });
     $.ajax({
         url: "../../request/request.php",
         method: "GET",
@@ -122,6 +138,9 @@
         $('.penguji').not(this).find('option[value="' + value + '"]').hide();
     });
 
+    $("#term").change(function(){
+
+    });
     $("#btnCreate").click(function(e) {
         var error = false;
         var term = $("#term").val().split(" ");

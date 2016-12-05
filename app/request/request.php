@@ -72,6 +72,12 @@
                 $response['data'] = $result;
                 break;
 
+            case 'GET_MAHASISWA_WITHOUT_MKS_TERM' :
+                $term = $_GET['term'];
+                $result = MahasiswaHandler::getMahasiswaWithoutMKS($db, $term);
+                $response['data'] = $result;
+                break;
+
             case 'GET_RUANGAN':
                 $ruanganList = RuanganHandler::getAllRuangan($db);
                 $data = pg_fetch_all($ruanganList);

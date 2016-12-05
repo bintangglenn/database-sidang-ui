@@ -28,4 +28,15 @@ class MahasiswaHandler
     {
         $query = "SELECT * FROM SISIDANG.MAHASISWA JOIN SISIDANG.MATA_KULIAH_SPESIAL MKS WHERE MKS.status = $status";
     }
+
+    public function getMahasiswaWithoutMKS($db, $term) {
+        $term = $term;
+        $query = "SELECT M.npm, M.nama
+        FROM SISIDANG.MAHASISWA AS M
+        WHERE NOT EXISTS (SELECT *
+            FROM SISIDANG.MATA_KULIAH_SPESIAL AS MKS
+            WHERE MKS.npm = M.npm AND MKS.tahun = $term[0] AND MKS.semester = $term[1])";
+        $result = pg_query($db, $query);
+        return pg_fetch_all($result);
+    }
 }
