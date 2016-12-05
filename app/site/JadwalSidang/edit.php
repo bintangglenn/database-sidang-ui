@@ -12,6 +12,7 @@
   $jamSelesai = $_POST['jamSelesai'];
   $ruangan = $_POST['ruangan'];
   $listPenguji = $_SESSION['datapenguji'];
+  // var_dump($_SESSION['datapenguji']);
 ?>
 <!DOCTYPE html>
 <html>

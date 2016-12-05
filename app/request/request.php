@@ -78,6 +78,12 @@
                 $data['events'] = $data;
                 $response['data'] = $data;
                 break;
+            case 'GET_JADWAL_SIDANG':
+                $jadwalsidangList = JadwalSidangHandler::getAllJadwalSidang($db);
+                $data = pg_fetch_all($jadwalsidangList);
+                $data['event'] = $data;
+                $response['data'] = $data;
+                break;
             default:
                 // code...
                 break;
@@ -102,12 +108,13 @@
                 $response['data'] = $result;
                 break;
             case 'CREATE_JADWAL_SIDANG':
-                $idJadwal = $_POST['idjadwal'];
-                $tanggal = $_POST['tanggal'];
-                $jamMulai = $_POST['jamMulai'];
-                $jamSelesai = $_POST['jamSelesai'];
-                $ruangan = $_POST['ruangan'];
-                $hardCopy = $_POST['hardCopy'];
+                // $idJadwal = $_POST['#idjadwal'];
+                $idmks = $_POST['#idMks'];
+                $tanggal = $_POST['#tanggal'];
+                $jamMulai = $_POST['#jamMulai'];
+                $jamSelesai = $_POST['#jamSelesai'];
+                $ruangan = $_POST['#ruangan'];
+                $hardCopy = $_POST['#hardCopy'];
                 $result = JadwalSidangHandler::create($db, $idJadwal, $idmks, $tanggal, $jamMulai, $jamSelesai, $ruangan);
                 $response['data'] = $result;
                 break;

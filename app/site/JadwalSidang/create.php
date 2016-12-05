@@ -93,8 +93,8 @@
                     </div>
 
                     <div class="form-group">
-                       <label for="pHardCopy"> Pengumpulan HardCopy</label>
-                       <label><input type="radio" name="HardCopy" required=""> Sudah </label>
+                       <label for="HardCopy" > Pengumpulan HardCopy</label>
+                       <label><input type="radio" name="HardCopy" id="hardCopy" required=""> Sudah </label>
                     </div>
                 </div>
             <div class="col-lg-6">
@@ -224,7 +224,6 @@
         var jamSelesai = $("#jamSelesai").val();
         var ruangan = $("#ruangan").val();
         var hardCopy = $("#hardCopy").val();
-        
         var examinerList = [];
         $(".penguji").each(function(){
             var value = $(this).val();
@@ -242,7 +241,8 @@
         var id = randomId();
         data = {
             action : "CREATE_JADWAL_SIDANG",
-            mahasiswa : mahasiswa,
+            idJadwal :id,
+            idMks : id,
             tanggal : tanggal,
             jamMulai : jamMulai,
             jamSelesai : jamSelesai,
