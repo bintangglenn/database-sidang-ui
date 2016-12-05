@@ -5,7 +5,7 @@
       $pembimbing = "Pembimbing Lain";
     }
   function connectDB() {
-   $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
+   $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=admin05');
     
     if (!$conn) {
       die("Connection failed");
@@ -49,7 +49,7 @@
   <script src="../../libs/js/jquery.min.js" type="text/javascript"></script>
   <script src="../../libs/js/bootstrap.min.js"></script>
   <script src="../../src/js/generator.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="../../libs/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../libs/css/bootstrap.min.css"
 </head>
 
 <body>
