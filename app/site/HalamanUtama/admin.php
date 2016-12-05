@@ -78,6 +78,7 @@
       }
       echo "</ul></td><td><ul>";
       $data = selectDosenPenguji($row[7]);
+      $_SESSION['datapenguji'] = pg_fetch_all($data);
       while($du = pg_fetch_row($data)) {
         echo "<li>$du[0]</li>";
       }
@@ -103,7 +104,7 @@
     $nama = strtolower($nama);
       $sql = "SELECT j.NamaMKS, m.nama, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.idMKS
           FROM SISIDANG.Jenismks AS j, SISIDANG.Mahasiswa AS m, SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.jadwal_sidang AS js, SISIDANG.ruangan AS r
-          WHERE j.ID = mks.IdJenisMKS AND m.npm = mks.NPM AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND m.nama LIKE \"%$nama%\" AND mks.IsSiapSidang = true";
+          WHERE j.ID = mks.IdJenisMKS AND m.npm = mks.NPM AND r.idRuangan = js.idRuangan AND js.idmks = mks.IdMKS AND m.nama LIKE '%$nama%' AND mks.IsSiapSidang = true";
 
       if(!$result = pg_query($conn, $sql)) {
         die("Error: $sql");
@@ -132,6 +133,7 @@
       }
       echo "</ul></td><td><ul>";
       $data = selectDosenPenguji($row[7]);
+      $_SESSION['datapenguji'] = pg_fetch_all($data);
       while($du = pg_fetch_row($data)) {
         echo "<li>$du[0]</li>";
       }
@@ -176,6 +178,7 @@
       }
       echo "</ul></td><td><ul>";
       $data = selectDosenPenguji($row[7]);
+      $_SESSION['datapenguji'] = pg_fetch_all($data);
       while($du = pg_fetch_row($data)) {
         echo "<li>$du[0]</li>";
       }
@@ -183,6 +186,12 @@
           <td>$date $time<br>$row[6]</td>
           <td class=\"action\">
           <form action=\"../JadwalSidang/edit.php\" method=\"post\">
+            <input type=\"hidden\" id=\"edit-command\" name=\"mahasiswa\" value=\"$row[1]\">
+            <input type=\"hidden\" id=\"edit-command\" name=\"tanggal\" value=\"$row[3]\">
+            <input type=\"hidden\" id=\"edit-command\" name=\"jamMulai\" value=\"$row[4]\">
+            <input type=\"hidden\" id=\"edit-command\" name=\"jamSelesai\" value=\"$row[5]\">
+            <input type=\"hidden\" id=\"edit-command\" name=\"ruangan\" value=\"$row[6]\">
+            
             <input type=\"hidden\" id=\"edit-command\" name=\"command\" value=\"edit\">
               <button type=\"submit\" class=\"btn btn-info\">Edit</button>
           </form>

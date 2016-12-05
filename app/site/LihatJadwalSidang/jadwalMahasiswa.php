@@ -26,7 +26,7 @@
   function selectAll($npm) {
     $conn = connectDB();
     
-    $sql = "SELECT mks.IdMKS, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan FROM SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.jadwal_sidang AS js, SISIDANG.ruangan AS r WHERE mks.IdMKS = js.idmks AND r.idRuangan = js.idRuangan AND mks.NPM = '$npm'";
+    $sql = "SELECT mks.IdMKS, mks.judul, js.tanggal, js.jamMulai, js.jamSelesai, r.namaRuangan, mks.idmks FROM SISIDANG.mata_kuliah_spesial AS mks, SISIDANG.jadwal_sidang AS js, SISIDANG.ruangan AS r WHERE mks.IdMKS = js.idmks AND r.idRuangan = js.idRuangan AND mks.NPM = '$npm' ORDER BY js.tanggal DESC LIMIT 1";
     
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -38,7 +38,7 @@
   function selectDosenPenguji($id) {
     $conn = connectDB();
 
-    $sql = "SELECT d.nama FROM SISIDANG.dosen_penguji AS du, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IDMKS = mks.IdMKS AND mks.NPM = $id";
+    $sql = "SELECT d.nama FROM SISIDANG.dosen_penguji AS du, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = du.nipdosenpenguji AND du.IDMKS = mks.IdMKS AND mks.idmks = '$id'";
 
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -50,7 +50,7 @@
   function selectDosenPembimbing($id) {
     $conn = connectDB();
 
-    $sql = "SELECT d.nama FROM SISIDANG.dosen_pembimbing AS dp, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.NPM = '$id'";
+    $sql = "SELECT d.nama FROM SISIDANG.dosen_pembimbing AS dp, SISIDANG.dosen AS d, SISIDANG.mata_kuliah_spesial AS mks WHERE d.NIP = dp.nipdosenpembimbing AND dp.IDMKS = mks.IdMKS AND mks.idmks = '$id'";
 
     if(!$result = pg_query($conn, $sql)) {
       die("Error: $sql");
@@ -138,18 +138,18 @@
                             <tr>
                                 <th>Dosen Pembimbing</th>
                                 <td>";
-                    $data = selectDosenPembimbing($_SESSION['loggedNPM']);
-                    while($row = pg_fetch_row($data)) {
-                        echo "$row[0], ";
+                    $dataDP = selectDosenPembimbing($row[6]);
+                    while($rowDP = pg_fetch_row($dataDP)) {
+                        echo "$rowDP[0], ";
                     }
                     echo "<b>Status: $status</b><td>
                         </tr>
                         <tr>
                             <th>Dosen Penguji</th>
                             <td><ul>";
-                    $data = selectDosenPenguji($_SESSION['loggedNPM']);
-                    while($row = pg_fetch_row($data)) {
-                        echo "<li>$row[0]</li>";
+                    $dataDU = selectDosenPenguji($row[6]);
+                    while($rowDU = pg_fetch_row($dataDU)) {
+                        echo "<li>$rowDU[0]</li>";
                     }
                     echo "</ul></td></tr></table></div>";
                 }

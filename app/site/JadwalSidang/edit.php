@@ -6,7 +6,12 @@
   }else{
     $nav = '';
   }
-
+  $mahasiswa = $_POST['mahasiswa'];
+  $tanggal = $_POST['tanggal'];
+  $jamMulai = $_POST['jamMulai'];
+  $jamSelesai = $_POST['jamSelesai'];
+  $ruangan = $_POST['ruangan'];
+  $listPenguji = $_SESSION['datapenguji'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -71,23 +76,23 @@
                     <div class="form-group">
                        <label for="mahasiswa"> Mahasiswa </label>
                        <select class="form-control" id="mahasiswa" name="mahasiswa">
-                       		<option value='0'>Pilih Mahasiswa</option>
+                       		<option value='0'><?php echo $mahasiswa; ?></option>
                        		
                        </select>
                     </div>
                     <div class="form-group">
                        <label for="tanggal"> Tanggal </label>
-                       <input type="text" class="form-control" required="" id="tanggal" placeholder="19-11-2016" /> </select>
+                       <input type="text" class="form-control" required="" id="tanggal" value="<?php echo $tanggal; ?>" /> </select>
                     </div>
                     <div class="form-group">
                        <label for="jamMulai"> Jam Mulai </label>
-                       <input type="text" class="form-control" required="" id="jamMulai" placeholder="12:30"/>
+                       <input type="text" class="form-control" required="" id="jamMulai" value="<?php echo $jamMulai; ?>"/>
                        <label for="jamSelesai"> Jam Selesai </label>
-                        <input type="text" class="form-control" required="" id="jamSelesai" placeholder="12:00"/>
+                        <input type="text" class="form-control" required="" id="jamSelesai" value="<?php echo $jamSelesai; ?>"/>
                        </select>
                        <label for="ruangan"> Ruangan </label>
                           <select class="form-control penguji" id="ruangan" name="ruangan">
-                            <option value='0'>Pilih Ruangan</option>
+                            <option value='0'><?php echo $ruangan; ?></option>
                           </select>
                     </div>
 
@@ -97,20 +102,21 @@
                     </div>
                 </div>
             <div class="col-lg-6">
-	            <div class="form-group">
-	                <label for="penguji1"> Penguji1 </label>
-	            	<select class="form-control penguji" id="penguji1" name="penguji1">
-	                	<option value='0'>Pilih Dosen Penguji</option>
-	                	
-	                </select>
-	            </div>
-	             <div id="penguji-wrapper">
-                  <div class="form-group ">
-                    <select class="form-control penguji" id="penguji" name="penguji">
-                      <option value="0">Pilih Dosen</option>
-                    </select>
-                  </div>
-              </div>
+              <?php
+                  $idx = 0;
+                  while($idx < count($listPenguji)) {
+                  echo '<div id="penguji-wrapper">
+                      <div class="form-group ">
+                        <label for="penguji"> Penguji</label>
+                        <select class="form-control penguji" class="penguji" name="penguji">
+                          <option value="$idx">' . $listPenguji[$idx]['nama'] . '</option>
+                        </select>
+                      </div>
+                      </div>';
+                    $idx++;
+                 }
+              ?>
+	             
               <div id="tambah-penguji" class="btn btn-default"> Tambah penguji </div>
             </div> <!--col-lg-6-->
             </div> <!--row-->
@@ -119,6 +125,7 @@
         </form>
 	</div>
 </body>
+
 <script type="text/javascript">
    var dosenList;
    var dosenOption;
@@ -127,7 +134,7 @@
    var ruanganList;
    var ruanganOption;
    // ajax call
-
+   
    $.ajax({
         url : "../../request/request.php",
         method : "GET",
@@ -156,7 +163,7 @@
               var penguji1 = $("#penguji1");
               var penguji2 = $("#penguji2");
               var penguji3 = $("#penguji3");
-              var penguji = $("#penguji");
+              var penguji = $(".penguji");
               for (var i = 0; i < dosenList.length; i++) {
                   var option = '<option value=' + dosenList[i].nip + '>' + dosenList[i].nama + '</option>';
                   dosenOption += option;
