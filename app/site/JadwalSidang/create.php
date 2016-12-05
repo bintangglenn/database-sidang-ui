@@ -106,6 +106,7 @@
 	            </div>
 	            <div id="penguji-wrapper">
                   <div class="form-group ">
+                    <label for="penguji1"> Penguji2 </label>
                     <select class="form-control penguji" id="penguji" name="penguji">
                       <option value="0">Pilih Dosen</option>
                     </select>

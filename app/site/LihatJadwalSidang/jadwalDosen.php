@@ -209,6 +209,7 @@
                                     echo "</ul></td><td><ul>";
 
                                     $dosTerkait = selectDosenPenguji($row[9]);
+                                    $_SESSION['datapenguji'] = pg_fetch_all($data);
                                     while($du = pg_fetch_row($dosTerkait)) {
                                         echo "<li>$du[0]</li>";
                                     }
