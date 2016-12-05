@@ -13,8 +13,9 @@
     header('Content-Type: application/json');
     $response = [
         'status' => 'success',
-        'data' => null,
-    ];
+        'data' => "none",
+        'message' => ''
+    ]; // default response
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action'])) {
         switch ($_GET['action']) {
@@ -66,6 +67,11 @@
                 $response['data'] = $result;
                 break;
 
+            case 'GET_MKS_IZIN_MAJU_SIDANG' :
+                $result = MKSHandler::getMKSWithSiapSidang($db);
+                $response['data'] = $result;
+                break;
+
             case 'GET_RUANGAN':
                 $ruanganList = RuanganHandler::getAllRuangan($db);
                 $data = pg_fetch_all($ruanganList);
@@ -85,7 +91,6 @@
                 $response['data'] = $data;
                 break;
             default:
-                // code...
                 break;
         }
     } elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
@@ -107,18 +112,21 @@
                 }
                 $response['data'] = $result;
                 break;
+
             case 'CREATE_JADWAL_SIDANG':
-                // $idJadwal = $_POST['#idjadwal'];
-                $idmks = $_POST['#idMks'];
-                $tanggal = $_POST['#tanggal'];
-                $jamMulai = $_POST['#jamMulai'];
-                $jamSelesai = $_POST['#jamSelesai'];
-                $ruangan = $_POST['#ruangan'];
-                $hardCopy = $_POST['#hardCopy'];
-                $result = JadwalSidangHandler::create($db, $idJadwal, $idmks, $tanggal, $jamMulai, $jamSelesai, $ruangan);
-                $response['data'] = $result;
+                $idmks = $_POST['idmks'];
+                $tanggal = $_POST['tanggal'];
+                $jamMulai = $_POST['jamMulai'];
+                $jamSelesai = $_POST['jamSelesai'];
+                $idruangan = $_POST['ruangan'];
+                $pengujiList = $_POST['pengujiList'];
+                $result = JadwalSidangHandler::create($db, $idmks, $npm, $tanggal, $jamMulai, $jamSelesai, $idruangan, $hardCopy, $pengujiList);
+                $response['message'] = pg_last_error($db);
                 break;
 
+            default :
+                $response['status'] = "failed";
+                $response['message'] = "wrong action command";
         }
     }
     echo json_encode($response);

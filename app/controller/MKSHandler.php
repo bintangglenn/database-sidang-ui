@@ -8,8 +8,10 @@
           $this->conn = $connection;
       }
 
-      public static function create($db, $idmks, $term,  $npm, $type, $title)
+      public static function create($db, $idmks, $term, $npm, $type, $title)
       {
+
+          // check mks for current term and semester
           try {
               $insert = 'INSERT INTO SISIDANG.MATA_KULIAH_SPESIAL (idmks, npm, tahun, semester, judul, IdJenisMKS) ';
               $values = "VALUES ($idmks, '$npm', '$term[0]', '$term[1]', '$title', '$type')";
@@ -105,5 +107,14 @@
           OFFSET $skip LIMIT $take";
           $count = pg_query($db, $query);
           return ['mkslist' => pg_fetch_all($MKSList), 'total' => pg_fetch_row($count)[0] / $take];
+      }
+
+      public static function getMKSWithSiapSidang($db) {
+          $query = "SELECT MKS.idmks, M.nama
+          FROM SISIDANG.MATA_KULIAH_SPESIAL AS MKS, SISIDANG.MAHASISWA AS M
+          WHERE MKS.npm = M.npm AND MKS.ijinmajusidang = true AND
+          NOT EXISTS (SELECT * FROM SISIDANG.JADWAL_SIDANG AS JS WHERE JS.idmks = MKS.idmks)";
+          $mksList = pg_query($db, $query);
+          return pg_fetch_all($mksList);
       }
   }

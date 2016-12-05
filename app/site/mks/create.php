@@ -18,8 +18,8 @@
     <script src="../../src/js/generator.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../../libs/css/reset.css">
     <link rel="stylesheet" href="../../libs/css/bootstrap.min.css">
-    <body>
 <header>
+    <body>
 <nav class="navbar navbar-inverse">
         <div class="container">
           <a class="navbar-brand" href="../HalamanUtama/admin.php"> Sisidang </a>
