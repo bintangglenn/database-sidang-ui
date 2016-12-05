@@ -133,17 +133,21 @@
         url : "../../request/request.php",
         method : "GET",
         dataType : "JSON",
-        data : {"action" : "GET_MAHASISWA"},
+        data : {"action" : "GET_MKS_IZIN_MAJU_SIDANG"},
         success : function (response) {
+            console.log("response", response);
             mahasiswaList = response.data;
             var selectMahasiswa = $("#mahasiswa");
             //selectMahasiswa.empty();
             for (var i = 0; i < mahasiswaList.length; i++) {
-                var option = '<option value=' + mahasiswaList[i].npm + '>' + mahasiswaList[i].nama + '</option>';
+                var option = '<option value=' + mahasiswaList[i].idmks + '>' + mahasiswaList[i].nama + '</option>';
                 mahasiswaoption += option;
                 selectMahasiswa.append(option);
             }
             
+        },
+        error : function(err) {
+          console.log("err", err.responseText)
         }
     });
 
@@ -241,14 +245,12 @@
         var id = randomId();
         data = {
             action : "CREATE_JADWAL_SIDANG",
-            idJadwal :id,
             idMks : id,
             tanggal : tanggal,
             jamMulai : jamMulai,
             jamSelesai : jamSelesai,
             ruangan : ruangan,
-            hardCopy : hardCopy,
-            examinerlist : examinerList,
+            pengujiList : examinerList,
         };
         $.ajax({
             url : "../../request/request.php",
