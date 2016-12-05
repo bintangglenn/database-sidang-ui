@@ -185,9 +185,9 @@
               ruanganList = response.data;
               var ruangan = $("#ruangan");
               for (var i = 0; i < ruanganList.length; i++) {
-                  var option = '<option value=' + ruanganList[i].idruangan + '>' + ruanganList[i].namaruangan + '</option>';
-                  ruanganOption += option;
-                  ruangan.append(option);
+                  var options = '<option value=' + ruanganList[i].idruangan + '>' + ruanganList[i].namaruangan + '</option>';
+                  ruanganOption += options;
+                  ruangan.append(options);
               }
           }
       });
@@ -225,18 +225,12 @@
 
     $("#btnCreate").click(function(e) {
         var error = false;
-        var term = $("#term").val().split(" ");
-        var npm = $("#mahasiswa").val();
-        var type = $("#jenismks").val();
-        var title = $("#judulmks").val();
-        if (title == null || title.length < 10) {
-            error = true;
-            $("#judulmks").parent().addClass("has-error");
-        } else {
-            $("#judulmks").parent().removeClass("has-error");
-        }
-
-        
+        var mahasiswa = $("#mahasiswa").val();
+        var tanggal = $("#tanggal").val();
+        var jamMulai = $("#jamMulai").val();
+        var jamSelesai = $("#jamSelesai").val();
+        var ruangan = $("#ruangan").val();
+        var hardCopy = $("#hardCopy").val();
         var examinerList = [];
         $(".penguji").each(function(){
             var value = $(this).val();
@@ -249,16 +243,18 @@
             }
 
         });
+        
         if (error) return;
         var id = randomId();
         data = {
-            action : "CREATE_MKS",
-            idmks : id,
-            term : term,
-            npm : npm,
-            type : type,
-            title : title,
-            adviserlist : adviserList,
+            action : "CREATE_JADWAL_SIDANG",
+            idJadwal :id,
+            idMks : id,
+            tanggal : tanggal,
+            jamMulai : jamMulai,
+            jamSelesai : jamSelesai,
+            ruangan : ruangan,
+            hardCopy : hardCopy,
             examinerlist : examinerList,
         };
         $.ajax({
@@ -274,5 +270,6 @@
             }
         });
     });
+   
 </script>
 </html>
