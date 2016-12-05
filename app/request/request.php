@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include '../connection.php';
     include '../controller/MahasiswaHandler.php';
     include '../controller/DosenHandler.php';
@@ -54,7 +55,14 @@
                 $take = $_GET['take'];
                 $sort = $_GET['sort'];
                 $term = $_GET['term'];
-                $result = MKSHandler::getMKSwithTerm($db, $skip, $take, $sort, $term);
+                $role = $_SESSION['loggedRole'];
+                $result;
+                if ($role == "admin") {
+                    $result = MKSHandler::getMKSwithTerm($db, $skip, $take, $sort, $term);
+                } else if ($role == "dosen") {
+                    $nip = $_SESSION['loggedNIP'];
+                    $result = MKSHandler::getMKSWithDosen($db, $skip, $take, $sort, $term, $nip);
+                }
                 $response['data'] = $result;
                 break;
 

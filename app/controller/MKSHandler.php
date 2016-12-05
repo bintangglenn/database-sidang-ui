@@ -50,17 +50,60 @@
       {
           $query = "SELECT MKS.idmks, MKS.judul, M.nama, MKS.tahun, MKS.semester, J.namamks as jenis, MKS.IsSiapSidang, MKS.PengumpulanHardCopy, MKS.IjinMajuSidang
          FROM SISIDANG.MATA_KULIAH_SPESIAL AS MKS, SISIDANG.MAHASISWA AS M, SISIDANG.JENISMKS AS J
-         WHERE MKS.npm = M.npm AND MKS.idjenismks = J.id AND MKS.tahun = $term[0] AND MKS.semester = $term[1]
-         OFFSET $skip LIMIT $take";
-          if ($sort != '') {
-              $query .= " ORDER BY $sort";
-          }
+         WHERE MKS.npm = M.npm AND MKS.idjenismks = J.id AND MKS.tahun = $term[0] AND MKS.semester = $term[1]";
+         if ($sort != '') {
+             $key = 'M.nama';
+             if ($sort == 'mahasiswa') {
+                 $key = 'M.nama';
+             } else if ($sort == 'jenismks') {
+                 $key = 'J.namamks';
+             } else if ($sort == 'term') {
+                 $key = 'MKS.tahun, MKS.semester';
+             }
+             $query .= " ORDER BY $key";
+
+         } else {
+             $query .= ' ORDER BY M.nama';
+         }
+
+         $query .= " OFFSET $skip LIMIT $take";
+
           $MKSList = pg_query($db, $query);
           $query = "SELECT COUNT(*) FROM SISIDANG.MATA_KULIAH_SPESIAL AS MKS
             WHERE MKS.tahun = $term[0] AND MKS.semester = $term[1]
           ";
           $count = pg_query($db, $query);
 
+          return ['mkslist' => pg_fetch_all($MKSList), 'total' => pg_fetch_row($count)[0] / $take];
+      }
+
+      public static function getMKSWithDosen($db, $skip, $take, $sort, $term, $nip)
+      {
+          $query = "SELECT DISTINCT MKS.idmks, MKS.judul, M.nama, MKS.tahun, MKS.semester, J.namamks as jenis, MKS.IsSiapSidang, MKS.PengumpulanHardCopy, MKS.IjinMajuSidang
+          FROM SISIDANG.MATA_KULIAH_SPESIAL AS MKS, SISIDANG.MAHASISWA AS M, SISIDANG.JENISMKS AS J, SISIDANG.DOSEN_PEMBIMBING AS DP , SISIDANG.DOSEN_PENGUJI AS SDP
+          WHERE DP.nipdosenpembimbing = '$nip' AND MKS.npm = M.npm AND MKS.idjenismks = J.id AND MKS.tahun = $term[0] AND MKS.semester = $term[1] AND DP.idmks = MKS.idmks AND SDP.idmks = MKS.idmks";
+
+          if ($sort != '') {
+              $key = 'M.nama';
+              if ($sort == 'mahasiswa') {
+                  $key = 'M.nama';
+              } else if ($sort == 'jenismks') {
+                  $key = 'J.namamks';
+              } else if ($sort == 'term') {
+                  $key = 'MKS.tahun, MKS.semester';
+              }
+              $query .= " ORDER BY $key";
+
+          } else {
+              $query .= ' ORDER BY M.nama';
+          }
+          $query .= " OFFSET $skip LIMIT $take";
+          $MKSList = pg_query($db, $query);
+          $query = "SELECT DISTINCT count(*)
+          FROM SISIDANG.MATA_KULIAH_SPESIAL AS MKS, SISIDANG.MAHASISWA AS M, SISIDANG.JENISMKS AS J, SISIDANG.DOSEN_PEMBIMBING AS DP , SISIDANG.SARAN_DOSEN_PENGUJI AS SDP
+          WHERE MKS.npm = M.npm AND MKS.idjenismks = J.id AND MKS.tahun = $term[0] AND MKS.semester = $term[1] AND DP.idmks = MKS.idmks AND SDP.idmks = MKS.idmks AND DP.nipdosenpembimbing = '$nip' AND SDP.nipdosenpenguji = '$nip'
+          OFFSET $skip LIMIT $take";
+          $count = pg_query($db, $query);
           return ['mkslist' => pg_fetch_all($MKSList), 'total' => pg_fetch_row($count)[0] / $take];
       }
   }
