@@ -1,6 +1,6 @@
 <?php session_start();
   function connectDB() {
-   $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=admin05');
+   $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
     
     if (!$conn) {
       die("Connection failed");

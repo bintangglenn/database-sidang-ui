@@ -5,7 +5,7 @@
       $pembimbing = "Pembimbing Lain";
     }
   function connectDB() {
-   $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=admin05');
+   $conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
     
     if (!$conn) {
       die("Connection failed");
@@ -158,15 +158,23 @@
                   echo "<br> $row[6]</td>
                       <td><ul>";
                   $data = selectDosenPembimbing($row[7]);
+
                   while($dp = pg_fetch_row($data)) {
                     echo "<li>$dp[0]</li>";
                   }
                   
                   echo "</ul></td>
                     <td class=\"action\">
-                      <form action=\"../LihatJadwalSidang/jadwalAdmin.php\" method=\"post\">
+                      <form  action=\"\" method=\"post\">
+                         <input type=\"hidden\" id=\"edit-command\" name=\"mahasiswa\" value=\"$row[0]\">
+                        <input type=\"hidden\" id=\"edit-command\" name=\"jenisSidang\" value=\"$row[3]\">
+                        <input type=\"hidden\" id=\"edit-command\" name=\"judul\" value=\"$row[4]\">
+                        <input type=\"hidden\" id=\"edit-command\" name=\"tanggal\" value=\"$row[5]\">
+                        <input type=\"hidden\" id=\"edit-command\" name=\"jamMulai\" value=\"$row[5]\">
+
+
                         <input type=\"hidden\" id=\"izin-command\" name=\"command\" value=\"izin\">
-                          <button type=\"submit\" class=\"btn btn-info\">izinkan</button>
+                          <button onclick=\"popNotif()\" type=\"submit\" class=\"btn btn-info\">izinkan</button>
                         </form>
                     </td></tr>
                     ";
@@ -255,6 +263,17 @@
             };
             getMks(data);
     });
+
+
+    function popNotif(){
+      //var x;
+      if(confirm("Apakah Anda yakin mengizinkan maju sidang?") == true){
+        window.location="../LihatJadwalSidang/jadwalAdmin.php";
+      }else{
+        window.location="../IzinMajuSidang/admin.php";
+      }
+
+    }
 
   </script>
 </body>
