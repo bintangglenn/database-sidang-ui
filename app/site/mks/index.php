@@ -230,19 +230,22 @@
             });
         }
         $.when(getTerm()).then(function(){
-            $.when(getMks({
-                action: "GET_MKS_WITH_TERM",
-                skip: 0,
-                take: 10,
-                term : term,
-                sort: sort
-            })).then(function() {
-                console.log("load done", totalPage);
-                for (var i = 1; i <= totalPage; i++) {
-                    var page = '<option value="' + i + '">' + i + '</option>';
-                    pagination.append(page);
-                }
-            });
+            setTimeout(function(){
+                $.when(getMks({
+                    action: "GET_MKS_WITH_TERM",
+                    skip: 0,
+                    take: 10,
+                    term : term,
+                    sort: sort
+                })).then(function() {
+                    console.log("load done", totalPage);
+                    for (var i = 1; i <= totalPage; i++) {
+                        var page = '<option value="' + i + '">' + i + '</option>';
+                        pagination.append(page);
+                    }
+                });
+            }, 10);
+
         });
         var pagination = $("#pagination");
         pagination.change(function() {
