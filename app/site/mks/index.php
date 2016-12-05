@@ -6,8 +6,6 @@
   }else{
     $nav = '';
   }
-  
-
 
 ?>
 <!DOCTYPE html>
@@ -46,8 +44,8 @@
                 <li><a href="../LihatJadwalSidang/jadwalAdmin.php">Lihat Daftar</a></li>
                 <li><a href="../JadwalSidang/create.php">Buat</a></li>
               </ul>
-              </li> <!--dropdown-->    
-            </li> <!--nav-item-->  
+              </li> <!--dropdown-->
+            </li> <!--nav-item-->
            <li class="nav-item">
              <li class="dropdown">
                 <a href="#" data-toggle="dropdown"> Jadwal Non Sidang <span class="arrow">&#9660;  </span></a>
@@ -62,7 +60,7 @@
             </li><!--nav-item-->
             <li class="nav-item">
               <li><a href="../Logout/logout.php">Logout</a></li>
-            </li><!--nav-item-->           
+            </li><!--nav-item-->
           </ul>
         </div>
       </nav>';
@@ -75,8 +73,8 @@
               <li><a href="../mks/index.php" > Mata Kuliah Spesial</a></li>
             </li> <!--nav-item-->
             <li class="nav-item">
-              <li><a href="../LihatJadwalSidang/jadwalDosen.php" >Jadwal Sidang </a></li>    
-            </li> <!--nav-item-->  
+              <li><a href="../LihatJadwalSidang/jadwalDosen.php" >Jadwal Sidang </a></li>
+            </li> <!--nav-item-->
             <li class="nav-item">
              <li class="dropdown">
                 <a href="#" data-toggle="dropdown"> Jadwal Non Sidang <span class="arrow">&#9660;  </span></a>
@@ -91,7 +89,7 @@
             </li><!--nav-item-->
             <li class="nav-item">
               <li><a href="../Logout/logout.php">Logout</a></li>
-            </li><!--nav-item-->           
+            </li><!--nav-item-->
           </ul>
         </div>
       </nav>';
@@ -111,6 +109,13 @@
                                     echo '<a class="btn btn-primary" href="create.php"> Tambah MKS </a>';
                                 }
                             ?>
+                            <div class="sort">
+                                <select id="sort" class="form-control" name="showperpage">
+                                    <option value="mahasiswa"> Nama Mahasiswa </option>
+                                    <option value="term"> Term </option>
+                                    <option value="jenismks"> Jenis MKS </option>
+                                </select>
+                            </div>
                         </div>
                         <div class="pull-right">
                             <div class="input-group">
@@ -162,7 +167,9 @@
         var currentPage = 3;
         var totalPage = 0;
         var term;
+        var sort = $("#sort").val();
         function getMks(data) {
+            console.log("data", data);
             $.ajax({
                 url: "../../request/request.php",
                 dataType: "JSON",
@@ -227,8 +234,8 @@
                 action: "GET_MKS_WITH_TERM",
                 skip: 0,
                 take: 10,
-                sort: "",
-                term : term
+                term : term,
+                sort: sort
             })).then(function() {
                 console.log("load done", totalPage);
                 for (var i = 1; i <= totalPage; i++) {
@@ -245,10 +252,9 @@
                 action: "GET_MKS_WITH_TERM",
                 skip: currentPage * showperpage,
                 take: showperpage,
-                sort: "",
+                sort: sort,
                 term : term
             };
-
             getMks(data);
         });
 
@@ -259,7 +265,7 @@
                 action: "GET_MKS_WITH_TERM",
                 skip: currentPage * showperpage,
                 take: showperpage,
-                sort: "",
+                sort: sort,
                 term : term
             };
             getMks(data);
@@ -271,7 +277,7 @@
                 action: "GET_MKS_WITH_TERM",
                 skip: 0,
                 take: 10,
-                sort: "",
+                sort: sort,
                 term : term
             })).then(function() {
                 console.log("load done", totalPage);
@@ -280,7 +286,24 @@
                     pagination.append(page);
                 }
             });
-        })
+        });
+
+        $("#sort").change(function() {
+            sort = $(this).val();
+            $.when(getMks({
+                action: "GET_MKS_WITH_TERM",
+                skip: 0,
+                take: 10,
+                sort: sort,
+                term : term
+            })).then(function() {
+                console.log("load done", totalPage);
+                for (var i = 1; i <= totalPage; i++) {
+                    var page = '<option value="' + i + '">' + i + '</option>';
+                    pagination.append(page);
+                }
+            });
+        });
     </script>
 </body>
 </html>

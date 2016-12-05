@@ -1,7 +1,7 @@
 <?php session_start();
 	function connectDB() {
 		$conn = pg_connect('host=localhost port=5432 dbname=postgres user=postgres password=2456298.5');
-		
+
 		if (!$conn) {
 			die("Connection failed");
 		}
@@ -66,12 +66,12 @@
 		<h1>Sistem Informasi Sidang</h1>
 		<div id="fullBg" />
 			<div class="container">
-				<form class="form-signin" action="index.php" method="POST">       
+				<form class="form-signin" action="index.php" method="POST">
 					<h1 class="form-signin-heading">Please Login</h1>
 					<input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
 					<input type="password" class="form-control" name="password" placeholder="Password" required=""/>
 					<input type="hidden" id="login-command" name="command" value="login"/>
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>   
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
 				</form>
 			</div>
 			<div id="errMsg">
@@ -85,5 +85,3 @@
 		</div>
 	</body>
 </html>
-
-
