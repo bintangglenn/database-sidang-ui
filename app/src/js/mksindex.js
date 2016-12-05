@@ -79,7 +79,7 @@ $.when(getTerm()).then(function(){
                     var page = '<option value="' + i + '">' + i + '</option>';
                     pagination.append(page);
                 }
-            },100);
+            },500);
 
         });
     }, 10);

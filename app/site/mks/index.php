@@ -109,6 +109,7 @@
                                 }
                             ?>
                             <div class="sort">
+                                <h4> Sort By </h4>
                                 <select id="sort" class="form-control" name="showperpage">
                                     <option value="mahasiswa"> Nama Mahasiswa </option>
                                     <option value="term"> Term </option>
@@ -118,7 +119,7 @@
                         </div>
                         <div class="pull-right">
                             <div class="input-group">
-                                <span> Show </span>
+                                <h4> Show </h4>
                                 <select id="showperpage" class="form-control" name="showperpage">
                                     <option value="10"> 10 </option>
                                     <option value="20"> 20 </option>
@@ -126,6 +127,7 @@
                                 </select>
                             </div>
                             <div class="input-group">
+                                <h4> Term </h4>
                                 <select id="selectTerm" class="form-control" name="selectTerm">
                                 </select>
                             </div>
@@ -142,7 +144,6 @@
                                     <th> Term </th>
                                     <th> Jenis MKS </th>
                                     <th> STATUS </th>
-                                    <th> ACTION </th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
