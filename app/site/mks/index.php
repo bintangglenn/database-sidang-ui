@@ -238,11 +238,15 @@
                     term : term,
                     sort: sort
                 })).then(function() {
-                    console.log("load done", totalPage);
-                    for (var i = 1; i <= totalPage; i++) {
-                        var page = '<option value="' + i + '">' + i + '</option>';
-                        pagination.append(page);
-                    }
+                    setTimeout(function(){
+                        console.log("load done", totalPage);
+                        pagination.empty();
+                        for (var i = 1; i <= totalPage; i++) {
+                            var page = '<option value="' + i + '">' + i + '</option>';
+                            pagination.append(page);
+                        }
+                    },100);
+
                 });
             }, 10);
 
@@ -284,6 +288,7 @@
                 term : term
             })).then(function() {
                 console.log("load done", totalPage);
+                pagination.empty();
                 for (var i = 1; i <= totalPage; i++) {
                     var page = '<option value="' + i + '">' + i + '</option>';
                     pagination.append(page);
@@ -301,6 +306,7 @@
                 term : term
             })).then(function() {
                 console.log("load done", totalPage);
+                pagination.empty();
                 for (var i = 1; i <= totalPage; i++) {
                     var page = '<option value="' + i + '">' + i + '</option>';
                     pagination.append(page);
